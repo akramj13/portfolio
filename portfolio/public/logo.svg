@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2.815 0.662 500 500">
+  <g data-padding="20" transform="matrix(1.53837, 0, 0, 1.491438, -1290.267212, -141.757462)" style="">
+    <g transform="translate(10 16.677)scale(.94065)">
+      <rect width="227.818" height="453.13" x="606.219" y="-226.259" fill="none" rx="0" ry="0" transform="translate(141.342 280.62)scale(1.24)"/>
+      <path fill="#c32cdb" d="M953.75 436.595h-69.613l146.68-352.544h4.972l147.188 352.544h-67.63l-19.393-50.232H972.153Zm79.063-220.782-7.96 27.85-34.807 94.476h87.519l-36.307-94.475Z"/>
+      <rect width="227.818" height="453.13" x="606.219" y="-226.259" fill="none" rx="0" ry="0" transform="translate(179.15 280.62)scale(1.24)"/>
+      <path fill="#049eb3" d="M991.559 436.595h-69.614l146.68-352.544h4.972l147.188 352.544h-67.63l-19.393-50.232h-123.803Zm79.062-220.782-7.96 27.85-34.808 94.476h87.52l-36.308-94.475Z"/>
+      <rect width="227.818" height="453.13" x="606.219" y="-226.259" fill="none" rx="0" ry="0" transform="translate(160.252 280.62)scale(1.24)"/>
+      <path fill="#f0eefe" d="M972.66 436.595h-69.613l146.68-352.544h4.972l147.188 352.544h-67.63l-19.393-50.232H991.063Zm79.063-220.782-7.96 27.85-34.807 94.476h87.519l-36.307-94.475Z"/>
+    </g>
+    <path fill="transparent" stroke="transparent" d="M831.5 0h337v562h-337z"/>
+  </g>
+</svg>
