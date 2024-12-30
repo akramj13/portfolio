@@ -3,7 +3,7 @@ import { link } from "fs";
 export const navItems = [
   { name: "about", link: "#about" },
   { name: "projects", link: "#projects" },
-  { name: "testimonials", link: "#testimonials" },
+  // { name: "testimonials", link: "#testimonials" },
   { name: "contact", link: "#contact" },
   { name: "resume", target: '_blank', link: "/Akram_Jamil_CV.pdf" },
 ];
@@ -62,7 +62,7 @@ export const gridItems = [
   },
   {
     id: 6,
-    title: "hire me to build your company's next big project",
+    title: "send me an email so we can connect!",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-1",
     imgClassName: "",
@@ -75,35 +75,21 @@ export const gridItems = [
 export const projects = [
   {
     id: 1,
-    title: "3D Solar System Planets to Explore",
-    des: "Explore the wonders of our solar system with this captivating 3D simulation of the planets using Three.js.",
-    img: "/p1.svg",
-    iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/fm.svg"],
-    link: "/ui.earth.com",
+    title: "AlzGuard - Alzheimer's Detection",
+    quickDes: "AlzGuard",
+    des: "Engineered the front-end and AI model for an Alzheimer’s detection tool for physicians, which won a $1,000 prize at YIC",
+    img: "/alzguard.png",
+    tech: "React, Python, Tensorflow, JavaScript, CSS",
+    link: "https://github.com/sahilalamgir/AlzGuard",
   },
   {
     id: 2,
-    title: "Yoom - Video Conferencing App",
-    des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
-    img: "/p2.svg",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
-    link: "/ui.yoom.com",
-  },
-  {
-    id: 3,
-    title: "AI Image SaaS - Canva Application",
-    des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-    img: "/p3.svg",
-    iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
-    link: "/ui.aiimg.com",
-  },
-  {
-    id: 4,
-    title: "Animated Apple Iphone 3D Website",
-    des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-    img: "/p4.svg",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
-    link: "/ui.apple.com",
+    title: "RoboAdvisor - Stock Market Prediction",
+    quickDes: "RoboAdvisor",
+    des: "Developed a tool which builds a comprehensive portfolio to beat the S&P500 returns using modern portfolio theory and stochastic optimization.",
+    img: "/stockadvisor.png",
+    tech: "Jupyter Notebook, Python, pandas, yfinance, NumPy, matplotlib",
+    link: "https://github.com/akramj13/Stock-Robo-Advisor",
   },
 ];
 
