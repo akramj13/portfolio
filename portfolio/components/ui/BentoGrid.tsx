@@ -3,7 +3,7 @@ import { IoCopyOutline } from "react-icons/io5";
 
 // Also install this npm i --save-dev @types/react-lottie
 import Lottie from "react-lottie";
-
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 
@@ -103,10 +103,12 @@ export const BentoGridItem = ({
             } `}
         >
           {spareImg && (
-            <img
+            <Image
               src={spareImg}
               alt={spareImg}
-              //   width={220}
+              layout="intrinsic"
+              width={2000}
+              height={2000}
               className="object-cover object-center w-full h-full"
             />
           )}

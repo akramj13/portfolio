@@ -95,7 +95,7 @@ export const FloatingNav = ({
         <div className="flex-shrink-0 mr-2">
           <Link href="/" passHref>
             <Image
-              src="/logo.svg" // Path to your logo image
+              src="/logo.svg" 
               alt="Logo"
               width={20}
               height={20}
