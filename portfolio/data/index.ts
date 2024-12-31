@@ -209,14 +209,43 @@ export const frameworks = [
     name: "NumPy",
     img: "/numpy.svg"
   },
+  {
+    name: "pandas",
+    img: "/pandas.png"
+  },
 ]
 
 export const tech = [
   {
     name: "GitHub",
-    img: "/git.png"
+    img: "/git.svg"
   },
   {
-    
-  }
+    name: "Vercel",
+    img: "/vercel.svg"
+  },
+  {
+    name: "Figma",
+    img: "/figma.png"
+  },
+  {
+    name: "Blender",
+    img: "/blender.png"
+  },
+  {
+    name: "Three.js",
+    img: "/three.svg"
+  },
+  {
+    name: "Jupyter Notebook",
+    img: "/jupyter.png"
+  },
+  {
+    name: "Xcode",
+    img: "/xcode.png"
+  },
+  {
+    name: "Android Studio",
+    img: "/android.png"
+  },
 ]

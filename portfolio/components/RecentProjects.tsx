@@ -13,7 +13,7 @@ const RecentProjects = () => {
         <span className="text-purple">recent projects</span>
       </h1>
       <section className="flex justify-center items-center">
-      <div className="grid lg:grid-cols-3 md2:grid-cols-2 sm:grid-cols-1 items-center justify-center p-4 gap-16 mt-10">
+      <div className="grid lg:grid-cols-3 md2:grid-cols-2 sm:grid-cols-1 items-center justify-center p-4 sm:gap-y-40 gap-16 mt-10">
         {projects.map((item) => (
           <div
             className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]"

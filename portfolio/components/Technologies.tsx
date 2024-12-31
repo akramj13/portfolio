@@ -1,5 +1,5 @@
 import React from 'react'
-import { languages , frameworks } from '@/data'
+import { languages , frameworks, tech } from '@/data'
 import { InfiniteMovingCards } from './ui/InfiniteCards'
 
 const Technologies = () => {
@@ -24,6 +24,14 @@ const Technologies = () => {
       <InfiniteMovingCards
         items={frameworks}
         direction="left"
+        speed="fast"
+        />
+      <h2 className="subheading text-24 pt-5 pb-10">
+        tools & <span className="text-purple">technologies</span>
+      </h2>
+      <InfiniteMovingCards
+        items={tech}
+        direction="right"
         speed="fast"
         />
     </div>
