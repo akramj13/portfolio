@@ -82,4 +82,7 @@
   .heading {
     @apply font-bold text-4xl md:text-5xl text-center;
   }
+  .subheading {
+    @apply font-semibold text-2xl md:text-3xl text-center;
+  }
 }

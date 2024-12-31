@@ -2,8 +2,8 @@ import { link } from "fs";
 
 export const navItems = [
   { name: "about", link: "#about" },
+  {name: "technologies", link: "#technologies"},
   { name: "projects", link: "#projects" },
-  // { name: "testimonials", link: "#testimonials" },
   { name: "contact", link: "#contact" },
   { name: "resume", target: '_blank', link: "/Akram_Jamil_CV.pdf" },
 ];
@@ -91,102 +91,31 @@ export const projects = [
     tech: "Jupyter Notebook, Python, pandas, yfinance, NumPy, matplotlib",
     link: "https://github.com/akramj13/Stock-Robo-Advisor",
   },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Adrian was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Adrian's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Adrian is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-];
-
-export const companies = [
-  {
-    id: 1,
-    name: "cloudinary",
-    img: "/cloud.svg",
-    nameImg: "/cloudName.svg",
-  },
-  {
-    id: 2,
-    name: "appwrite",
-    img: "/app.svg",
-    nameImg: "/appName.svg",
-  },
   {
     id: 3,
-    name: "HOSTINGER",
-    img: "/host.svg",
-    nameImg: "/hostName.svg",
-  },
-  {
-    id: 4,
-    name: "stream",
-    img: "/s.svg",
-    nameImg: "/streamName.svg",
-  },
-  {
-    id: 5,
-    name: "docker.",
-    img: "/dock.svg",
-    nameImg: "/dockerName.svg",
-  },
+    title: "Personal Portfolio - Akram's Space",
+    quickDes: "Portfolio",
+    des: "Designed and developed a personal portfolio website to showcase my work and projects. Actually, you're on it right now!",
+    img: "/portfolio.png",
+    tech: "React, TypeScript, Tailwind CSS, Three.js, Vercel, Framer Motion, Next.js",
+    link: "/", // change to github link
+  }
 ];
 
 export const workExperience = [
   {
     id: 1,
-    title: "Frontend Engineer Intern",
-    desc: "Assisted in the development of a web-based platform using React.js, enhancing interactivity.",
+    title: "Software Developer - Stealth Startup",
+    desc: "Assisted in building the front-end in React, Next.js and TailwindCSS, of a stealth startup, which is currently in the pre-seed stage.",
     className: "md:col-span-2",
-    thumbnail: "/exp1.svg",
+    thumbnail: "/stealth.png",
   },
   {
     id: 2,
-    title: "Mobile App Dev - JSM Tech",
-    desc: "Designed and developed mobile app for both iOS & Android platforms using React Native.",
+    title: "Telecommunications Consultant Intern - Canada Cartage",
+    desc: "Managed server-side telecommunications systems (with over 5000+ devices), optimizing network performance and ensuring seamless communication across multiple departments.",
     className: "md:col-span-2", // change to md:col-span-2
-    thumbnail: "/exp2.svg",
-  },
-  {
-    id: 3,
-    title: "Freelance App Dev Project",
-    desc: "Led the dev of a mobile app for a client, from initial concept to deployment on app stores.",
-    className: "md:col-span-2", // change to md:col-span-2
-    thumbnail: "/exp3.svg",
-  },
-  {
-    id: 4,
-    title: "Lead Frontend Developer",
-    desc: "Developed and maintained user-facing features using modern frontend technologies.",
-    className: "md:col-span-2",
-    thumbnail: "/exp4.svg",
+    thumbnail: "/cartage.png",
   },
 ];
 
@@ -207,3 +136,87 @@ export const socialMedia = [
     link: "https://www.linkedin.com/in/akramjamil/"
   },
 ];
+
+export const languages = [
+  {
+    name: "JavaScript",
+    img: "/javascript.png"
+  },
+  {
+    name: "TypeScript",
+    img: "/typescript.png"
+  },
+  {
+    name: "C",
+    img: "/c.png",
+  },
+  {
+    name: "C++",
+    img: "/cpp.png",
+  },
+  {
+    name: "Python",
+    img: "/python.png"
+  },
+  {
+    name: "Java",
+    img: "/java.png"
+  },
+  {
+    name: "Dart",
+    img: "/dart.png"
+  },
+  {
+    name: "Racket",
+    img: "/racket.png"
+  },
+  {
+    name: "HTML5",
+    img: "/html.png"
+  },
+  {
+    name: "CSS3",
+    img: "/css.png"
+  }
+]
+
+export const frameworks = [
+  {
+    name: "React", 
+    img: "/react.png"
+  },
+  {
+    name: "Tailwind CSS",
+    img: "/tailwind.png"
+  },
+  {
+    name: "Next.js",
+    img: "/nextjs.svg"
+  },
+  {
+    name: "Node.js",
+    img: "/node.png"
+  },
+  {
+    name: "Flutter",
+    img: "/flutter.png"
+  },
+  {
+    name: "Tensorflow",
+    img: "/tensorflow.png"
+  },
+  {
+    name: "NumPy",
+    img: "/numpy.svg"
+  },
+]
+
+export const tech = [
+  {
+    name: "GitHub",
+    img: "/git.png"
+  },
+  {
+    
+  }
+]
