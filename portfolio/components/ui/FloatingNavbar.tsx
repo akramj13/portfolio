@@ -28,6 +28,7 @@ export const FloatingNav = ({
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for toggling dropdown
 
   // Handle navbar visibility based on scroll direction
   useMotionValueEvent(scrollYProgress, "change", (current) => {
@@ -65,6 +66,9 @@ export const FloatingNav = ({
       }
     };
   }, [scrollTimeout]);
+
+  // Toggle mobile dropdown visibility
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
     <AnimatePresence mode="wait">
@@ -104,20 +108,47 @@ export const FloatingNav = ({
           </Link>
         </div>
 
-        {/* Navigation Items */}
-        {navItems.map((navItem: any, idx: number) => (
-          <Link
-            key={`link=${idx}`}
-            href={navItem.link}
-            target={navItem.target}
-            className={cn(
-              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-            )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="!cursor-pointer">{navItem.name}</span>
-          </Link>
-        ))}
+        {/* Hamburger icon for mobile */}
+        <div className="block md:hidden">
+          <button onClick={toggleDropdown}>
+            <span className="block h-1 w-6 bg-white mb-1"></span>
+            <span className="block h-1 w-6 bg-white mb-1"></span>
+            <span className="block h-1 w-6 bg-white"></span>
+          </button>
+        </div>
+
+        {/* Dropdown menu (for mobile) */}
+        {isDropdownOpen && (
+          <div className="absolute top-12 left-1/2 transform -translate-x-1/2 bg-black/75 rounded-md py-4 px-8 w-64 z-50 md:hidden">
+            {navItems.map((navItem, idx) => (
+              <Link
+                key={`dropdown-link-${idx}`}
+                href={navItem.link}
+                target={navItem.target}
+                className="block py-2 text-white hover:text-gray-300"
+              >
+                {navItem.name}
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Navigation Items (desktop) */}
+        <div className="hidden md:flex space-x-4">
+          {navItems.map((navItem, idx) => (
+            <Link
+              key={`link=${idx}`}
+              href={navItem.link}
+              target={navItem.target}
+              className={cn(
+                "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+              )}
+            >
+              <span className="block sm:hidden">{navItem.icon}</span>
+              <span className="!cursor-pointer">{navItem.name}</span>
+            </Link>
+          ))}
+        </div>
       </motion.div>
     </AnimatePresence>
   );
