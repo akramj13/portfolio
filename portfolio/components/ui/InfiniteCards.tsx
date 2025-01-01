@@ -89,12 +89,12 @@ export const InfiniteMovingCards = ({
             key={item.name}
             className="w-40 h-40 flex-shrink-0 flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-slate-900 rounded-lg border border-slate-700 p-4"
           >
-            <Image
+            <img
               src={item.img}
               alt={item.name}
-              layout="intrinsic"
-              width={30}
-              height={30}
+              // layout="intrinsic"
+              // width={30}
+              // height={30}
               className="w-20 h-20 object-contain"
             />
             <p className="mt-2 text-sm text-gray-100">{item.name}</p>
