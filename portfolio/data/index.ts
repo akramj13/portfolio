@@ -55,7 +55,7 @@ export const gridItems = [
     title: "currently double majoring in computer science and finance",
     description: "who am I...",
     className: "md:col-span-3 md:row-span-2",
-    imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
+    imgClassName: "absolute right-0 bottom-0 md:w-96 w-60 hidden sm:block",
     titleClassName: "justify-center md:justify-start lg:justify-center",
     img: "/uwlogo.png",
     spareImg: "/grid.svg",
