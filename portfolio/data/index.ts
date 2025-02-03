@@ -49,7 +49,6 @@ export const gridItems = [
     img: "/grid.svg",
     spareImg: "/b4.svg",
   },
-
   {
     id: 5,
     title: "currently double majoring in computer science and finance",
@@ -99,6 +98,15 @@ export const projects = [
     img: "/portfolio.png",
     tech: "React, TypeScript, Tailwind CSS, Three.js, Vercel, Framer Motion, Next.js",
     link: "/", // change to github link
+  },
+  {
+    id: 4,
+    title: "LearnETF - GeeseHacks Winning Project",
+    quickDes: "LearnETF",
+    des: "Built a platform to educate students on ETFs and investing, which won the Sun Life Sponsor Prize at GeeseHacks.",
+    img: "/learnetf.png",
+    tech: "React, TypeScript, Tailwind CSS, Figma, Next.js, Python, Flask, OpenAI, Plotly, NumPy, yfinance",
+    link: "https://github.com/akramj13/learnetf",
   }
 ];
 
