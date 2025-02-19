@@ -2,10 +2,10 @@ import { link } from "fs";
 
 export const navItems = [
   { name: "about", link: "#about" },
-  {name: "technologies", link: "#technologies"},
+  { name: "technologies", link: "#technologies" },
   { name: "projects", link: "#projects" },
   { name: "contact", link: "#contact" },
-  { name: "resume", target: '_blank', link: "/Akram_Jamil_CV.pdf" },
+  { name: "resume", target: "_blank", link: "/Akram_Jamil_CV.pdf" },
 ];
 
 export const gridItems = [
@@ -107,7 +107,16 @@ export const projects = [
     img: "/learnetf.png",
     tech: "React, TypeScript, Tailwind CSS, Figma, Next.js, Python, Flask, OpenAI, Plotly, NumPy, yfinance",
     link: "https://github.com/akramj13/learnetf",
-  }
+  },
+  {
+    id: 5,
+    title: "Voice Synthesis AI - AI-Powered Voice Generation",
+    quickDes: "VoiceAI",
+    des: "Built a modern web application leveraging AI to generate high-quality voice-overs for short-form videos, featuring custom topic generation, multiple voice styles, and auto-captioning.",
+    img: "/ai-voice.png",
+    tech: "Next.js 14, React 19, Tailwind CSS, Google Gemini AI, ElevenLabs, AssemblyAI, AWS S3, Neon Database, Drizzle ORM, Clerk",
+    link: "https://github.com/akramj13/ai-video",
+  },
 ];
 
 export const workExperience = [
@@ -131,28 +140,28 @@ export const socialMedia = [
   {
     id: 1,
     img: "/git.svg",
-    link: "https://github.com/akramj13"
+    link: "https://github.com/akramj13",
   },
   {
     id: 2,
     img: "/twit.svg",
-    link: "https://x.com/akrxmj"
+    link: "https://x.com/akrxmj",
   },
   {
     id: 3,
     img: "/link.svg",
-    link: "https://www.linkedin.com/in/akramjamil/"
+    link: "https://www.linkedin.com/in/akramjamil/",
   },
 ];
 
 export const languages = [
   {
     name: "JavaScript",
-    img: "/javascript.png"
+    img: "/javascript.png",
   },
   {
     name: "TypeScript",
-    img: "/typescript.png"
+    img: "/typescript.png",
   },
   {
     name: "C",
@@ -164,96 +173,96 @@ export const languages = [
   },
   {
     name: "Python",
-    img: "/python.png"
+    img: "/python.png",
   },
   {
     name: "Java",
-    img: "/java.png"
+    img: "/java.png",
   },
   {
     name: "Dart",
-    img: "/dart.png"
+    img: "/dart.png",
   },
   {
     name: "Racket",
-    img: "/racket.png"
+    img: "/racket.png",
   },
   {
     name: "HTML5",
-    img: "/html.png"
+    img: "/html.png",
   },
   {
     name: "CSS3",
-    img: "/css.png"
-  }
-]
+    img: "/css.png",
+  },
+];
 
 export const frameworks = [
   {
-    name: "React", 
-    img: "/react.png"
+    name: "React",
+    img: "/react.png",
   },
   {
     name: "Tailwind CSS",
-    img: "/tailwind.png"
+    img: "/tailwind.png",
   },
   {
     name: "Next.js",
-    img: "/nextjs.svg"
+    img: "/nextjs.svg",
   },
   {
     name: "Node.js",
-    img: "/node.png"
+    img: "/node.png",
   },
   {
     name: "Flutter",
-    img: "/flutter.png"
+    img: "/flutter.png",
   },
   {
     name: "Tensorflow",
-    img: "/tensorflow.png"
+    img: "/tensorflow.png",
   },
   {
     name: "NumPy",
-    img: "/numpy.svg"
+    img: "/numpy.svg",
   },
   {
     name: "pandas",
-    img: "/pandas.png"
+    img: "/pandas.png",
   },
-]
+];
 
 export const tech = [
   {
     name: "GitHub",
-    img: "/git.svg"
+    img: "/git.svg",
   },
   {
     name: "Vercel",
-    img: "/vercel.svg"
+    img: "/vercel.svg",
   },
   {
     name: "Figma",
-    img: "/figma.png"
+    img: "/figma.png",
   },
   {
     name: "Blender",
-    img: "/blender.png"
+    img: "/blender.png",
   },
   {
     name: "Three.js",
-    img: "/three.svg"
+    img: "/three.svg",
   },
   {
     name: "Jupyter Notebook",
-    img: "/jupyter.png"
+    img: "/jupyter.png",
   },
   {
     name: "Xcode",
-    img: "/xcode.png"
+    img: "/xcode.png",
   },
   {
     name: "Android Studio",
-    img: "/android.png"
+    img: "/android.png",
   },
-]
+];
