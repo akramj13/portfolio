@@ -1,7 +1,50 @@
-import React from "react";
+"use client";
+import React, { useState, useMemo } from "react";
 import PageLayout from "@/components/utils/page-layout";
+import ArticlePreview from "@/components/ArticlePreview";
+import SearchBar from "@/components/SearchBar";
+
+const data = [
+  {
+    title: "Building Scalable React Applications: Lessons Learned",
+    date: "2024-01-15",
+    readingTime: 5,
+    excerpt: "After working on several large-scale React applications.",
+    tags: ["React", "Architecture", "Performance"],
+  },
+  {
+    title: "The Modern Developer's Guide to TypeScript",
+    date: "2024-01-08",
+    readingTime: 3,
+    excerpt:
+      "TypeScript has revolutionized JavaScript development by adding static type checking.",
+    tags: ["TypeScript", "JavaScript", "Best Practices"],
+  },
+  {
+    title: "Mastering CSS Grid: A Comprehensive Guide",
+    date: "2024-01-01",
+    readingTime: 4,
+    excerpt: "CSS Grid has become an essential tool for modern web design.",
+    tags: ["CSS", "Grid", "Web Design"],
+  },
+];
 
 function Writing() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter articles based on search term
+  const filteredArticles = useMemo(() => {
+    if (!searchTerm) return data;
+
+    const searchLower = searchTerm.toLowerCase();
+    return data.filter(
+      (article) =>
+        article.title.toLowerCase().includes(searchLower) ||
+        article.excerpt.toLowerCase().includes(searchLower) ||
+        article.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+    );
+  }, [searchTerm]);
+
   return (
     <PageLayout variant="narrow" maxWidth="lg">
       <div className="space-y-10">
@@ -10,110 +53,50 @@ function Writing() {
           <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
             writing
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Thoughts on technology, development, and the ever-evolving world of
-            software.
-          </p>
+          {/* <p className="text-lg text-muted-foreground">
+            i like to write sometimes
+          </p> */}
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            placeholder="Search articles by title, content, or tags..."
+            articles={data}
+          />
         </section>
+
+        {/* Search Results Info */}
+        {searchTerm && (
+          <section className="text-center">
+            <p className="text-muted-foreground">
+              {filteredArticles.length === 0
+                ? `No articles found for "${searchTerm}"`
+                : `Found ${filteredArticles.length} article${
+                    filteredArticles.length !== 1 ? "s" : ""
+                  } for "${searchTerm}"`}
+            </p>
+          </section>
+        )}
 
         {/* Articles */}
         <section className="space-y-8">
-          {/* Article 1 */}
-          <article className="border-b border-border pb-8">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <time dateTime="2024-01-15">January 15, 2024</time>
-                <span>•</span>
-                <span>5 min read</span>
-              </div>
-              <h2 className="text-2xl font-semibold hover:text-primary transition-colors cursor-pointer">
-                Building Scalable React Applications: Lessons Learned
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                After working on several large-scale React applications,
-                I&apos;ve learned valuable lessons about architecture, state
-                management, and performance optimization. Here are the key
-                insights that transformed how I approach React development.
+          {filteredArticles.length === 0 && searchTerm ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                No articles match your search criteria.
               </p>
-              <div className="flex gap-2">
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  React
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Architecture
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Performance
-                </span>
-              </div>
-            </div>
-          </article>
-
-          {/* Article 2 */}
-          <article className="border-b border-border pb-8">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <time dateTime="2024-01-08">January 8, 2024</time>
-                <span>•</span>
-                <span>3 min read</span>
-              </div>
-              <h2 className="text-2xl font-semibold hover:text-primary transition-colors cursor-pointer">
-                The Modern Developer&apos;s Guide to TypeScript
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                TypeScript has revolutionized JavaScript development by adding
-                static type checking. Explore advanced TypeScript patterns and
-                best practices that will make your code more maintainable and
-                bug-free.
+              <p className="text-muted-foreground mt-2">
+                Try searching for different keywords or browse all articles.
               </p>
-              <div className="flex gap-2">
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  TypeScript
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  JavaScript
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Best Practices
-                </span>
-              </div>
             </div>
-          </article>
-
-          {/* Article 3 */}
-          <article className="border-b border-border pb-8">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <time dateTime="2023-12-22">December 22, 2023</time>
-                <span>•</span>
-                <span>7 min read</span>
-              </div>
-              <h2 className="text-2xl font-semibold hover:text-primary transition-colors cursor-pointer">
-                Optimizing Web Performance: A Comprehensive Guide
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Web performance directly impacts user experience and business
-                metrics. Learn about the latest techniques for optimizing
-                loading times, Core Web Vitals, and creating lightning-fast web
-                applications.
-              </p>
-              <div className="flex gap-2">
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Performance
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Web Vitals
-                </span>
-                <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">
-                  Optimization
-                </span>
-              </div>
-            </div>
-          </article>
+          ) : (
+            filteredArticles.map((article, index) => (
+              <ArticlePreview key={index} article={article} />
+            ))
+          )}
         </section>
 
         {/* Newsletter Signup */}
-        <section className="bg-muted/50 rounded-lg p-6 text-center">
+        {/* <section className="bg-muted/50 rounded-lg p-6 text-center">
           <h3 className="text-xl font-semibold mb-3">Stay Updated</h3>
           <p className="text-muted-foreground mb-4">
             Get notified when I publish new articles about web development and
@@ -129,7 +112,7 @@ function Writing() {
               Subscribe
             </button>
           </div>
-        </section>
+        </section> */}
       </div>
     </PageLayout>
   );
