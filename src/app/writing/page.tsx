@@ -3,6 +3,7 @@ import React, { useState, useMemo } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import ArticlePreview from "@/components/ArticlePreview";
 import SearchBar from "@/components/SearchBar";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const data = [
   {
@@ -90,7 +91,9 @@ function Writing() {
             </div>
           ) : (
             filteredArticles.map((article, index) => (
-              <ArticlePreview key={index} article={article} />
+              <BlurFade key={index} delay={0.25 + index * 0.05}>
+                <ArticlePreview article={article} />
+              </BlurFade>
             ))
           )}
         </section>

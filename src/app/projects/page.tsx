@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import SearchBar from "@/components/SearchBar";
 import ProjectCard from "@/components/ProjectCard";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 // Dummy project data
 const projectsData = [
@@ -94,7 +95,9 @@ function Projects() {
         {/* Projects List */}
         <div className="flex flex-col gap-6 max-w-4xl mx-auto">
           {filteredProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <BlurFade key={index} delay={0.25 + index * 0.05} inView>
+              <ProjectCard project={project} />
+            </BlurFade>
           ))}
         </div>
 
