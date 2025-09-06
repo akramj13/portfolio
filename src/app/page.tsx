@@ -1,62 +1,66 @@
 import PageLayout from "@/components/utils/page-layout";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import experiences from "./linkedin.json";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <PageLayout variant="default" maxWidth="2xl">
+    <PageLayout variant="narrow" maxWidth="2xl">
       <div className="space-y-8">
         {/* Hero Section */}
-        <section className="text-center space-y-4">
+        <section className="space-y-4">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            hi, i&apos;m akram 👋
+            hey, i&apos;m akram.
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            I&apos;m a passionate developer creating meaningful digital
-            experiences. Explore my projects, read my thoughts, and get to know
-            my work.
+            i&apos;m a cs & finance double major at the university of waterloo
+            and i like building stuff, whether it be a passion project or b2b
+            saas.
           </p>
         </section>
-
-        {/* Content Section */}
-        <section className="prose prose-neutral dark:prose-invert max-w-none">
-          <p className="text-base leading-relaxed">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere
-            totam accusamus dolorum, molestias at, ut vitae, accusantium magnam
-            maxime facilis animi distinctio perferendis quisquam quam delectus
-            itaque nulla beatae praesentium? Quo iusto, recusandae at, quam
-            voluptatibus laudantium iure enim incidunt esse temporibus
-            excepturi!
-          </p>
-
-          <p className="text-base leading-relaxed">
-            Dolores, aperiam alias doloribus magnam veritatis laborum ratione
-            cumque. Rem exercitationem aliquid repellat iste tempora quidem
-            ipsam. Perspiciatis tempora, sed tenetur, magnam quisquam commodi ab
-            aspernatur odio magni repellendus inventore accusamus, adipisci eum
-            quidem iusto.
-          </p>
-
-          <p className="text-base leading-relaxed">
-            Aliquam facilis quidem rem nobis molestias odit pariatur amet,
-            perferendis ut nesciunt? Optio dolor neque aliquid temporibus a
-            fugit delectus rerum nostrum vero repellat, aliquam natus, impedit
-            similique, in fuga eveniet perspiciatis? Harum culpa a autem vel,
-            iste possimus accusamus suscipit quas.
-          </p>
-        </section>
-
-        {/* Call to Action */}
-        <section className="text-center bg-muted/50 rounded-lg p-8">
-          <h2 className="text-2xl font-semibold mb-4">Ready to collaborate?</h2>
-          <p className="text-muted-foreground mb-6">
-            Let&apos;s build something amazing together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-6 py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-              View My Work
-            </button>
-            <button className="px-6 py-3 border border-border rounded-md hover:bg-muted transition-colors">
-              Get In Touch
-            </button>
+        {/* Work Experience */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            some places i&apos;ve worked:
+          </h2>
+          <div className="space-y-6">
+            {experiences.map((exp, index) => (
+              <div
+                key={index}
+                className="group relative bg-card border border-border rounded-lg p-6"
+              >
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Image
+                      src={exp.image}
+                      alt={`${exp.company} logo`}
+                      width={60}
+                      height={60}
+                      className="rounded-xl ring-1 ring-border/50"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground leading-tight">
+                          {exp.title}
+                        </h3>
+                        <p className="text-primary font-medium">
+                          {exp.company}
+                        </p>
+                      </div>
+                      <div className="text-sm text-muted-foreground text-right">
+                        <p className="font-medium">{exp.duration}</p>
+                        {exp.location && (
+                          <p className="text-xs">{exp.location}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>
