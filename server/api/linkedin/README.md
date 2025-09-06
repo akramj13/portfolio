@@ -29,19 +29,46 @@ A FastAPI application that scrapes LinkedIn profile data like experience section
 
 ## Running the Application
 
-### Development mode (with auto-reload):
+### Docker (Recommended)
+
+1. Build the Docker image:
+
+   ```bash
+   make build
+   ```
+
+2. Run the container:
+
+   ```bash
+   make docker-run
+   ```
+
+3. Stop the container:
+   ```bash
+   make docker-stop
+   ```
+
+The API will be available at `http://localhost:8000`
+
+### Local Development
+
+#### Development mode (with auto-reload):
 
 ```bash
 make dev
 ```
 
-### Production mode:
+#### Production mode:
 
 ```bash
 make run
 ```
 
-The API will be available at `http://localhost:8000`
+Note: For local development, you'll also need to install Playwright browsers:
+
+```bash
+playwright install
+```
 
 ## API Endpoints
 
