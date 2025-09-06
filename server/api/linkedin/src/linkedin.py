@@ -1,7 +1,7 @@
 import asyncio
 import time
 from playwright.async_api import async_playwright
-from src.parse_experience import parse_linkedin_experience, format_experience_data
+from src.parse_experience import parse_linkedin_experience_async, format_experience_data
 
 class LinkedIn:
     def __init__(self,
@@ -37,7 +37,7 @@ class LinkedIn:
     
     async def get_experience(self):
         content = await self.__scrape_experience()
-        experiences = parse_linkedin_experience(content)
+        experiences = await parse_linkedin_experience_async(content)
         formatted_experiences = format_experience_data(experiences)
         
         return formatted_experiences
