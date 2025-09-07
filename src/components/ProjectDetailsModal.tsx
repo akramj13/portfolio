@@ -10,12 +10,16 @@ import {
 } from "./ui/dialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { ExternalLink, Calendar, Clock, Star } from "lucide-react";
+import { ExternalLink, Clock, Star } from "lucide-react";
 
 type Project = {
   title: string;
   description: string;
   src: string;
+  features: string[];
+  highlights: string[];
+  challenges: string[];
+  time: string;
   link: string;
   tags: string[];
 };
@@ -63,22 +67,16 @@ function ProjectDetailsModal({
                   <Star className="w-4 h-4" />
                   Key Features
                 </h3>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Modern, responsive design</li>
-                  <li>Optimized performance</li>
-                  <li>User-friendly interface</li>
-                  <li>Cross-platform compatibility</li>
+                <ul className="text-sm text-muted-foreground space-y-2 pl-4">
+                  {project.features.map((feature, index) => (
+                    <li
+                      key={index}
+                      className="relative before:content-['•'] before:absolute before:-left-4 before:text-primary"
+                    >
+                      {feature}
+                    </li>
+                  ))}
                 </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  Project Timeline
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Development period: 2-3 months
-                </p>
               </div>
 
               <div>
@@ -86,9 +84,7 @@ function ProjectDetailsModal({
                   <Clock className="w-4 h-4" />
                   Development Time
                 </h3>
-                <p className="text-sm text-muted-foreground">
-                  Approximately 200+ hours of development
-                </p>
+                <p className="text-sm text-muted-foreground">{project.time}</p>
               </div>
             </div>
 
@@ -107,25 +103,29 @@ function ProjectDetailsModal({
 
               <div>
                 <h3 className="font-semibold mb-2">Project Highlights</h3>
-                <div className="text-sm text-muted-foreground space-y-2">
-                  <p>
-                    This project showcases modern web development practices and
-                    demonstrates proficiency in full-stack development.
-                  </p>
-                  <p>
-                    Built with scalability and maintainability in mind,
-                    following industry best practices and design patterns.
-                  </p>
-                </div>
+                <ul className="text-sm text-muted-foreground space-y-2 pl-4">
+                  {project.highlights.map((highlight, index) => (
+                    <li
+                      key={index}
+                      className="relative before:content-['•'] before:absolute before:-left-4 before:text-primary"
+                    >
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div>
                 <h3 className="font-semibold mb-2">Challenges Overcome</h3>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Performance optimization</li>
-                  <li>Cross-browser compatibility</li>
-                  <li>Responsive design implementation</li>
-                  <li>State management complexity</li>
+                <ul className="text-sm text-muted-foreground space-y-2 pl-4">
+                  {project.challenges.map((challenge, index) => (
+                    <li
+                      key={index}
+                      className="relative before:content-['•'] before:absolute before:-left-4 before:text-primary"
+                    >
+                      {challenge}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

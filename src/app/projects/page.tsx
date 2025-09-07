@@ -4,58 +4,7 @@ import PageLayout from "@/components/utils/page-layout";
 import SearchBar from "@/components/SearchBar";
 import ProjectCard from "@/components/ProjectCard";
 import { BlurFade } from "@/components/ui/blur-fade";
-
-// Dummy project data
-const projectsData = [
-  {
-    title: "E-commerce Platform",
-    description:
-      "A full-stack e-commerce platform with user authentication, payment processing, and admin dashboard. Built with modern web technologies for optimal performance and user experience.",
-    src: "/projects/ecommerce.svg",
-    link: "https://github.com/akramj13/ecommerce-platform",
-    tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
-  },
-  {
-    title: "Task Management App",
-    description:
-      "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Perfect for agile development teams.",
-    src: "/projects/task-manager.svg",
-    link: "https://github.com/akramj13/task-manager",
-    tags: ["React", "Node.js", "MongoDB", "Socket.io", "Material-UI"],
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "An interactive weather dashboard that provides real-time weather data, forecasts, and location-based weather alerts. Features beautiful data visualizations and responsive design.",
-    src: "/projects/weather-app.svg",
-    link: "https://github.com/akramj13/weather-dashboard",
-    tags: ["Vue.js", "OpenWeather API", "Chart.js", "Vuetify", "PWA"],
-  },
-  {
-    title: "Social Media App",
-    description:
-      "A mobile-first social media application with photo sharing, real-time messaging, and social features. Built with React Native for cross-platform compatibility.",
-    src: "/projects/social-app.svg",
-    link: "https://github.com/akramj13/social-media-app",
-    tags: ["React Native", "Firebase", "Redux", "Expo", "AsyncStorage"],
-  },
-  {
-    title: "AI Chat Bot",
-    description:
-      "An intelligent chatbot powered by AI that can answer questions, provide recommendations, and assist with various tasks. Features natural language processing and machine learning.",
-    src: "/projects/ai-chatbot.svg",
-    link: "https://github.com/akramj13/ai-chatbot",
-    tags: ["Python", "OpenAI", "FastAPI", "Docker", "Redis"],
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern, responsive portfolio website showcasing projects and skills. Features smooth animations, dark/light mode, and optimized performance for excellent user experience.",
-    src: "/projects/portfolio.svg",
-    link: "https://github.com/akramj13/portfolio",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript", "Vercel"],
-  },
-];
+import projectsData from "./projects.json";
 
 function Projects() {
   const [searchTerm, setSearchTerm] = useState("");

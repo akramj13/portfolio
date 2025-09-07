@@ -1,0 +1,158 @@
+[
+  {
+    "title": "E-commerce Platform",
+    "description": "A full-stack e-commerce platform with user authentication, payment processing, and admin dashboard. Built with modern web technologies for optimal performance and user experience.",
+    "src": "/projects/ecommerce.svg",
+    "features": [
+      "User authentication with JWT",
+      "Product catalog with search and filters",
+      "Shopping cart and checkout process",
+      "Admin dashboard for managing products and orders"
+    ],
+    "time": "Approx. 3 months",
+    "tags": ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
+    "highlights": [
+      "Implemented secure user authentication and authorization",
+      "Integrated Stripe for seamless payment processing",
+      "Designed a responsive UI with Tailwind CSS",
+      "Optimized database queries for fast performance"
+    ],
+    "challenges": [
+      "Ensuring data security and privacy",
+      "Handling complex state management in the frontend",
+      "Optimizing performance for a large product catalog"
+    ],
+    "link": "https://github.com/akramj13/ecommerce-platform"
+  },
+  {
+    "title": "Task Management App",
+    "description": "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Perfect for agile development teams.",
+    "src": "/projects/task-manager.svg",
+    "features": [
+      "Real-time collaboration with Socket.io",
+      "Drag-and-drop task management",
+      "Team member assignment and tracking",
+      "Sprint planning and project timelines"
+    ],
+    "time": "Approx. 2 months",
+    "tags": ["React", "Node.js", "MongoDB", "Socket.io", "Material-UI"],
+    "highlights": [
+      "Built real-time synchronization across multiple users",
+      "Implemented intuitive drag-and-drop interface",
+      "Created comprehensive user role management",
+      "Designed scalable database schema for task hierarchies"
+    ],
+    "challenges": [
+      "Managing real-time state synchronization",
+      "Optimizing performance with large task datasets",
+      "Implementing complex user permission systems"
+    ],
+    "link": "https://github.com/akramj13/task-manager"
+  },
+  {
+    "title": "Weather Dashboard",
+    "description": "An interactive weather dashboard that provides real-time weather data, forecasts, and location-based weather alerts. Features beautiful data visualizations and responsive design.",
+    "src": "/projects/weather-app.svg",
+    "features": [
+      "Real-time weather data from OpenWeather API",
+      "7-day weather forecasts with hourly details",
+      "Interactive charts and data visualizations",
+      "Location-based weather alerts and notifications"
+    ],
+    "time": "Approx. 1.5 months",
+    "tags": ["Vue.js", "OpenWeather API", "Chart.js", "Vuetify", "PWA"],
+    "highlights": [
+      "Integrated multiple weather APIs for comprehensive data",
+      "Created responsive charts with Chart.js",
+      "Implemented Progressive Web App features",
+      "Built geolocation-based weather detection"
+    ],
+    "challenges": [
+      "Handling API rate limits and data caching",
+      "Creating responsive data visualizations",
+      "Implementing accurate location-based services"
+    ],
+    "link": "https://github.com/akramj13/weather-dashboard"
+  },
+  {
+    "title": "Social Media App",
+    "description": "A mobile-first social media application with photo sharing, real-time messaging, and social features. Built with React Native for cross-platform compatibility.",
+    "src": "/projects/social-app.svg",
+    "features": [
+      "Photo and video sharing with filters",
+      "Real-time messaging and chat rooms",
+      "User profiles and social connections",
+      "Push notifications and activity feeds"
+    ],
+    "time": "Approx. 4 months",
+    "tags": ["React Native", "Firebase", "Redux", "Expo", "AsyncStorage"],
+    "highlights": [
+      "Built cross-platform mobile app with React Native",
+      "Implemented real-time messaging with Firebase",
+      "Created complex state management with Redux",
+      "Designed intuitive mobile-first user interface"
+    ],
+    "challenges": [
+      "Optimizing performance on mobile devices",
+      "Managing complex state across multiple screens",
+      "Implementing real-time features with offline support"
+    ],
+    "link": "https://github.com/akramj13/social-media-app"
+  },
+  {
+    "title": "AI Chat Bot",
+    "description": "An intelligent chatbot powered by AI that can answer questions, provide recommendations, and assist with various tasks. Features natural language processing and machine learning.",
+    "src": "/projects/ai-chatbot.svg",
+    "features": [
+      "Natural language processing with OpenAI",
+      "Context-aware conversation handling",
+      "Multi-topic question answering",
+      "Custom knowledge base integration"
+    ],
+    "time": "Approx. 2.5 months",
+    "tags": ["Python", "OpenAI", "FastAPI", "Docker", "Redis"],
+    "highlights": [
+      "Integrated OpenAI GPT for intelligent responses",
+      "Built scalable API with FastAPI",
+      "Implemented conversation memory with Redis",
+      "Containerized application with Docker"
+    ],
+    "challenges": [
+      "Managing conversation context and memory",
+      "Optimizing API response times",
+      "Handling various user input patterns"
+    ],
+    "link": "https://github.com/akramj13/ai-chatbot"
+  },
+  {
+    "title": "Portfolio Website",
+    "description": "A modern, responsive portfolio website showcasing projects and skills. Features smooth animations, dark/light mode, and optimized performance for excellent user experience.",
+    "src": "/projects/portfolio.svg",
+    "features": [
+      "Responsive design with smooth animations",
+      "Dark and light mode toggle",
+      "Project showcase with detailed modals",
+      "SEO optimization and fast loading times"
+    ],
+    "time": "Approx. 1 month",
+    "tags": [
+      "Next.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "TypeScript",
+      "Vercel"
+    ],
+    "highlights": [
+      "Built with Next.js for optimal performance",
+      "Implemented smooth animations with Framer Motion",
+      "Created fully responsive design with Tailwind CSS",
+      "Deployed with excellent Core Web Vitals scores"
+    ],
+    "challenges": [
+      "Optimizing animations for performance",
+      "Creating accessible design patterns",
+      "Implementing efficient image optimization"
+    ],
+    "link": "https://github.com/akramj13/portfolio"
+  }
+]
