@@ -1,6 +1,7 @@
 // app/api/admin/refresh-cache/route.ts (Next.js 14/15)
 // Protect this route (check session/role) before running!
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 
 export async function POST() {
@@ -31,6 +32,9 @@ export async function POST() {
       update: { payload },
       create: { id: "main", payload },
     });
+
+    // 3) Revalidate the home page to reflect the new data
+    revalidatePath("/");
 
     return NextResponse.json({
       ok: true,

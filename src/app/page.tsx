@@ -4,6 +4,10 @@ import PageLayout from "@/components/utils/page-layout";
 import WorkExperience from "@/components/WorkExperience";
 import ExperienceCard from "@/components/ExperienceCard";
 import { Layers } from "lucide-react";
+
+// Revalidate every hour (3600 seconds) to check for new data
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <PageLayout variant="default" maxWidth="2xl">
