@@ -11,18 +11,7 @@ import {
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ExternalLink, Clock, Star } from "lucide-react";
-
-type Project = {
-  title: string;
-  description: string;
-  src: string;
-  features: string[];
-  highlights: string[];
-  challenges: string[];
-  time: string;
-  link: string;
-  tags: string[];
-};
+import { Project } from "@/types";
 
 interface ProjectDetailsModalProps {
   project: Project;
@@ -49,12 +38,12 @@ function ProjectDetailsModal({
 
         <div className="space-y-6">
           {/* Project Image */}
-          <div className="relative w-full h-64 rounded-lg overflow-hidden bg-muted">
+          <div className="relative w-full h-48 sm:h-64 md:h-72 rounded-lg overflow-hidden bg-muted">
             <Image
               src={project.src}
               alt={project.title}
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
 

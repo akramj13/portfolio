@@ -5,29 +5,37 @@ import ArticlePreview from "@/components/ArticlePreview";
 import SearchBar from "@/components/SearchBar";
 import { BlurFade } from "@/components/ui/blur-fade";
 
-const data = [
-  {
-    title: "Building Scalable React Applications: Lessons Learned",
-    date: "2024-01-15",
-    readingTime: 5,
-    excerpt: "After working on several large-scale React applications.",
-    tags: ["React", "Architecture", "Performance"],
-  },
-  {
-    title: "The Modern Developer's Guide to TypeScript",
-    date: "2024-01-08",
-    readingTime: 3,
-    excerpt:
-      "TypeScript has revolutionized JavaScript development by adding static type checking.",
-    tags: ["TypeScript", "JavaScript", "Best Practices"],
-  },
-  {
-    title: "Mastering CSS Grid: A Comprehensive Guide",
-    date: "2024-01-01",
-    readingTime: 4,
-    excerpt: "CSS Grid has become an essential tool for modern web design.",
-    tags: ["CSS", "Grid", "Web Design"],
-  },
+interface Article {
+  title: string;
+  date: string;
+  readingTime: number;
+  excerpt: string;
+  tags: string[];
+}
+
+const data: Article[] = [
+  // {
+  //   title: "Building Scalable React Applications: Lessons Learned",
+  //   date: "2024-01-15",
+  //   readingTime: 5,
+  //   excerpt: "After working on several large-scale React applications.",
+  //   tags: ["React", "Architecture", "Performance"],
+  // },
+  // {
+  //   title: "The Modern Developer's Guide to TypeScript",
+  //   date: "2024-01-08",
+  //   readingTime: 3,
+  //   excerpt:
+  //     "TypeScript has revolutionized JavaScript development by adding static type checking.",
+  //   tags: ["TypeScript", "JavaScript", "Best Practices"],
+  // },
+  // {
+  //   title: "Mastering CSS Grid: A Comprehensive Guide",
+  //   date: "2024-01-01",
+  //   readingTime: 4,
+  //   excerpt: "CSS Grid has become an essential tool for modern web design.",
+  //   tags: ["CSS", "Grid", "Web Design"],
+  // },
 ];
 
 function Writing() {
@@ -80,7 +88,14 @@ function Writing() {
 
         {/* Articles */}
         <section className="space-y-8">
-          {filteredArticles.length === 0 && searchTerm ? (
+          {data.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">nothing so far.</p>
+              <p className="text-muted-foreground mt-2">
+                check back later for articles and thoughts.
+              </p>
+            </div>
+          ) : filteredArticles.length === 0 && searchTerm ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">
                 No articles match your search criteria.

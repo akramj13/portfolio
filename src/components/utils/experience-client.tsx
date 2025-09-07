@@ -17,7 +17,7 @@ function WorkExperienceClient({ experiences }: WorkExperienceClientProps) {
     <section className="space-y-6">
       <BlurFade inView>
         <h2 className="text-2xl font-semibold text-foreground">
-          some places i&apos;ve worked:
+          some places i&apos;ve worked
         </h2>
       </BlurFade>
       <div className="margin-0 space-y-6">

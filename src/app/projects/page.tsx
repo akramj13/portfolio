@@ -43,24 +43,30 @@ function Projects() {
 
         {/* Projects List */}
         <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-          {filteredProjects.map((project, index) => (
-            <BlurFade key={index} delay={0.25 + index * 0.05} inView>
-              <ProjectCard project={project} />
-            </BlurFade>
-          ))}
+          {projectsData.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">nothing so far.</p>
+              <p className="text-muted-foreground mt-2">
+                check back later for projects and builds.
+              </p>
+            </div>
+          ) : filteredProjects.length === 0 && searchTerm ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                No projects found matching &quot;{searchTerm}&quot;
+              </p>
+              <p className="text-muted-foreground text-sm mt-2">
+                Try searching for different keywords or technologies
+              </p>
+            </div>
+          ) : (
+            filteredProjects.map((project, index) => (
+              <BlurFade key={index} delay={0.25 + index * 0.05} inView>
+                <ProjectCard project={project} />
+              </BlurFade>
+            ))
+          )}
         </div>
-
-        {/* No Results */}
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">
-              No projects found matching &quot;{searchTerm}&quot;
-            </p>
-            <p className="text-muted-foreground text-sm mt-2">
-              Try searching for different keywords or technologies
-            </p>
-          </div>
-        )}
       </div>
     </PageLayout>
   );

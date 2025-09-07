@@ -6,14 +6,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ExternalLink, Info } from "lucide-react";
 import ProjectDetailsModal from "./ProjectDetailsModal";
-
-type Project = {
-  title: string;
-  description: string;
-  src: string; // Video or Image
-  link: string;
-  tags: string[];
-};
+import { Project } from "@/types";
 
 function ProjectCard({ project }: { project: Project }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +16,7 @@ function ProjectCard({ project }: { project: Project }) {
       <MagicCard className="p-6 h-full flex flex-col rounded-3xl transition-all duration-300 hover:scale-[1.02] group">
         <div className="flex flex-col h-full">
           {/* Project Image */}
-          <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden bg-muted">
+          <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden bg-muted border border-gray-200 dark:border-transparent">
             <Image
               src={project.src}
               alt={project.title}

@@ -16,3 +16,16 @@ model LinkedInCache {
   payload   Json
   updatedAt DateTime @updatedAt
 }
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  src         String
+  features    String[]
+  time        String
+  tags        String[]
+  highlights  String[]
+  challenges  String[]
+  link        String
+}

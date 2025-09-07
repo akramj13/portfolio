@@ -1,157 +1,187 @@
 [
   {
-    "title": "E-commerce Platform",
-    "description": "A full-stack e-commerce platform with user authentication, payment processing, and admin dashboard. Built with modern web technologies for optimal performance and user experience.",
-    "src": "/projects/ecommerce.svg",
+    "title": "AlzGuard - Alzheimer's Detection",
+    "description": "Engineered the frontend and AI model for an Alzheimer's detection tool for physicians, which won a $1000 at YIC",
+    "src": "/projects/alzguard.png",
     "features": [
-      "User authentication with JWT",
-      "Product catalog with search and filters",
-      "Shopping cart and checkout process",
-      "Admin dashboard for managing products and orders"
+      "AI-powered Alzheimer's detection using machine learning",
+      "Medical image analysis and processing",
+      "Random-forest classifier for accurate predictions",
+      "Physician-friendly interface for clinical use",
+      "Real-time diagnostic results and recommendations"
     ],
-    "time": "Approx. 3 months",
-    "tags": ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
+    "time": "Approx. 2 months",
+    "tags": ["React", "Python", "Tensorflow", "JavaScript", "CSS"],
     "highlights": [
-      "Implemented secure user authentication and authorization",
-      "Integrated Stripe for seamless payment processing",
-      "Designed a responsive UI with Tailwind CSS",
-      "Optimized database queries for fast performance"
+      "Developed machine learning model for Alzheimer's detection",
+      "Built intuitive frontend interface for medical professionals",
+      "Won $1000 prize at Youth Innovation Challenge",
+      "Achieved high accuracy in diagnostic predictions"
     ],
     "challenges": [
       "Ensuring data security and privacy",
       "Handling complex state management in the frontend",
       "Optimizing performance for a large product catalog"
     ],
-    "link": "https://github.com/akramj13/ecommerce-platform"
+    "link": "https://github.com/akramj13/AlzGuard"
   },
   {
-    "title": "Task Management App",
-    "description": "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features. Perfect for agile development teams.",
-    "src": "/projects/task-manager.svg",
+    "title": "Voice Synthesis AI - AI-Powered Voice Generation",
+    "description": "Built a modern full-stack web app that leverages AI to generate high-quality voice overs for short-form videos featuring custom topic generation and more.",
+    "src": "/projects/ai-voice.png",
     "features": [
-      "Real-time collaboration with Socket.io",
-      "Drag-and-drop task management",
-      "Team member assignment and tracking",
-      "Sprint planning and project timelines"
-    ],
-    "time": "Approx. 2 months",
-    "tags": ["React", "Node.js", "MongoDB", "Socket.io", "Material-UI"],
-    "highlights": [
-      "Built real-time synchronization across multiple users",
-      "Implemented intuitive drag-and-drop interface",
-      "Created comprehensive user role management",
-      "Designed scalable database schema for task hierarchies"
-    ],
-    "challenges": [
-      "Managing real-time state synchronization",
-      "Optimizing performance with large task datasets",
-      "Implementing complex user permission systems"
-    ],
-    "link": "https://github.com/akramj13/task-manager"
-  },
-  {
-    "title": "Weather Dashboard",
-    "description": "An interactive weather dashboard that provides real-time weather data, forecasts, and location-based weather alerts. Features beautiful data visualizations and responsive design.",
-    "src": "/projects/weather-app.svg",
-    "features": [
-      "Real-time weather data from OpenWeather API",
-      "7-day weather forecasts with hourly details",
-      "Interactive charts and data visualizations",
-      "Location-based weather alerts and notifications"
-    ],
-    "time": "Approx. 1.5 months",
-    "tags": ["Vue.js", "OpenWeather API", "Chart.js", "Vuetify", "PWA"],
-    "highlights": [
-      "Integrated multiple weather APIs for comprehensive data",
-      "Created responsive charts with Chart.js",
-      "Implemented Progressive Web App features",
-      "Built geolocation-based weather detection"
-    ],
-    "challenges": [
-      "Handling API rate limits and data caching",
-      "Creating responsive data visualizations",
-      "Implementing accurate location-based services"
-    ],
-    "link": "https://github.com/akramj13/weather-dashboard"
-  },
-  {
-    "title": "Social Media App",
-    "description": "A mobile-first social media application with photo sharing, real-time messaging, and social features. Built with React Native for cross-platform compatibility.",
-    "src": "/projects/social-app.svg",
-    "features": [
-      "Photo and video sharing with filters",
-      "Real-time messaging and chat rooms",
-      "User profiles and social connections",
-      "Push notifications and activity feeds"
-    ],
-    "time": "Approx. 4 months",
-    "tags": ["React Native", "Firebase", "Redux", "Expo", "AsyncStorage"],
-    "highlights": [
-      "Built cross-platform mobile app with React Native",
-      "Implemented real-time messaging with Firebase",
-      "Created complex state management with Redux",
-      "Designed intuitive mobile-first user interface"
-    ],
-    "challenges": [
-      "Optimizing performance on mobile devices",
-      "Managing complex state across multiple screens",
-      "Implementing real-time features with offline support"
-    ],
-    "link": "https://github.com/akramj13/social-media-app"
-  },
-  {
-    "title": "AI Chat Bot",
-    "description": "An intelligent chatbot powered by AI that can answer questions, provide recommendations, and assist with various tasks. Features natural language processing and machine learning.",
-    "src": "/projects/ai-chatbot.svg",
-    "features": [
-      "Natural language processing with OpenAI",
-      "Context-aware conversation handling",
-      "Multi-topic question answering",
-      "Custom knowledge base integration"
+      "AI-powered voice synthesis using ElevenLabs API",
+      "Custom topic generation with Gemini AI",
+      "High-quality voice over generation for videos",
+      "Audio transcription and processing with Assembly AI",
+      "Cloud storage integration with AWS S3",
+      "User authentication and session management"
     ],
     "time": "Approx. 2.5 months",
-    "tags": ["Python", "OpenAI", "FastAPI", "Docker", "Redis"],
-    "highlights": [
-      "Integrated OpenAI GPT for intelligent responses",
-      "Built scalable API with FastAPI",
-      "Implemented conversation memory with Redis",
-      "Containerized application with Docker"
-    ],
-    "challenges": [
-      "Managing conversation context and memory",
-      "Optimizing API response times",
-      "Handling various user input patterns"
-    ],
-    "link": "https://github.com/akramj13/ai-chatbot"
-  },
-  {
-    "title": "Portfolio Website",
-    "description": "A modern, responsive portfolio website showcasing projects and skills. Features smooth animations, dark/light mode, and optimized performance for excellent user experience.",
-    "src": "/projects/portfolio.svg",
-    "features": [
-      "Responsive design with smooth animations",
-      "Dark and light mode toggle",
-      "Project showcase with detailed modals",
-      "SEO optimization and fast loading times"
-    ],
-    "time": "Approx. 1 month",
     "tags": [
       "Next.js",
-      "Tailwind CSS",
-      "Framer Motion",
+      "Gemini API",
+      "Assembly AI",
+      "Elevenlabs",
+      "AWS S3",
+      "PostgreSQL (Neon)",
+      "Drizzle ORM",
+      "Clerk Auth"
+    ],
+    "highlights": [
+      "Integrated ElevenLabs for realistic voice synthesis",
+      "Built scalable backend with PostgreSQL and Drizzle ORM",
+      "Implemented secure file storage with AWS S3",
+      "Created seamless user experience with Clerk authentication",
+      "Optimized audio processing pipeline for performance",
+      "Deployed full-stack application with modern tech stack"
+    ],
+    "challenges": [
+      "Managing large audio file uploads and processing",
+      "Optimizing voice synthesis API response times",
+      "Handling concurrent user requests efficiently",
+      "Implementing secure file storage and access controls",
+      "Balancing audio quality with processing speed"
+    ],
+    "link": "https://github.com/akramj13/ai-voice"
+  },
+  {
+    "title": "RoboAdvisor - Stock Market Prediction",
+    "description": "An AI-driven robo-advisor for stock market predictions, providing users with insights and recommendations based on real-time data analysis. Used modern portfolio theory and stochastic optimization to beat the market (S&P 500).",
+    "src": "/projects/stockadvisor.png",
+    "features": [
+      "Real-time stock market data analysis",
+      "AI-driven predictions and recommendations",
+      "User-friendly dashboard with visualizations",
+      "Portfolio tracking and management"
+    ],
+    "time": "Approx. 1.5 months",
+    "tags": ["Python", "NumPy", "pandas", "yfinance", "matplotlib"],
+    "highlights": [
+      "Integrated multiple stock market APIs for comprehensive data",
+      "Created responsive charts with Matplotlib",
+      "Used modern portfolio theory for investment strategies",
+      "Achieved higher returns than S&P 500 benchmark",
+      "Optimized strategy using options data and market sentiment"
+    ],
+    "challenges": [
+      "Handling large volumes of real-time data",
+      "Ensuring accuracy of AI predictions",
+      "Designing intuitive user interfaces for complex data"
+    ],
+    "link": "https://github.com/akramj13/Stock-Robo-Advisor"
+  },
+  {
+    "title": "LearnETF - GeeseHacks 2025 Winner",
+    "description": "Built a full-stack LMS platform for learning about ETFs, which won the Sun Life Sponsor prize at GeeseHacks 2025. Features interactive lessons, quizzes, and progress tracking.",
+    "src": "/projects/learnetf.png",
+    "features": [
+      "Interactive learning modules for ETFs, stocks, and bonds",
+      "Real-time market insights using Yahoo Finance API",
+      "AI-powered personalized financial guidance",
+      "Interactive data visualizations with Plotly",
+      "Gamified modules to enhance user engagement",
+      "Beginner-friendly approach for Gen-Z financial literacy"
+    ],
+    "time": "Approx. 2 days",
+    "tags": [
+      "React",
       "TypeScript",
+      "Tailwind CSS",
+      "Figma",
+      "Next.js",
+      "Python",
+      "Flask",
+      "OpenAI",
+      "Plotly",
+      "NumPy",
+      "yfinance"
+    ],
+    "highlights": [
+      "Won Sun Life Sponsor Prize at GeeseHacks 2025",
+      "Built comprehensive financial literacy platform in 2 days",
+      "Integrated real-time market data with yfinance and NumPy",
+      "Implemented AI-powered personalized learning with OpenAI API",
+      "Created interactive data visualizations with Plotly",
+      "Designed accessible platform specifically for Gen-Z users"
+    ],
+    "challenges": [
+      "Building a complete LMS platform within hackathon timeframe",
+      "Integrating multiple APIs for real-time financial data",
+      "Simplifying complex financial concepts for younger audiences",
+      "Creating engaging gamified learning experiences",
+      "Ensuring data accuracy and real-time performance"
+    ],
+    "link": "https://github.com/akramj13/learnetf"
+  },
+  {
+    "title": "Full-Stack Portfolio Website",
+    "description": "A sophisticated, modern portfolio website built with Next.js 15 and advanced architectural patterns. Features real-time LinkedIn data integration, custom animation systems, PostgreSQL database, admin dashboard, and microservice API architecture for scalable content management.",
+    "src": "/projects/portfolio.png",
+    "features": [
+      "Real-time LinkedIn work experience integration via custom API",
+      "Advanced animation system with Motion (Framer Motion successor) and custom blur-fade components",
+      "PostgreSQL database with Prisma ORM for data persistence and caching",
+      "Admin dashboard for content management and cache refresh functionality",
+      "Microservice architecture with Python FastAPI backend for LinkedIn scraping",
+      "Theme-aware magic card components with gradient animations",
+      "Advanced search and filtering system for projects",
+      "SEO optimization with Next.js 15 App Router and metadata API",
+      "Responsive design with Tailwind CSS 4 and Radix UI primitives"
+    ],
+    "time": "Approx. 2 months",
+    "tags": [
+      "Next.js 15",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Python",
+      "FastAPI",
+      "Playwright",
+      "Motion",
+      "Tailwind CSS 4",
+      "Radix UI",
+      "Docker",
       "Vercel"
     ],
     "highlights": [
-      "Built with Next.js for optimal performance",
-      "Implemented smooth animations with Framer Motion",
-      "Created fully responsive design with Tailwind CSS",
-      "Deployed with excellent Core Web Vitals scores"
+      "Architected full-stack application with Next.js 15 App Router and React 19",
+      "Built custom LinkedIn scraping microservice using Python, FastAPI, and Playwright",
+      "Implemented PostgreSQL database with Prisma ORM for efficient data management",
+      "Created sophisticated animation system using Motion library with custom components",
+      "Developed admin dashboard with cache management and real-time data refresh",
+      "Integrated Radix UI primitives for accessible, production-ready components",
+      "Optimized performance with Turbopack bundling and advanced image optimization",
+      "Deployed scalable architecture with containerized microservices"
     ],
     "challenges": [
-      "Optimizing animations for performance",
-      "Creating accessible design patterns",
-      "Implementing efficient image optimization"
+      "Designing scalable microservice architecture for LinkedIn data scraping",
+      "Implementing secure authentication and rate limiting for API endpoints",
+      "Creating performant custom animation components while maintaining accessibility",
+      "Managing complex state synchronization between frontend cache and database",
+      "Optimizing PostgreSQL queries and implementing efficient caching strategies",
+      "Handling LinkedIn's anti-bot measures with sophisticated scraping techniques",
+      "Balancing visual appeal with Core Web Vitals performance metrics"
     ],
     "link": "https://github.com/akramj13/portfolio"
   }

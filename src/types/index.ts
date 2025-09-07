@@ -8,3 +8,15 @@ export type Experience = {
   description: string;
   skills: string[];
 };
+
+export type Project = {
+  title: string;
+  description: string;
+  src: string;
+  features: string[];
+  time: string;
+  tags: string[];
+  highlights: string[];
+  challenges: string[];
+  link: string;
+};
