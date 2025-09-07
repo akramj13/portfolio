@@ -2,6 +2,22 @@
 
 import React, { useState } from "react";
 import PageLayout from "@/components/utils/page-layout";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  ChevronDownIcon,
+  PlusIcon,
+  EditIcon,
+  TrashIcon,
+  RefreshCwIcon,
+  FileTextIcon,
+  FolderIcon,
+} from "lucide-react";
 
 function Dashboard() {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -41,9 +57,29 @@ function Dashboard() {
     alert("Blog post creation coming soon!");
   };
 
+  const handleEditBlogPost = () => {
+    // TODO: Implement blog post editing
+    alert("Blog post editing coming soon!");
+  };
+
+  const handleDeleteBlogPost = () => {
+    // TODO: Implement blog post deletion
+    alert("Blog post deletion coming soon!");
+  };
+
   const handleNewProject = () => {
     // TODO: Implement project creation
     alert("Project creation coming soon!");
+  };
+
+  const handleEditProject = () => {
+    // TODO: Implement project editing
+    alert("Project editing coming soon!");
+  };
+
+  const handleDeleteProject = () => {
+    // TODO: Implement project deletion
+    alert("Project deletion coming soon!");
   };
 
   const handleUpdateHomePage = () => {
@@ -124,54 +160,85 @@ function Dashboard() {
                 className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <div className="font-medium flex items-center gap-2">
-                  {isRefreshing && (
-                    <svg
-                      className="animate-spin h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                  )}
-                  {isRefreshing ? "Refreshing..." : "Refresh LinkedIn"}
+                  <RefreshCwIcon
+                    className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+                  />
+                  {isRefreshing ? "Refreshing..." : "Update Experience Section"}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Update experience data
+                  Fetch latest LinkedIn data
                 </div>
               </button>
 
-              <button
-                onClick={handleNewBlogPost}
-                className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left"
-              >
-                <div className="font-medium">New Blog Post</div>
-                <div className="text-sm text-muted-foreground">
-                  Write an article
-                </div>
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left">
+                    <div className="font-medium flex items-center justify-between">
+                      <span className="flex items-center gap-2">
+                        <FileTextIcon className="h-4 w-4" />
+                        Blog Posts
+                      </span>
+                      <ChevronDownIcon className="h-4 w-4" />
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Manage blog content
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem onClick={handleNewBlogPost}>
+                    <PlusIcon className="h-4 w-4 mr-2" />
+                    Add New Post
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleEditBlogPost}>
+                    <EditIcon className="h-4 w-4 mr-2" />
+                    Edit Post
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleDeleteBlogPost}
+                    className="text-red-600"
+                  >
+                    <TrashIcon className="h-4 w-4 mr-2" />
+                    Delete Post
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-              <button
-                onClick={handleNewProject}
-                className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left"
-              >
-                <div className="font-medium">Add Project</div>
-                <div className="text-sm text-muted-foreground">
-                  Showcase new work
-                </div>
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left">
+                    <div className="font-medium flex items-center justify-between">
+                      <span className="flex items-center gap-2">
+                        <FolderIcon className="h-4 w-4" />
+                        Projects
+                      </span>
+                      <ChevronDownIcon className="h-4 w-4" />
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Manage portfolio projects
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem onClick={handleNewProject}>
+                    <PlusIcon className="h-4 w-4 mr-2" />
+                    Add New Project
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleEditProject}>
+                    <EditIcon className="h-4 w-4 mr-2" />
+                    Edit Project
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleDeleteProject}
+                    className="text-red-600"
+                  >
+                    <TrashIcon className="h-4 w-4 mr-2" />
+                    Delete Project
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               <button
                 onClick={handleUpdateHomePage}

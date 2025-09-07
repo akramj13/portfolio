@@ -1,4 +1,4 @@
-import { BlurFade } from "@/components/magicui/blur-fade";
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/utils/page-layout";
 import WorkExperience from "@/components/WorkExperience";

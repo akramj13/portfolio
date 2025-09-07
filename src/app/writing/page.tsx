@@ -3,7 +3,7 @@ import React, { useState, useMemo } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import ArticlePreview from "@/components/ArticlePreview";
 import SearchBar from "@/components/SearchBar";
-import { BlurFade } from "@/components/magicui/blur-fade";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const data = [
   {

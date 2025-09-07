@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import SearchBar from "@/components/SearchBar";
 import ProjectCard from "@/components/ProjectCard";
-import { BlurFade } from "@/components/magicui/blur-fade";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 // Dummy project data
 const projectsData = [

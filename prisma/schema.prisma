@@ -12,7 +12,7 @@ datasource db {
 }
 
 model LinkedInCache {
-  id        String   @id @default("main") // fixed single-row id
+  id        String   @id @default("main")
   payload   Json
   updatedAt DateTime @updatedAt
 }

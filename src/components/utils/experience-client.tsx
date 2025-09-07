@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ExperienceCard from "../ExperienceCard";
-import { BlurFade } from "@/components/magicui/blur-fade";
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Experience } from "@/types";
 
 interface WorkExperienceClientProps {
