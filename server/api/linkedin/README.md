@@ -15,6 +15,7 @@ A FastAPI application that scrapes LinkedIn profile data like experience section
    - `PROFILE_URL`: Your LinkedIn profile URL
    - `LINKEDIN_EMAIL`: Your LinkedIn email
    - `LINKEDIN_PASSWORD`: Your LinkedIn password
+   - `API_TOKEN`: Whatever you want the secure token for this API to be.
 
 3. Install dependencies:
 
