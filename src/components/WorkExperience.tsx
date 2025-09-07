@@ -1,6 +1,6 @@
 import React from "react";
 import { PrismaClient } from "../../generated/prisma";
-import WorkExperienceClient from "./WorkExperienceClient";
+import WorkExperienceClient from "@/components/utils/experience-client";
 import { Experience } from "@/types";
 
 const prisma = new PrismaClient();

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import ExperienceCard from "./ExperienceCard";
+import ExperienceCard from "../ExperienceCard";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { Experience } from "@/types";
 
@@ -32,9 +32,7 @@ function WorkExperienceClient({ experiences }: WorkExperienceClientProps) {
               onClick={() => setShowAll(!showAll)}
               className="cursor-pointer px-6 py-2 text-sm font-medium text-foreground bg-card border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors"
             >
-              {showAll
-                ? "Show Less"
-                : `Show All ${experiences.length} Experiences`}
+              {showAll ? "show less" : "show more experiences"}
             </button>
           </div>
         )}
