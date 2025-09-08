@@ -31,16 +31,16 @@ export default function ImageUpload({
 
   const processFile = (file: File) => {
     setError(null);
-    
+
     // Validate file type
-    if (!file.type.startsWith('image/')) {
-      setError('Please select an image file (JPG, PNG, WebP, or SVG)');
+    if (!file.type.startsWith("image/")) {
+      setError("Please select an image file (JPG, PNG, WebP, or SVG)");
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError('File size must be less than 5MB');
+      setError("File size must be less than 5MB");
       return;
     }
 
@@ -62,7 +62,7 @@ export default function ImageUpload({
 
     setUploading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(`/admin/api/projects/${projectId}/image`, {
         method: "PUT",
@@ -123,17 +123,17 @@ export default function ImageUpload({
   return (
     <div className="space-y-4">
       <label className="block text-sm font-medium">Project Image</label>
-      
+
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-800 px-3 py-2 rounded-md text-sm">
           {error}
         </div>
       )}
-      
-      <div 
+
+      <div
         className={`border-2 border-dashed rounded-lg p-6 text-center transition-all duration-200 ${
-          isDragOver 
-            ? "border-primary bg-primary/5 scale-[1.02]" 
+          isDragOver
+            ? "border-primary bg-primary/5 scale-[1.02]"
             : error
             ? "border-red-300 bg-red-50/50"
             : "border-border hover:border-primary/50 hover:bg-muted/30"
@@ -184,17 +184,18 @@ export default function ImageUpload({
           </div>
         ) : (
           <div className="space-y-4">
-            <ImageIcon className={`w-12 h-12 mx-auto transition-colors ${
-              isDragOver ? "text-primary" : "text-muted-foreground"
-            }`} />
-            <div>
-              <p className={`mb-2 transition-colors ${
+            <ImageIcon
+              className={`w-12 h-12 mx-auto transition-colors ${
                 isDragOver ? "text-primary" : "text-muted-foreground"
-              }`}>
-                {isDragOver 
-                  ? "Drop your image here" 
-                  : "Upload a project image"
-                }
+              }`}
+            />
+            <div>
+              <p
+                className={`mb-2 transition-colors ${
+                  isDragOver ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                {isDragOver ? "Drop your image here" : "Upload a project image"}
               </p>
               <p className="text-sm text-muted-foreground mb-3">
                 Drag and drop an image, or click to browse
@@ -222,7 +223,8 @@ export default function ImageUpload({
       />
 
       <p className="text-xs text-muted-foreground">
-        Recommended: 16:9 aspect ratio, max 5MB. Supports JPG, PNG, WebP, and SVG.
+        Recommended: 16:9 aspect ratio, max 5MB. Supports JPG, PNG, WebP, and
+        SVG.
       </p>
     </div>
   );

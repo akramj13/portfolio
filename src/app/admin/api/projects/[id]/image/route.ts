@@ -34,16 +34,16 @@ export async function GET(
       where: { id: params.id },
       select: { imageBytes: true, imageMime: true, title: true },
     });
-    
+
     if (!proj) {
       return new NextResponse("Project not found", { status: 404 });
     }
-    
+
     if (!proj.imageBytes) {
       // Return a redirect to a placeholder image instead of 404
       return Response.redirect("/projects/placeholder.png", 302);
     }
-    
+
     const res = new NextResponse(Buffer.from(proj.imageBytes), {
       headers: {
         "Content-Type": proj.imageMime ?? "image/webp",

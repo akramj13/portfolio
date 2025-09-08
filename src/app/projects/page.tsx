@@ -22,7 +22,9 @@ function Projects() {
         const data = await response.json();
         setProjects(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch projects");
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch projects"
+        );
       } finally {
         setLoading(false);
       }
@@ -113,7 +115,11 @@ function Projects() {
             </div>
           ) : (
             filteredProjects.map((project, index) => (
-              <BlurFade key={project.id || index} delay={0.25 + index * 0.05} inView>
+              <BlurFade
+                key={project.id || index}
+                delay={0.25 + index * 0.05}
+                inView
+              >
                 <ProjectCard project={project} />
               </BlurFade>
             ))

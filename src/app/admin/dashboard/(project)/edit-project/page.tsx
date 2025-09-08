@@ -54,7 +54,9 @@ export default function EditProject() {
         const data = await response.json();
         setProject(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch project");
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch project"
+        );
       } finally {
         setLoading(false);
       }

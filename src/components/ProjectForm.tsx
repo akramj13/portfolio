@@ -157,10 +157,34 @@ export default function ProjectForm({
 
       {/* Dynamic Arrays */}
       {[
-        { key: "tags" as const, label: "Technologies/Tags", value: newTag, setValue: setNewTag, useBadges: true },
-        { key: "features" as const, label: "Key Features", value: newFeature, setValue: setNewFeature, useBadges: false },
-        { key: "highlights" as const, label: "Project Highlights", value: newHighlight, setValue: setNewHighlight, useBadges: false },
-        { key: "challenges" as const, label: "Challenges Overcome", value: newChallenge, setValue: setNewChallenge, useBadges: false },
+        {
+          key: "tags" as const,
+          label: "Technologies/Tags",
+          value: newTag,
+          setValue: setNewTag,
+          useBadges: true,
+        },
+        {
+          key: "features" as const,
+          label: "Key Features",
+          value: newFeature,
+          setValue: setNewFeature,
+          useBadges: false,
+        },
+        {
+          key: "highlights" as const,
+          label: "Project Highlights",
+          value: newHighlight,
+          setValue: setNewHighlight,
+          useBadges: false,
+        },
+        {
+          key: "challenges" as const,
+          label: "Challenges Overcome",
+          value: newChallenge,
+          setValue: setNewChallenge,
+          useBadges: false,
+        },
       ].map(({ key, label, value, setValue, useBadges }) => (
         <div key={key}>
           <label className="block text-sm font-medium mb-2">{label}</label>
@@ -187,12 +211,16 @@ export default function ProjectForm({
               <Plus className="w-4 h-4" />
             </Button>
           </div>
-          
+
           {/* Conditional rendering based on useBadges */}
           {useBadges ? (
             <div className="flex flex-wrap gap-2">
               {formData[key].map((item: string, index: number) => (
-                <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="flex items-center gap-1"
+                >
                   {item}
                   <button
                     type="button"
@@ -211,9 +239,7 @@ export default function ProjectForm({
                   key={index}
                   className="flex items-start gap-2 p-3 bg-muted/50 rounded-md border"
                 >
-                  <div className="flex-1 text-sm leading-relaxed">
-                    {item}
-                  </div>
+                  <div className="flex-1 text-sm leading-relaxed">{item}</div>
                   <button
                     type="button"
                     onClick={() => removeItem(key, index)}
