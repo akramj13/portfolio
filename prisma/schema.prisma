@@ -21,7 +21,8 @@ model Project {
   id          String   @id @default(cuid())
   title       String
   description String
-  src         String
+  imageMime   String?
+  imageBytes  Bytes?
   features    String[]
   time        String
   tags        String[]

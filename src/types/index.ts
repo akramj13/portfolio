@@ -10,9 +10,10 @@ export type Experience = {
 };
 
 export type Project = {
+  id?: string; // Optional for new projects
   title: string;
   description: string;
-  src: string;
+  src?: string; // For compatibility with current components, will be generated from id
   features: string[];
   time: string;
   tags: string[];

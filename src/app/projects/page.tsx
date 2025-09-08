@@ -1,16 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import SearchBar from "@/components/SearchBar";
 import ProjectCard from "@/components/ProjectCard";
 import { BlurFade } from "@/components/ui/blur-fade";
-import projectsData from "./projects.json";
+import { Project } from "@/types";
 
 function Projects() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/api/projects");
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   // Filter projects based on search term
-  const filteredProjects = projectsData.filter(
+  const filteredProjects = projects.filter(
     (project) =>
       project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -18,6 +40,36 @@ function Projects() {
         tag.toLowerCase().includes(searchTerm.toLowerCase())
       )
   );
+
+  if (loading) {
+    return (
+      <PageLayout variant="wide" maxWidth="xl">
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+            projects
+          </h1>
+          <div className="flex items-center justify-center py-12">
+            <div className="text-muted-foreground">Loading projects...</div>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageLayout variant="wide" maxWidth="xl">
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+            projects
+          </h1>
+          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md">
+            {error}
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout variant="wide" maxWidth="xl">
@@ -33,7 +85,7 @@ function Projects() {
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             placeholder="Search projects..."
-            articles={projectsData.map((project) => ({
+            articles={projects.map((project) => ({
               title: project.title,
               excerpt: project.description,
               tags: project.tags,
@@ -43,7 +95,7 @@ function Projects() {
 
         {/* Projects List */}
         <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-          {projectsData.length === 0 ? (
+          {projects.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">nothing so far.</p>
               <p className="text-muted-foreground mt-2">
@@ -61,7 +113,7 @@ function Projects() {
             </div>
           ) : (
             filteredProjects.map((project, index) => (
-              <BlurFade key={index} delay={0.25 + index * 0.05} inView>
+              <BlurFade key={project.id || index} delay={0.25 + index * 0.05} inView>
                 <ProjectCard project={project} />
               </BlurFade>
             ))

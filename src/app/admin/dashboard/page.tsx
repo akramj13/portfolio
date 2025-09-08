@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageLayout from "@/components/utils/page-layout";
 import {
   DropdownMenu,
@@ -10,18 +10,35 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  ChevronDownIcon,
-  PlusIcon,
-  EditIcon,
-  TrashIcon,
-  RefreshCwIcon,
-  FileTextIcon,
-  FolderIcon,
+  ChevronDown,
+  Plus,
+  Edit,
+  Trash,
+  RefreshCw,
+  FileText,
+  Folder,
 } from "lucide-react";
 
 function Dashboard() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshMessage, setRefreshMessage] = useState("");
+  const [stats, setStats] = useState({ projects: 0, blogPosts: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/admin/api/stats");
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const handleRefreshLinkedIn = async () => {
     setIsRefreshing(true);
@@ -68,18 +85,15 @@ function Dashboard() {
   };
 
   const handleNewProject = () => {
-    // TODO: Implement project creation
-    alert("Project creation coming soon!");
+    window.location.href = "/admin/dashboard/new-project";
   };
 
   const handleEditProject = () => {
-    // TODO: Implement project editing
-    alert("Project editing coming soon!");
+    window.location.href = "/admin/dashboard/projects";
   };
 
   const handleDeleteProject = () => {
-    // TODO: Implement project deletion
-    alert("Project deletion coming soon!");
+    window.location.href = "/admin/dashboard/projects";
   };
 
   const handleUpdateHomePage = () => {
@@ -119,7 +133,7 @@ function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Total Projects
                 </p>
-                <p className="text-2xl font-bold">12</p>
+                <p className="text-2xl font-bold">{stats.projects}</p>
               </div>
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <span className="text-primary font-semibold">📁</span>
@@ -136,7 +150,7 @@ function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Blog Posts
                 </p>
-                <p className="text-2xl font-bold">8</p>
+                <p className="text-2xl font-bold">{stats.blogPosts}</p>
               </div>
               <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <span className="text-primary font-semibold">📝</span>
@@ -160,7 +174,7 @@ function Dashboard() {
                 className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <div className="font-medium flex items-center gap-2">
-                  <RefreshCwIcon
+                  <RefreshCw
                     className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
                   />
                   {isRefreshing ? "Refreshing..." : "Update Experience Section"}
@@ -175,10 +189,10 @@ function Dashboard() {
                   <button className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left">
                     <div className="font-medium flex items-center justify-between">
                       <span className="flex items-center gap-2">
-                        <FileTextIcon className="h-4 w-4" />
+                        <FileText className="h-4 w-4" />
                         Blog Posts
                       </span>
-                      <ChevronDownIcon className="h-4 w-4" />
+                      <ChevronDown className="h-4 w-4" />
                     </div>
                     <div className="text-sm text-muted-foreground">
                       Manage blog content
@@ -187,11 +201,11 @@ function Dashboard() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem onClick={handleNewBlogPost}>
-                    <PlusIcon className="h-4 w-4 mr-2" />
+                    <Plus className="h-4 w-4 mr-2" />
                     Add New Post
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleEditBlogPost}>
-                    <EditIcon className="h-4 w-4 mr-2" />
+                    <Edit className="h-4 w-4 mr-2" />
                     Edit Post
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -199,7 +213,7 @@ function Dashboard() {
                     onClick={handleDeleteBlogPost}
                     className="text-red-600"
                   >
-                    <TrashIcon className="h-4 w-4 mr-2" />
+                    <Trash className="h-4 w-4 mr-2" />
                     Delete Post
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -210,10 +224,10 @@ function Dashboard() {
                   <button className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left">
                     <div className="font-medium flex items-center justify-between">
                       <span className="flex items-center gap-2">
-                        <FolderIcon className="h-4 w-4" />
+                        <Folder className="h-4 w-4" />
                         Projects
                       </span>
-                      <ChevronDownIcon className="h-4 w-4" />
+                      <ChevronDown className="h-4 w-4" />
                     </div>
                     <div className="text-sm text-muted-foreground">
                       Manage portfolio projects
@@ -222,11 +236,11 @@ function Dashboard() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem onClick={handleNewProject}>
-                    <PlusIcon className="h-4 w-4 mr-2" />
+                    <Plus className="h-4 w-4 mr-2" />
                     Add New Project
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleEditProject}>
-                    <EditIcon className="h-4 w-4 mr-2" />
+                    <Edit className="h-4 w-4 mr-2" />
                     Edit Project
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -234,7 +248,7 @@ function Dashboard() {
                     onClick={handleDeleteProject}
                     className="text-red-600"
                   >
-                    <TrashIcon className="h-4 w-4 mr-2" />
+                    <Trash className="h-4 w-4 mr-2" />
                     Delete Project
                   </DropdownMenuItem>
                 </DropdownMenuContent>
