@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
-      orderBy: { id: "desc" }, // Most recent first
+      orderBy: { sortOrder: "asc" }, // Order by sortOrder
     });
 
     // Transform projects to include src field for image

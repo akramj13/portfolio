@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const projects = await prisma.project.findMany({
-      orderBy: { id: "desc" }, // Most recent first
+      orderBy: { sortOrder: "asc" }, // Order by sortOrder
     });
     return NextResponse.json(projects);
   } catch (error) {
@@ -38,6 +38,12 @@ export async function POST(req: Request) {
       );
     }
 
+    // Get the maximum sortOrder to place new project at the end
+    const maxSortOrder = await prisma.project.findFirst({
+      orderBy: { sortOrder: "desc" },
+      select: { sortOrder: true },
+    });
+
     const project = await prisma.project.create({
       data: {
         title,
@@ -48,6 +54,7 @@ export async function POST(req: Request) {
         highlights: highlights || [],
         challenges: challenges || [],
         link,
+        sortOrder: (maxSortOrder?.sortOrder ?? -1) + 1,
         // imageBytes and imageMime will be null initially
         // They can be updated later via the image upload endpoint
       },
