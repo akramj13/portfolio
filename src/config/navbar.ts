@@ -5,6 +5,7 @@ export const navdata = {
     { href: "/", icon: Icons.home, label: "home" },
     { href: "/projects", icon: Icons.projects, label: "projects" },
     { href: "/writing", icon: Icons.writing, label: "writing" },
+    { href: "/admin/dashboard", icon: Icons.dashboard, label: "dashboard" },
   ],
   contact: {
     social: {

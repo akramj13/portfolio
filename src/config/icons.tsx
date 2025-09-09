@@ -4,6 +4,7 @@ import {
   PencilIcon,
   Computer,
   UserRoundSearch,
+  LayoutDashboard,
 } from "lucide-react";
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -12,6 +13,7 @@ export const Icons = {
   writing: (props: IconProps) => <PencilIcon {...props} />,
   projects: (props: IconProps) => <Computer {...props} />,
   socials: (props: IconProps) => <UserRoundSearch {...props} />,
+  dashboard: (props: IconProps) => <LayoutDashboard {...props} />,
   email: (props: IconProps) => <MailIcon {...props} />,
   linkedin: (props: IconProps) => (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>

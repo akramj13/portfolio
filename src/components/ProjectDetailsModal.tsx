@@ -40,7 +40,7 @@ function ProjectDetailsModal({
           {/* Project Image */}
           <div className="relative w-full h-48 sm:h-64 md:h-72 rounded-lg overflow-hidden bg-muted">
             <Image
-              src={project.src}
+              src={project.src || "/placeholder.svg"}
               alt={project.title}
               fill
               className="object-contain"
