@@ -14,7 +14,16 @@ export async function GET(
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
-    return NextResponse.json(project);
+    // Transform project to include src field for image
+    const transformedProject = {
+      ...project,
+      // Only use database image if it exists
+      src: project.imageBytes
+        ? `/admin/api/projects/${project.id}/image`
+        : null,
+    };
+
+    return NextResponse.json(transformedProject);
   } catch (error) {
     console.error("Error fetching project:", error);
     return NextResponse.json(

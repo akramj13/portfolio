@@ -39,8 +39,10 @@ export default function NewProject() {
         throw new Error(errorData.error || "Failed to create project");
       }
 
-      // Redirect to dashboard on success
-      router.push("/admin/dashboard");
+      const createdProject = await response.json();
+
+      // Redirect to edit page where user can upload image
+      router.push(`/admin/dashboard/edit-project?id=${createdProject.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create project");
     } finally {
@@ -60,7 +62,8 @@ export default function NewProject() {
             Create New Project
           </h1>
           <p className="text-muted-foreground">
-            Add a new project to your portfolio.
+            Add a new project to your portfolio. You&apos;ll be able to upload
+            an image after creation.
           </p>
         </div>
 

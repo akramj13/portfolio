@@ -29,4 +29,5 @@ model Project {
   highlights  String[]
   challenges  String[]
   link        String
+  sortOrder   Int      @default(0)
 }
