@@ -43,6 +43,7 @@ function ProjectDetailsModal({
               src={project.src || "/placeholder.svg"}
               alt={project.title}
               fill
+              unoptimized
               className="object-contain"
             />
           </div>

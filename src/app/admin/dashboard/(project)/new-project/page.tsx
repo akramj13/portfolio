@@ -14,6 +14,7 @@ interface ProjectFormData {
   highlights: string[];
   challenges: string[];
   link: string;
+  imageFile?: File;
 }
 
 export default function NewProject() {
@@ -26,12 +27,31 @@ export default function NewProject() {
     setError(null);
 
     try {
+      // Create FormData to handle both JSON and file data
+      const formData = new FormData();
+
+      // Add project data as JSON
+      const projectData = {
+        title: data.title,
+        description: data.description,
+        features: data.features,
+        time: data.time,
+        tags: data.tags,
+        highlights: data.highlights,
+        challenges: data.challenges,
+        link: data.link,
+      };
+
+      formData.append("project", JSON.stringify(projectData));
+
+      // Add image file if provided
+      if (data.imageFile) {
+        formData.append("image", data.imageFile);
+      }
+
       const response = await fetch("/admin/api/projects", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -39,10 +59,8 @@ export default function NewProject() {
         throw new Error(errorData.error || "Failed to create project");
       }
 
-      const createdProject = await response.json();
-
-      // Redirect to edit page where user can upload image
-      router.push(`/admin/dashboard/edit-project?id=${createdProject.id}`);
+      // Redirect to projects list since image is already uploaded
+      router.push("/admin/dashboard/projects");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create project");
     } finally {
@@ -62,8 +80,8 @@ export default function NewProject() {
             Create New Project
           </h1>
           <p className="text-muted-foreground">
-            Add a new project to your portfolio. You&apos;ll be able to upload
-            an image after creation.
+            Add a new project to your portfolio. You can upload an image as part
+            of the creation process.
           </p>
         </div>
 

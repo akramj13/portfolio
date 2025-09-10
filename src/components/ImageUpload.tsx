@@ -9,12 +9,14 @@ interface ImageUploadProps {
   projectId?: string;
   currentImageSrc?: string;
   onImageUpdate?: () => void;
+  onImageSelect?: (file: File | null) => void;
 }
 
 export default function ImageUpload({
   projectId,
   currentImageSrc,
   onImageUpdate,
+  onImageSelect,
 }: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -51,7 +53,10 @@ export default function ImageUpload({
     };
     reader.readAsDataURL(file);
 
-    // Upload if we have a project ID
+    // Notify parent component of file selection
+    onImageSelect?.(file);
+
+    // Upload if we have a project ID (for existing projects)
     if (projectId) {
       uploadImage(file);
     }
@@ -89,6 +94,7 @@ export default function ImageUpload({
 
   const clearImage = () => {
     setPreview(null);
+    onImageSelect?.(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -124,7 +130,7 @@ export default function ImageUpload({
     <div className="space-y-4">
       <label className="block text-sm font-medium">Project Image</label>
 
-      {!projectId && (
+      {!projectId && !onImageSelect && (
         <div className="bg-blue-50 border border-blue-200 text-blue-800 px-3 py-2 rounded-md text-sm">
           Note: Save the project first to enable image uploads.
         </div>
@@ -138,17 +144,21 @@ export default function ImageUpload({
 
       <div
         className={`border-2 border-dashed rounded-lg p-6 text-center transition-all duration-200 ${
-          !projectId
+          !projectId && !onImageSelect
             ? "border-muted bg-muted/20 opacity-50"
             : isDragOver
             ? "border-primary bg-primary/5 scale-[1.02]"
             : error
             ? "border-red-300 bg-red-50/50"
             : "border-border hover:border-primary/50 hover:bg-muted/30"
-        } ${uploading || !projectId ? "pointer-events-none" : ""}`}
-        onDragOver={projectId ? handleDragOver : undefined}
-        onDragLeave={projectId ? handleDragLeave : undefined}
-        onDrop={projectId ? handleDrop : undefined}
+        } ${
+          uploading || (!projectId && !onImageSelect)
+            ? "pointer-events-none"
+            : ""
+        }`}
+        onDragOver={projectId || onImageSelect ? handleDragOver : undefined}
+        onDragLeave={projectId || onImageSelect ? handleDragLeave : undefined}
+        onDrop={projectId || onImageSelect ? handleDrop : undefined}
       >
         {displaySrc ? (
           <div className="relative">
@@ -173,7 +183,7 @@ export default function ImageUpload({
                 variant="outline"
                 size="sm"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={uploading || !projectId}
+                disabled={uploading || (!projectId && !onImageSelect)}
               >
                 <Upload className="w-4 h-4 mr-2" />
                 {uploading ? "Uploading..." : "Replace Image"}
@@ -183,7 +193,7 @@ export default function ImageUpload({
                 variant="outline"
                 size="sm"
                 onClick={clearImage}
-                disabled={uploading || !projectId}
+                disabled={uploading || (!projectId && !onImageSelect)}
               >
                 <X className="w-4 h-4 mr-2" />
                 Remove
@@ -203,14 +213,14 @@ export default function ImageUpload({
                   isDragOver ? "text-primary" : "text-muted-foreground"
                 }`}
               >
-                {!projectId
+                {!projectId && !onImageSelect
                   ? "Image uploads will be available after saving"
                   : isDragOver
                   ? "Drop your image here"
                   : "Upload a project image"}
               </p>
               <p className="text-sm text-muted-foreground mb-3">
-                {!projectId
+                {!projectId && !onImageSelect
                   ? "Save the project first to enable image uploads"
                   : "Drag and drop an image, or click to browse"}
               </p>
@@ -218,7 +228,7 @@ export default function ImageUpload({
                 type="button"
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={uploading || !projectId}
+                disabled={uploading || (!projectId && !onImageSelect)}
               >
                 <Upload className="w-4 h-4 mr-2" />
                 Choose Image

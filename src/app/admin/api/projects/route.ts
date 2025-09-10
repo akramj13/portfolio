@@ -25,7 +25,31 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
+    // Check if request is FormData (includes image) or JSON
+    const contentType = req.headers.get("content-type") || "";
+
+    let projectData;
+    let imageFile: File | null = null;
+
+    if (contentType.includes("multipart/form-data")) {
+      // Handle FormData (with image)
+      const formData = await req.formData();
+      const projectJson = formData.get("project") as string;
+      imageFile = formData.get("image") as File | null;
+
+      if (!projectJson) {
+        return NextResponse.json(
+          { error: "Project data is required" },
+          { status: 400 }
+        );
+      }
+
+      projectData = JSON.parse(projectJson);
+    } else {
+      // Handle JSON (without image)
+      projectData = await req.json();
+    }
+
     const {
       title,
       description,
@@ -35,7 +59,7 @@ export async function POST(req: NextRequest) {
       highlights,
       challenges,
       link,
-    } = body;
+    } = projectData;
 
     // Validate required fields
     if (!title || !description || !link) {
@@ -51,20 +75,26 @@ export async function POST(req: NextRequest) {
       select: { sortOrder: true },
     });
 
+    // Prepare project data
+    const projectCreateData = {
+      title,
+      description,
+      features: features || [],
+      time: time || "",
+      tags: tags || [],
+      highlights: highlights || [],
+      challenges: challenges || [],
+      link,
+      sortOrder: (maxSortOrder?.sortOrder ?? -1) + 1,
+      // Include image data if provided
+      ...(imageFile && {
+        imageBytes: Buffer.from(await imageFile.arrayBuffer()),
+        imageMime: imageFile.type,
+      }),
+    };
+
     const project = await prisma.project.create({
-      data: {
-        title,
-        description,
-        features: features || [],
-        time: time || "",
-        tags: tags || [],
-        highlights: highlights || [],
-        challenges: challenges || [],
-        link,
-        sortOrder: (maxSortOrder?.sortOrder ?? -1) + 1,
-        // imageBytes and imageMime will be null initially
-        // They can be updated later via the image upload endpoint
-      },
+      data: projectCreateData,
     });
 
     return NextResponse.json(project, { status: 201 });

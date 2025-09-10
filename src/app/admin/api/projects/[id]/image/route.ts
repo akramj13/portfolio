@@ -38,11 +38,7 @@ export async function GET(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
-  // Verify admin authentication
-  const isAuthorized = await verifyAdminAuth(req);
-  if (!isAuthorized) {
-    return createUnauthorizedResponse();
-  }
+  // Note: No authentication required for GET - images should be publicly accessible
 
   const params = await context.params;
 
@@ -52,16 +48,29 @@ export async function GET(
       select: { imageBytes: true, imageMime: true, title: true },
     });
 
+    console.log(`Image request for project ${params.id}:`, {
+      projectFound: !!proj,
+      hasImageBytes: !!proj?.imageBytes,
+      imageBytesLength: proj?.imageBytes?.length || 0,
+      imageMime: proj?.imageMime,
+    });
+
     if (!proj) {
       return new NextResponse("Project not found", { status: 404 });
     }
 
-    if (!proj.imageBytes) {
+    if (!proj.imageBytes || proj.imageBytes.length === 0) {
       // Return a redirect to a placeholder image instead of 404
-      return Response.redirect("/projects/placeholder.png", 302);
+      return NextResponse.redirect(new URL("/placeholder.svg", req.url));
     }
 
-    const res = new NextResponse(Buffer.from(proj.imageBytes), {
+    // Ensure imageBytes is properly converted to Buffer
+    const imageBuffer =
+      proj.imageBytes instanceof Buffer
+        ? proj.imageBytes
+        : Buffer.from(proj.imageBytes);
+
+    const res = new NextResponse(imageBuffer, {
       headers: {
         "Content-Type": proj.imageMime ?? "image/webp",
         "Cache-Control": "public, max-age=31536000, immutable",

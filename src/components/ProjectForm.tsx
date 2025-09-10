@@ -15,6 +15,7 @@ interface ProjectFormData {
   highlights: string[];
   challenges: string[];
   link: string;
+  imageFile?: File;
 }
 
 interface ProjectFormProps {
@@ -41,6 +42,7 @@ export default function ProjectForm({
     highlights: initialData.highlights || [],
     challenges: initialData.challenges || [],
     link: initialData.link || "",
+    imageFile: undefined,
   });
 
   const [newFeature, setNewFeature] = useState("");
@@ -83,6 +85,9 @@ export default function ProjectForm({
       <ImageUpload
         projectId={initialData?.id}
         currentImageSrc={initialData?.src}
+        onImageSelect={(file: File | null) =>
+          setFormData((prev) => ({ ...prev, imageFile: file || undefined }))
+        }
       />
 
       {/* Basic Information */}
