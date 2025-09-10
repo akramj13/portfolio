@@ -5,9 +5,6 @@ import WorkExperience from "@/components/WorkExperience";
 import ExperienceCard from "@/components/ExperienceCard";
 import { Layers } from "lucide-react";
 
-// Revalidate every day to check for new data
-export const revalidate = 1 * 60 * 60 * 24;
-
 export default function Home() {
   return (
     <PageLayout variant="default" maxWidth="2xl">

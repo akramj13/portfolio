@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import PageLayout from "@/components/utils/page-layout";
+import LogoutButton from "@/components/LogoutButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -112,17 +113,20 @@ function Dashboard() {
               Manage your portfolio content and settings.
             </p>
           </div>
-          {refreshMessage && (
-            <div
-              className={`px-4 py-2 rounded-md text-sm ${
-                refreshMessage.includes("Error")
-                  ? "bg-red-100 text-red-800 border border-red-200"
-                  : "bg-green-100 text-green-800 border border-green-200"
-              }`}
-            >
-              {refreshMessage}
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            <LogoutButton />
+            {refreshMessage && (
+              <div
+                className={`px-4 py-2 rounded-md text-sm ${
+                  refreshMessage.includes("Error")
+                    ? "bg-red-100 text-red-800 border border-red-200"
+                    : "bg-green-100 text-green-800 border border-green-200"
+                }`}
+              >
+                {refreshMessage}
+              </div>
+            )}
+          </div>
         </section>
 
         {/* Stats Grid */}

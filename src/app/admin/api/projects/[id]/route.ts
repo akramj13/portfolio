@@ -1,10 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
+  const params = await context.params;
+
   try {
     const project = await prisma.project.findUnique({
       where: { id: params.id },
@@ -34,9 +43,17 @@ export async function GET(
 }
 
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
+  const params = await context.params;
+
   try {
     const body = await req.json();
     const {
@@ -83,9 +100,17 @@ export async function PUT(
 }
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
+  const params = await context.params;
+
   try {
     await prisma.project.delete({
       where: { id: params.id },

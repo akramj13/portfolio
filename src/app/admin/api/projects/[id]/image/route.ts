@@ -1,10 +1,19 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
 
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
+  const params = await context.params;
+
   try {
     const buf = Buffer.from(await req.arrayBuffer());
     // optional: run through sharp here to cap dimensions/quality
@@ -26,9 +35,17 @@ export async function PUT(
 }
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
+  const params = await context.params;
+
   try {
     const proj = await prisma.project.findUnique({
       where: { id: params.id },

@@ -1,10 +1,17 @@
 // app/api/admin/refresh-cache/route.ts (Next.js 14/15)
 // Protect this route (check session/role) before running!
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
+import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
+  // Verify admin authentication
+  const isAuthorized = await verifyAdminAuth(req);
+  if (!isAuthorized) {
+    return createUnauthorizedResponse();
+  }
+
   try {
     // 1) Call your Python FastAPI service to get LinkedIn experience data
     const fastApiUrl = process.env.LINKEDIN_DATA_URL || "http://localhost:8000";
