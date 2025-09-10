@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import PageLayout from "@/components/utils/page-layout";
 import ProjectForm from "@/components/ProjectForm";
@@ -28,7 +28,7 @@ interface ProjectFormData {
   link: string;
 }
 
-export default function EditProject() {
+function EditProjectContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
@@ -153,5 +153,23 @@ export default function EditProject() {
         )}
       </div>
     </PageLayout>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <PageLayout variant="wide" maxWidth="2xl">
+      <div className="flex items-center justify-center py-12">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    </PageLayout>
+  );
+}
+
+export default function EditProject() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <EditProjectContent />
+    </Suspense>
   );
 }
