@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { Dock, DockIcon } from "@/components/ui/dock";
 
 import { navdata, Icons } from "@/config";
+import { useAuth } from "@/hooks/useAuth";
 
 // Import the mobile detection hook from dock.tsx
 const useIsMobile = () => {
@@ -43,12 +44,22 @@ const useIsMobile = () => {
 
 function Navbar() {
   const isMobile = useIsMobile();
+  const { isAuthenticated } = useAuth();
+
+  // Filter navigation items based on authentication status
+  const filteredNavItems = navdata.navbar.filter((item) => {
+    // Hide dashboard link if user is not authenticated
+    if (item.label === "dashboard" && !isAuthenticated) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <nav className="fixed left-1/2 transform -translate-x-1/2 z-50">
       <TooltipProvider>
         <Dock direction="middle">
-          {navdata.navbar.map((item) => (
+          {filteredNavItems.map((item) => (
             <DockIcon key={item.label}>
               <Tooltip>
                 <TooltipTrigger asChild>
