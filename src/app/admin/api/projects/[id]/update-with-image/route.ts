@@ -4,27 +4,17 @@ import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { cdnUploader } from "@/lib/cdn-uploader";
 
-export async function GET() {
-  try {
-    const projects = await prisma.project.findMany({
-      orderBy: { sortOrder: "asc" }, // Order by sortOrder
-    });
-    return NextResponse.json(projects);
-  } catch (error) {
-    console.error("Error fetching projects:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch projects" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(req: NextRequest) {
+export async function PUT(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   // Verify admin authentication
   const isAuthorized = await verifyAdminAuth(req);
   if (!isAuthorized) {
     return createUnauthorizedResponse();
   }
+
+  const params = await context.params;
 
   try {
     // Check if request is FormData (includes image) or JSON
@@ -71,12 +61,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Get the maximum sortOrder to place new project at the end
-    const maxSortOrder = await prisma.project.findFirst({
-      orderBy: { sortOrder: "desc" },
-      select: { sortOrder: true },
-    });
-
     // Handle image file if provided
     let imageSrc: string | null = null;
     if (imageFile) {
@@ -87,8 +71,8 @@ export async function POST(req: NextRequest) {
       imageSrc = await cdnUploader.uploadFile(imageFile, fileName);
     }
 
-    // Prepare project data
-    const projectCreateData = {
+    // Prepare update data - only include src if a new image was uploaded
+    const updateData = {
       title,
       description,
       features: features || [],
@@ -97,22 +81,22 @@ export async function POST(req: NextRequest) {
       highlights: highlights || [],
       challenges: challenges || [],
       link,
-      src: imageSrc,
-      sortOrder: (maxSortOrder?.sortOrder ?? -1) + 1,
+      ...(imageSrc && { src: imageSrc }),
     };
 
-    const project = await prisma.project.create({
-      data: projectCreateData,
+    const project = await prisma.project.update({
+      where: { id: params.id },
+      data: updateData,
     });
 
     // Revalidate the projects page to reflect changes
     revalidatePath("/projects");
 
-    return NextResponse.json(project, { status: 201 });
+    return NextResponse.json(project);
   } catch (error) {
-    console.error("Error creating project:", error);
+    console.error("Error updating project:", error);
     return NextResponse.json(
-      { error: "Failed to create project" },
+      { error: "Failed to update project" },
       { status: 500 }
     );
   }

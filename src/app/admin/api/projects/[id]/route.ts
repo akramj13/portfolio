@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export async function GET(
   req: NextRequest,
@@ -23,16 +24,7 @@ export async function GET(
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
-    // Transform project to include src field for image
-    const transformedProject = {
-      ...project,
-      // Only use database image if it exists
-      src: project.imageBytes
-        ? `/admin/api/projects/${project.id}/image`
-        : null,
-    };
-
-    return NextResponse.json(transformedProject);
+    return NextResponse.json(project);
   } catch (error) {
     console.error("Error fetching project:", error);
     return NextResponse.json(
@@ -65,6 +57,7 @@ export async function PUT(
       highlights,
       challenges,
       link,
+      src,
     } = body;
 
     // Validate required fields
@@ -75,19 +68,25 @@ export async function PUT(
       );
     }
 
+    const updateData = {
+      title,
+      description,
+      features: features || [],
+      time: time || "",
+      tags: tags || [],
+      highlights: highlights || [],
+      challenges: challenges || [],
+      link,
+      ...(src && { src }),
+    };
+
     const project = await prisma.project.update({
       where: { id: params.id },
-      data: {
-        title,
-        description,
-        features: features || [],
-        time: time || "",
-        tags: tags || [],
-        highlights: highlights || [],
-        challenges: challenges || [],
-        link,
-      },
+      data: updateData,
     });
+
+    // Revalidate the projects page to reflect changes
+    revalidatePath("/projects");
 
     return NextResponse.json(project);
   } catch (error) {
@@ -115,6 +114,10 @@ export async function DELETE(
     await prisma.project.delete({
       where: { id: params.id },
     });
+
+    // Revalidate the projects page to reflect changes
+    revalidatePath("/projects");
+    revalidatePath("/"); // Also revalidate home page in case projects are shown there
 
     return NextResponse.json({ message: "Project deleted successfully" });
   } catch (error) {

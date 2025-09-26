@@ -9,6 +9,45 @@ services:
       - ./server/api/linkedin/.env
     depends_on:
       - db
+
+  cdn:
+    image: nginx:alpine
+    container_name: portfolio-cdn
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    volumes:
+      - cdn_static_files:/usr/share/nginx/html/projects
+      - cdn_config:/etc/nginx:ro
+    depends_on:
+      - cdn_init
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost/health",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  cdn_init:
+    image: nginx:alpine
+    container_name: cdn-config-init
+    volumes:
+      - cdn_config:/tmp/nginx
+      - ./server/cdn/nginx.conf:/tmp/nginx.conf:ro
+    command: >
+      sh -c "
+        cp /tmp/nginx.conf /tmp/nginx/nginx.conf &&
+        echo 'CDN configuration copied successfully'
+      "
+    restart: "no"
+
   db:
     image: postgres:16
     container_name: local-postgres
@@ -29,3 +68,5 @@ services:
 
 volumes:
   pgdata:
+  cdn_static_files:
+  cdn_config:

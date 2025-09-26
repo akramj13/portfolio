@@ -8,17 +8,14 @@ import Image from "next/image";
 interface ImageUploadProps {
   projectId?: string;
   currentImageSrc?: string;
-  onImageUpdate?: () => void;
   onImageSelect?: (file: File | null) => void;
 }
 
 export default function ImageUpload({
   projectId,
   currentImageSrc,
-  onImageUpdate,
   onImageSelect,
 }: ImageUploadProps) {
-  const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,41 +52,6 @@ export default function ImageUpload({
 
     // Notify parent component of file selection
     onImageSelect?.(file);
-
-    // Upload if we have a project ID (for existing projects)
-    if (projectId) {
-      uploadImage(file);
-    }
-  };
-
-  const uploadImage = async (file: File) => {
-    if (!projectId) return;
-
-    setUploading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`/admin/api/projects/${projectId}/image`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": file.type,
-        },
-        body: file,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
-      }
-
-      onImageUpdate?.();
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      setError("Failed to upload image. Please try again.");
-      // Reset preview on error
-      setPreview(null);
-    } finally {
-      setUploading(false);
-    }
   };
 
   const clearImage = () => {
@@ -151,11 +113,7 @@ export default function ImageUpload({
             : error
             ? "border-red-300 bg-red-50/50"
             : "border-border hover:border-primary/50 hover:bg-muted/30"
-        } ${
-          uploading || (!projectId && !onImageSelect)
-            ? "pointer-events-none"
-            : ""
-        }`}
+        } ${!projectId && !onImageSelect ? "pointer-events-none" : ""}`}
         onDragOver={projectId || onImageSelect ? handleDragOver : undefined}
         onDragLeave={projectId || onImageSelect ? handleDragLeave : undefined}
         onDrop={projectId || onImageSelect ? handleDrop : undefined}
@@ -169,13 +127,6 @@ export default function ImageUpload({
                 fill
                 className="object-cover"
               />
-              {uploading && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <div className="text-white text-sm font-medium">
-                    Uploading...
-                  </div>
-                </div>
-              )}
             </div>
             <div className="flex gap-2 justify-center">
               <Button
@@ -183,17 +134,17 @@ export default function ImageUpload({
                 variant="outline"
                 size="sm"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={uploading || (!projectId && !onImageSelect)}
+                disabled={!projectId && !onImageSelect}
               >
                 <Upload className="w-4 h-4 mr-2" />
-                {uploading ? "Uploading..." : "Replace Image"}
+                Replace Image
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={clearImage}
-                disabled={uploading || (!projectId && !onImageSelect)}
+                disabled={!projectId && !onImageSelect}
               >
                 <X className="w-4 h-4 mr-2" />
                 Remove
@@ -228,7 +179,7 @@ export default function ImageUpload({
                 type="button"
                 variant="outline"
                 onClick={() => fileInputRef.current?.click()}
-                disabled={uploading || (!projectId && !onImageSelect)}
+                disabled={!projectId && !onImageSelect}
               >
                 <Upload className="w-4 h-4 mr-2" />
                 Choose Image

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verifyAdminAuth, createUnauthorizedResponse } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(req: NextRequest) {
   // Verify admin authentication
@@ -29,6 +30,9 @@ export async function PUT(req: NextRequest) {
     );
 
     await Promise.all(updatePromises);
+
+    // Revalidate the projects page to reflect the new order
+    revalidatePath("/projects");
 
     return NextResponse.json({ success: true });
   } catch (error) {

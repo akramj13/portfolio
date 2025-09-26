@@ -13,7 +13,7 @@ export type Project = {
   id?: string; // Optional for new projects
   title: string;
   description: string;
-  src?: string; // For compatibility with current components, will be generated from id
+  src?: string | null; // Updated to match Prisma schema (string | null)
   features: string[];
   time: string;
   tags: string[];

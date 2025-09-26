@@ -15,6 +15,7 @@ interface Project {
   highlights: string[];
   challenges: string[];
   link: string;
+  src?: string;
 }
 
 interface ProjectFormData {
@@ -26,6 +27,7 @@ interface ProjectFormData {
   highlights: string[];
   challenges: string[];
   link: string;
+  imageFile?: File;
 }
 
 function EditProjectContent() {
@@ -72,13 +74,44 @@ function EditProjectContent() {
     setError(null);
 
     try {
-      const response = await fetch(`/admin/api/projects/${projectId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      let response;
+
+      if (data.imageFile) {
+        // Use FormData for file upload
+        const formData = new FormData();
+
+        // Add project data as JSON
+        const projectData = {
+          title: data.title,
+          description: data.description,
+          features: data.features,
+          time: data.time,
+          tags: data.tags,
+          highlights: data.highlights,
+          challenges: data.challenges,
+          link: data.link,
+        };
+
+        formData.append("project", JSON.stringify(projectData));
+        formData.append("image", data.imageFile);
+
+        response = await fetch(
+          `/admin/api/projects/${projectId}/update-with-image`,
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
+      } else {
+        // Use JSON for no file upload
+        response = await fetch(`/admin/api/projects/${projectId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      }
 
       if (!response.ok) {
         const errorData = await response.json();

@@ -7,16 +7,7 @@ export async function GET() {
       orderBy: { sortOrder: "asc" }, // Order by sortOrder
     });
 
-    // Transform projects to include src field for image
-    const transformedProjects = projects.map((project) => ({
-      ...project,
-      // Only use database image if it exists
-      src: project.imageBytes
-        ? `/admin/api/projects/${project.id}/image`
-        : null,
-    }));
-
-    return NextResponse.json(transformedProjects);
+    return NextResponse.json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error);
     return NextResponse.json(

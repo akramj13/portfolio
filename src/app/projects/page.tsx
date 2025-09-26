@@ -1,133 +1,28 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import PageLayout from "@/components/utils/page-layout";
-import SearchBar from "@/components/SearchBar";
-import ProjectCard from "@/components/ProjectCard";
-import { BlurFade } from "@/components/ui/blur-fade";
-import { Project } from "@/types";
+import React from "react";
+import { PrismaClient } from "../../../generated/prisma";
+import ProjectsClient from "@/components/utils/projects-client";
 
-function Projects() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const prisma = new PrismaClient();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch("/api/projects");
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-        const data = await response.json();
-        setProjects(data);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch projects"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+// Enable revalidation for this page when projects are updated
+export const revalidate = 0; // Disable static generation caching for ISR
 
-    fetchProjects();
-  }, []);
+async function Projects() {
+  try {
+    // Fetch projects from database at build time
+    const projects = await prisma.project.findMany({
+      orderBy: { sortOrder: "asc" },
+    });
 
-  // Filter projects based on search term
-  const filteredProjects = projects.filter(
-    (project) =>
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.tags.some((tag) =>
-        tag.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-  );
+    return <ProjectsClient projects={projects} />;
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
 
-  if (loading) {
-    return (
-      <PageLayout variant="wide" maxWidth="xl">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-            projects
-          </h1>
-          <div className="flex items-center justify-center py-12">
-            <div className="text-muted-foreground">Loading projects...</div>
-          </div>
-        </div>
-      </PageLayout>
-    );
+    // Fallback to empty array
+    return <ProjectsClient projects={[]} />;
+  } finally {
+    await prisma.$disconnect();
   }
-
-  if (error) {
-    return (
-      <PageLayout variant="wide" maxWidth="xl">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-            projects
-          </h1>
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md">
-            {error}
-          </div>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  return (
-    <PageLayout variant="wide" maxWidth="xl">
-      <div className="text-center space-y-4">
-        {/* Header */}
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-          projects
-        </h1>
-
-        {/* Search */}
-        <div className="max-w-md mx-auto">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            placeholder="Search projects..."
-            articles={projects.map((project) => ({
-              title: project.title,
-              excerpt: project.description,
-              tags: project.tags,
-            }))}
-          />
-        </div>
-
-        {/* Projects List */}
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-          {projects.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">nothing so far.</p>
-              <p className="text-muted-foreground mt-2">
-                check back later for projects and builds.
-              </p>
-            </div>
-          ) : filteredProjects.length === 0 && searchTerm ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">
-                No projects found matching &quot;{searchTerm}&quot;
-              </p>
-              <p className="text-muted-foreground text-sm mt-2">
-                Try searching for different keywords or technologies
-              </p>
-            </div>
-          ) : (
-            filteredProjects.map((project, index) => (
-              <BlurFade
-                key={project.id || index}
-                delay={0.25 + index * 0.05}
-                inView
-              >
-                <ProjectCard project={project} />
-              </BlurFade>
-            ))
-          )}
-        </div>
-      </div>
-    </PageLayout>
-  );
 }
 
 export default Projects;
