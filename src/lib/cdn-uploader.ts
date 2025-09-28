@@ -5,18 +5,24 @@ import { join, dirname } from "path";
 class CDNUploader {
   private baseUrl: string;
 
-  constructor(baseUrl: string = "http://localhost:3001") {
+  constructor(
+    baseUrl: string = process.env.NEXT_PUBLIC_CDN_URL || "http://localhost:3001"
+  ) {
     this.baseUrl = baseUrl;
+  }
+
+  // Helper to sanitize filenames for safe use in shell commands and URLs
+  private sanitizeFilename(filename: string): string {
+    // Replace spaces and most special characters with underscores, keep dots and dashes
+    return filename.replace(/[^a-zA-Z0-9._-]/g, "_");
   }
 
   async uploadFile(file: File, filename: string): Promise<string> {
     try {
-      // Create a temporary file with a simple name to avoid path issues
+      // Sanitize the filename for safe shell usage
+      const safeFilename = this.sanitizeFilename(filename);
       const timestamp = Date.now();
-      const tempFileName = `upload_${timestamp}_${filename.replace(
-        /[\/\\]/g,
-        "_"
-      )}`;
+      const tempFileName = `upload_${timestamp}_${safeFilename}`;
       const tempPath = join("/tmp", tempFileName);
 
       // Write the file to temp location
@@ -25,7 +31,7 @@ class CDNUploader {
 
       try {
         // Extract directory path from filename (e.g., "blogs/example-blog" from "blogs/example-blog/image.png")
-        const fileDir = dirname(filename);
+        const fileDir = dirname(safeFilename);
         const targetDir = fileDir === "." ? "projects" : fileDir;
 
         // Ensure the target directory exists in the CDN volume
@@ -35,11 +41,11 @@ class CDNUploader {
 
         // Copy the file to CDN volume
         execSync(
-          `docker cp "${tempPath}" portfolio-cdn:/usr/share/nginx/html/${filename}`
+          `docker cp "${tempPath}" portfolio-cdn:/usr/share/nginx/html/${safeFilename}`
         );
 
         // Return the CDN URL
-        return `${this.baseUrl}/${filename}`;
+        return `${this.baseUrl}/${safeFilename}`;
       } finally {
         // Clean up temp file
         try {
