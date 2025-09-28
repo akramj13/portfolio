@@ -4,8 +4,7 @@ import { ThemeProvider } from "@/components/utils/theme-provider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -14,10 +13,15 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  ),
   title: "akramj13 - Akram Jamil",
   description:
     "welcome to my portfolio. feel free to checkout what i'm working on!",
 };
+
+const GA_ID = process.env.GA_ID;
 
 export default function RootLayout({
   children,
@@ -27,6 +31,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} antialiased`}>
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);} 
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', {
+                  page_path: window.location.pathname + window.location.search
+                });
+              `}
+            </Script>
+          </>
+        )}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -37,7 +60,6 @@ export default function RootLayout({
           {children}
           <Footer />
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );

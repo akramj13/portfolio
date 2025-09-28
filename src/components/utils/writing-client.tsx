@@ -141,53 +141,57 @@ export default function WritingClient({ blogs }: WritingClientProps) {
   const shouldShowCollapseButton = !searchTerm && blogs.length > 4 && showAll;
 
   return (
-    <PageLayout variant="narrow" maxWidth="lg">
-      <div className="space-y-10">
+    <PageLayout variant="wide" maxWidth="xl">
+      <div className="text-center space-y-4">
         {/* Header */}
-        <section className="text-center space-y-4">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-            writing
-          </h1>
-          {!searchTerm && blogs.length > 0 && (
-            <p className="text-sm text-muted-foreground">
-              {showAll
-                ? `Showing all ${blogs.length} articles`
-                : `Showing ${Math.min(4, blogs.length)} of ${
-                    blogs.length
-                  } articles`}
-            </p>
-          )}
+        <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+          writing
+        </h1>
+        {!searchTerm && blogs.length > 0 && (
+          <p className="text-sm text-muted-foreground">
+            {showAll
+              ? `Showing all ${blogs.length} articles`
+              : `Showing ${Math.min(4, blogs.length)} of ${
+                  blogs.length
+                } articles`}
+          </p>
+        )}
+        <div className="max-w-md mx-auto">
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             placeholder="Search articles by title, content, or tags..."
             articles={enhancedArticles}
           />
-        </section>
-
-        {/* Search Results Info */}
-        {searchTerm && (
-          <section className="text-center">
-            <p className="text-muted-foreground">
-              {filteredBlogs.length === 0
-                ? `No articles found for "${searchTerm}"`
-                : `Found ${filteredBlogs.length} article${
-                    filteredBlogs.length !== 1 ? "s" : ""
-                  } for "${searchTerm}"`}
+        </div>
+        {/* If no blogs, show message here for consistent spacing */}
+        {blogs.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">nothing so far.</p>
+            <p className="text-muted-foreground mt-2">
+              check back later for articles and thoughts.
             </p>
-          </section>
+          </div>
         )}
+      </div>
 
-        {/* Articles */}
-        <section className="space-y-8">
-          {blogs.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">nothing so far.</p>
-              <p className="text-muted-foreground mt-2">
-                check back later for articles and thoughts.
-              </p>
-            </div>
-          ) : displayedBlogs.length === 0 && searchTerm ? (
+      {/* Search Results Info */}
+      {searchTerm && (
+        <section className="text-center">
+          <p className="text-muted-foreground">
+            {filteredBlogs.length === 0
+              ? `No articles found for "${searchTerm}"`
+              : `Found ${filteredBlogs.length} article${
+                  filteredBlogs.length !== 1 ? "s" : ""
+                } for "${searchTerm}"`}
+          </p>
+        </section>
+      )}
+
+      {/* Articles */}
+      {blogs.length > 0 && (
+        <section className="space-y-8 my-10">
+          {displayedBlogs.length === 0 && searchTerm ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">
                 No articles match your search criteria.
@@ -213,30 +217,30 @@ export default function WritingClient({ blogs }: WritingClientProps) {
             ))
           )}
         </section>
+      )}
 
-        {/* Show All/Show Less Button */}
-        {shouldShowExpandButton && (
-          <section className="text-center">
-            <button
-              onClick={() => setShowAll(true)}
-              className="px-6 py-3 border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-foreground font-medium"
-            >
-              Show All Articles ({blogs.length})
-            </button>
-          </section>
-        )}
+      {/* Show All/Show Less Button */}
+      {shouldShowExpandButton && (
+        <section className="text-center">
+          <button
+            onClick={() => setShowAll(true)}
+            className="px-6 py-3 border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-foreground font-medium"
+          >
+            Show All Articles ({blogs.length})
+          </button>
+        </section>
+      )}
 
-        {shouldShowCollapseButton && (
-          <section className="text-center">
-            <button
-              onClick={() => setShowAll(false)}
-              className="px-6 py-3 border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-foreground font-medium"
-            >
-              Show Less
-            </button>
-          </section>
-        )}
-      </div>
+      {shouldShowCollapseButton && (
+        <section className="text-center">
+          <button
+            onClick={() => setShowAll(false)}
+            className="px-6 py-3 border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors text-foreground font-medium"
+          >
+            Show Less
+          </button>
+        </section>
+      )}
     </PageLayout>
   );
 }

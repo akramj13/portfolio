@@ -51,7 +51,7 @@ services:
 
   db:
     image: postgres:16
-    container_name: local-postgres
+    container_name: database
     restart: unless-stopped
     ports:
       - "5432:5432"
