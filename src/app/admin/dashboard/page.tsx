@@ -18,12 +18,15 @@ import {
   RefreshCw,
   FileText,
   Folder,
+  Upload,
 } from "lucide-react";
 
 function Dashboard() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshMessage, setRefreshMessage] = useState("");
   const [stats, setStats] = useState({ projects: "...", blogPosts: "..." });
+  const [isUploadingResume, setIsUploadingResume] = useState(false);
+  const [resumeUploadMessage, setResumeUploadMessage] = useState("");
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -94,9 +97,48 @@ function Dashboard() {
     window.location.href = "/admin/dashboard/projects";
   };
 
-  const handleUpdateHomePage = () => {
-    // TODO: Implement home page text update
-    alert("Home page text update coming soon!");
+  const handleResumeUpload = async (file: File) => {
+    setIsUploadingResume(true);
+    setResumeUploadMessage("");
+
+    try {
+      const formData = new FormData();
+      formData.append("resume", file);
+
+      const response = await fetch("/admin/api/resume/upload", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setResumeUploadMessage("Resume uploaded successfully!");
+      } else {
+        setResumeUploadMessage(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      setResumeUploadMessage("Failed to upload resume");
+      console.error("Error uploading resume:", error);
+    } finally {
+      setIsUploadingResume(false);
+      // Clear message after 5 seconds
+      setTimeout(() => setResumeUploadMessage(""), 5000);
+    }
+  };
+
+  const triggerFileUpload = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".pdf,.doc,.docx";
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        handleResumeUpload(file);
+      }
+    };
+    input.click();
   };
 
   return (
@@ -112,15 +154,30 @@ function Dashboard() {
           </div>
           <div className="flex items-center gap-4">
             <LogoutButton />
-            {refreshMessage && (
-              <div
-                className={`px-4 py-2 rounded-md text-sm ${
-                  refreshMessage.includes("Error")
-                    ? "bg-red-100 text-red-800 border border-red-200"
-                    : "bg-green-100 text-green-800 border border-green-200"
-                }`}
-              >
-                {refreshMessage}
+            {(refreshMessage || resumeUploadMessage) && (
+              <div className="space-y-2">
+                {refreshMessage && (
+                  <div
+                    className={`px-4 py-2 rounded-md text-sm ${
+                      refreshMessage.includes("Error")
+                        ? "bg-red-100 text-red-800 border border-red-200"
+                        : "bg-green-100 text-green-800 border border-green-200"
+                    }`}
+                  >
+                    {refreshMessage}
+                  </div>
+                )}
+                {resumeUploadMessage && (
+                  <div
+                    className={`px-4 py-2 rounded-md text-sm ${
+                      resumeUploadMessage.includes("Error")
+                        ? "bg-red-100 text-red-800 border border-red-200"
+                        : "bg-green-100 text-green-800 border border-green-200"
+                    }`}
+                  >
+                    {resumeUploadMessage}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -255,15 +312,44 @@ function Dashboard() {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <button
-                onClick={handleUpdateHomePage}
-                className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left"
-              >
-                <div className="font-medium">Update Home Page</div>
-                <div className="text-sm text-muted-foreground">
-                  Edit main content
-                </div>
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="p-4 border border-border rounded-lg hover:bg-muted transition-colors text-left">
+                    <div className="font-medium flex items-center justify-between">
+                      <span className="flex items-center gap-2">
+                        <Upload className="h-4 w-4" />
+                        Configure Resume
+                      </span>
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Upload or view your resume
+                    </div>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuItem
+                    onClick={() => {
+                      if (!isUploadingResume) triggerFileUpload();
+                    }}
+                    disabled={isUploadingResume}
+                  >
+                    <Upload className="h-4 w-4 mr-2" />
+                    {isUploadingResume ? "Uploading..." : "Upload Resume"}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <a
+                      href="http://localhost:3001/resume.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      View Current Resume
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
