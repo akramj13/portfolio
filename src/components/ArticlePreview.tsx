@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 type Article = {
@@ -9,8 +10,13 @@ type Article = {
   tags: string[];
 };
 
-function ArticlePreview({ article }: { article: Article }) {
-  return (
+interface ArticlePreviewProps {
+  article: Article;
+  slug?: string;
+}
+
+function ArticlePreview({ article, slug }: ArticlePreviewProps) {
+  const content = (
     <article className="border-b border-border pb-8">
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -40,6 +46,19 @@ function ArticlePreview({ article }: { article: Article }) {
       </div>
     </article>
   );
+
+  if (slug) {
+    return (
+      <Link
+        href={`/writing/${slug}`}
+        className="block hover:opacity-90 transition-opacity"
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 }
 
 export default ArticlePreview;

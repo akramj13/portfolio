@@ -23,7 +23,7 @@ import {
 function Dashboard() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshMessage, setRefreshMessage] = useState("");
-  const [stats, setStats] = useState({ projects: 0, blogPosts: 0 });
+  const [stats, setStats] = useState({ projects: "...", blogPosts: "..." });
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -71,18 +71,15 @@ function Dashboard() {
   };
 
   const handleNewBlogPost = () => {
-    // TODO: Implement blog post creation
-    alert("Blog post creation coming soon!");
+    window.location.href = "/admin/dashboard/new-blog";
   };
 
   const handleEditBlogPost = () => {
-    // TODO: Implement blog post editing
-    alert("Blog post editing coming soon!");
+    window.location.href = "/admin/dashboard/blogs";
   };
 
   const handleDeleteBlogPost = () => {
-    // TODO: Implement blog post deletion
-    alert("Blog post deletion coming soon!");
+    window.location.href = "/admin/dashboard/blogs";
   };
 
   const handleNewProject = () => {

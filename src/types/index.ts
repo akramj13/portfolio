@@ -21,3 +21,26 @@ export type Project = {
   challenges: string[];
   link: string;
 };
+
+export type Blog = {
+  id: number;
+  title: string;
+  slug: string;
+  date: Date;
+  readingTime: number;
+  excerpt: string;
+  tags: string[];
+  content: string;
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type BlogInput = {
+  title: string;
+  slug: string;
+  excerpt: string;
+  readingTime: number;
+  tags: string[];
+  published: boolean;
+};

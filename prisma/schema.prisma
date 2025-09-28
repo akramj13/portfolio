@@ -30,3 +30,17 @@ model Project {
   link        String
   sortOrder   Int      @default(0)
 }
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  date        DateTime
+  readingTime Int
+  excerpt     String
+  tags        String[]
+  content     String
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

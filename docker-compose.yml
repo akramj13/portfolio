@@ -18,6 +18,7 @@ services:
       - "3001:80"
     volumes:
       - cdn_static_files:/usr/share/nginx/html/projects
+      - cdn_blog_files:/usr/share/nginx/html/blogs
       - cdn_config:/etc/nginx:ro
     depends_on:
       - cdn_init
@@ -69,4 +70,5 @@ services:
 volumes:
   pgdata:
   cdn_static_files:
+  cdn_blog_files:
   cdn_config:

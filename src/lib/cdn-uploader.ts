@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import { writeFileSync, unlinkSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
 
 class CDNUploader {
   private baseUrl: string;
@@ -11,26 +11,35 @@ class CDNUploader {
 
   async uploadFile(file: File, filename: string): Promise<string> {
     try {
-      // Create a temporary file
-      const tempPath = join("/tmp", `upload_${Date.now()}_${filename}`);
+      // Create a temporary file with a simple name to avoid path issues
+      const timestamp = Date.now();
+      const tempFileName = `upload_${timestamp}_${filename.replace(
+        /[\/\\]/g,
+        "_"
+      )}`;
+      const tempPath = join("/tmp", tempFileName);
 
       // Write the file to temp location
       const buffer = await file.arrayBuffer();
       writeFileSync(tempPath, Buffer.from(buffer));
 
       try {
-        // First, ensure the projects directory exists in the CDN volume
+        // Extract directory path from filename (e.g., "blogs/example-blog" from "blogs/example-blog/image.png")
+        const fileDir = dirname(filename);
+        const targetDir = fileDir === "." ? "projects" : fileDir;
+
+        // Ensure the target directory exists in the CDN volume
         execSync(
-          `docker exec portfolio-cdn mkdir -p /usr/share/nginx/html/projects`
+          `docker exec portfolio-cdn mkdir -p /usr/share/nginx/html/${targetDir}`
         );
 
         // Copy the file to CDN volume
         execSync(
-          `docker cp "${tempPath}" portfolio-cdn:/usr/share/nginx/html/projects/${filename}`
+          `docker cp "${tempPath}" portfolio-cdn:/usr/share/nginx/html/${filename}`
         );
 
         // Return the CDN URL
-        return `${this.baseUrl}/projects/${filename}`;
+        return `${this.baseUrl}/${filename}`;
       } finally {
         // Clean up temp file
         try {
@@ -52,7 +61,7 @@ class CDNUploader {
   async deleteFile(filename: string): Promise<void> {
     try {
       execSync(
-        `docker exec portfolio-cdn rm -f /usr/share/nginx/html/projects/${filename}`
+        `docker exec portfolio-cdn rm -f /usr/share/nginx/html/${filename}`
       );
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -67,7 +76,7 @@ class CDNUploader {
   async listFiles(): Promise<string[]> {
     try {
       const output = execSync(
-        `docker exec portfolio-cdn find /usr/share/nginx/html/projects -type f -name "*" 2>/dev/null || echo ""`,
+        `docker exec portfolio-cdn find /usr/share/nginx/html -type f -name "*" 2>/dev/null || echo ""`,
         { encoding: "utf8" }
       );
 
@@ -75,9 +84,7 @@ class CDNUploader {
         .trim()
         .split("\n")
         .filter((line: string) => line.length > 0)
-        .map((line: string) =>
-          line.replace("/usr/share/nginx/html/projects/", "")
-        );
+        .map((line: string) => line.replace("/usr/share/nginx/html/", ""));
     } catch (error) {
       console.error("Error listing files:", error);
       return [];

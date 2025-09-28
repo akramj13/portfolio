@@ -28,7 +28,7 @@ export default function Home() {
             <Button variant="outline" className="cursor-pointer text-lg">
               <a href="/projects" className="flex items-center">
                 <Layers className="mr-2 h-8 w-8" />
-                <p>checkout what i&apos;ve worked on</p>
+                <p>check out what i&apos;ve worked on</p>
               </a>
             </Button>
           </BlurFade>

@@ -10,14 +10,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [projectCount] = await Promise.all([
+    const [projectCount, blogCount] = await Promise.all([
       prisma.project.count(),
-      // Add more stats here as needed
+      prisma.blog.count(),
     ]);
 
     return NextResponse.json({
       projects: projectCount,
-      blogPosts: 8, // Placeholder until blog functionality is implemented
+      blogPosts: blogCount,
     });
   } catch (error) {
     console.error("Error fetching stats:", error);

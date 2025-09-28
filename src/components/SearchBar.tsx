@@ -10,6 +10,7 @@ interface SearchBarProps {
     title: string;
     excerpt: string;
     tags: string[];
+    excerptPhrases?: string[];
   }>;
 }
 
@@ -28,10 +29,15 @@ function SearchBar({
   const recommendations = useMemo(() => {
     if (!articles.length) return [];
 
-    // Get all unique tags
+    // Get all unique tags (prioritize complete tags)
     const allTags = [...new Set(articles.flatMap((article) => article.tags))];
 
-    // Get common words from titles (filter out common words)
+    // Get meaningful phrases from excerpts
+    const excerptPhrases = articles.flatMap(
+      (article) => article.excerptPhrases || []
+    );
+
+    // Get meaningful words/phrases from titles
     const stopWords = new Set([
       "the",
       "a",
@@ -47,31 +53,80 @@ function SearchBar({
       "of",
       "with",
       "by",
+      "is",
+      "are",
+      "was",
+      "were",
+      "be",
+      "been",
+      "being",
+      "have",
+      "has",
+      "had",
+      "do",
+      "does",
+      "did",
+      "will",
+      "would",
+      "could",
+      "should",
     ]);
-    const titleWords = articles.flatMap((article) =>
-      article.title
+
+    const titlePhrases = articles.flatMap((article) => {
+      const words = article.title
         .toLowerCase()
         .replace(/[^\w\s]/g, "")
         .split(" ")
-        .filter((word) => word.length > 2 && !stopWords.has(word))
-    );
+        .filter((word) => word.length > 2 && !stopWords.has(word));
 
-    const uniqueTitleWords = [...new Set(titleWords)];
+      const phrases: string[] = [];
+      // Add individual meaningful words
+      phrases.push(...words);
 
-    // Combine and sort by relevance
-    return [...allTags, ...uniqueTitleWords].slice(0, 8);
+      // Add 2-word combinations from titles
+      for (let i = 0; i < words.length - 1; i++) {
+        phrases.push(`${words[i]} ${words[i + 1]}`);
+      }
+
+      return phrases;
+    });
+
+    const uniqueTitlePhrases = [...new Set(titlePhrases)];
+    const uniqueExcerptPhrases = [...new Set(excerptPhrases)];
+
+    // Prioritize: tags first, then excerpt phrases, then title phrases
+    const combinedRecommendations = [
+      ...allTags,
+      ...uniqueExcerptPhrases.slice(0, 8), // Limit excerpt phrases
+      ...uniqueTitlePhrases.slice(0, 6), // Limit title phrases
+    ];
+
+    // Remove duplicates and limit total
+    return [...new Set(combinedRecommendations)].slice(0, 12);
   }, [articles]);
 
-  // Filter recommendations based on search term
+  // Filter recommendations based on search term with better matching
   const filteredRecommendations = useMemo(() => {
     if (!searchTerm) {
-      return recommendations.slice(0, 5); // Show top 5 when no search term
+      return recommendations.slice(0, 6); // Show top 6 when no search term
     }
 
-    const searchLower = searchTerm.toLowerCase();
-    return recommendations
-      .filter((rec) => rec.toLowerCase().includes(searchLower))
-      .slice(0, 5);
+    const searchLower = searchTerm.toLowerCase().trim();
+
+    // Prioritize recommendations that start with the search term
+    const startsWithMatches = recommendations.filter((rec) =>
+      rec.toLowerCase().startsWith(searchLower)
+    );
+
+    // Then include recommendations that contain the search term
+    const containsMatches = recommendations.filter(
+      (rec) =>
+        rec.toLowerCase().includes(searchLower) &&
+        !rec.toLowerCase().startsWith(searchLower)
+    );
+
+    // Combine and limit results
+    return [...startsWithMatches, ...containsMatches].slice(0, 6);
   }, [searchTerm, recommendations]);
 
   // Handle click outside
