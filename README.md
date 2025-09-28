@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+    <img alt="Logo" src="public/logo.png" width="100" />
+</div>
+<h1 align="center">
+    personal website
+</h1>
+<p align="center">
+    Built with <a href="https://nextjs.org/">Next.js</a> (App Router), <a href="https://tailwindcss.com/">Tailwind CSS</a>, <a href="https://www.prisma.io/">Prisma</a>, PostgreSQL, Docker, and Nginx CDN.
+</p>
+<p align="center">
+    Features a custom admin dashboard, markdown blog system, CDN-backed image and resume uploads, with deployment workflows.
+</p>
 
-## Getting Started
+## getting started
+
+Configure environment variables first in both `server/api/linkedin` and `/` directories. Refer to the `.env.example` files.
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev && docker compose up -d
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This site is deployed with the help of <a href="https://vercel.com/">Vercel</a>, <a href="https://www.cloudflare.com/">Cloudflare</a>, and the power of my own self-hosted VPS.
