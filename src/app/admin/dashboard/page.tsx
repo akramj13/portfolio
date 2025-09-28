@@ -340,7 +340,7 @@ function Dashboard() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <a
-                      href="http://localhost:3001/resume.pdf"
+                      href={`${process.env.NEXT_PUBLIC_CDN_URL}/resume.pdf`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
