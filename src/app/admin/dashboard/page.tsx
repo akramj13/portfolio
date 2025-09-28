@@ -353,45 +353,19 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Activity */}
-          <div className="bg-card border border-border rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="h-2 w-2 bg-green-500 rounded-full mt-2"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">
-                    Dashboard updated with new functionality
-                  </p>
-                  <p className="text-xs text-muted-foreground">Just now</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="h-2 w-2 bg-blue-500 rounded-full mt-2"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">
-                    LinkedIn API integration added
-                  </p>
-                  <p className="text-xs text-muted-foreground">1 hour ago</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="h-2 w-2 bg-purple-500 rounded-full mt-2"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">
-                    Portfolio design improvements
-                  </p>
-                  <p className="text-xs text-muted-foreground">2 days ago</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="h-2 w-2 bg-orange-500 rounded-full mt-2"></div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">Admin dashboard created</p>
-                  <p className="text-xs text-muted-foreground">3 days ago</p>
-                </div>
-              </div>
-            </div>
+          {/* Inspirational Quote Card */}
+          <div className="bg-card border border-border rounded-lg p-6 flex flex-col justify-center items-center h-full">
+            <h2 className="text-lg font-semibold mb-4 text-center">
+              Inspiration
+            </h2>
+            <blockquote className="italic text-xl text-center text-muted-foreground max-w-md">
+              &ldquo;Success is not the key to happiness. Happiness is the key
+              to success. If you love what you are doing, you will be
+              successful.&rdquo;
+            </blockquote>
+            <span className="mt-4 text-sm text-muted-foreground">
+              — Albert Schweitzer
+            </span>
           </div>
         </section>
       </div>
