@@ -192,7 +192,7 @@ function SearchBar({
             </div>
             {filteredRecommendations.map((recommendation, index) => (
               <button
-                key={recommendation}
+                key={index}
                 onClick={() => handleRecommendationClick(recommendation)}
                 className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
                   index === highlightedIndex

@@ -25,7 +25,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isValid = await bcrypt.compare(password, adminPasswordHash);
+    // Decode the Base64 encoded hash back to the original bcrypt hash
+    const decodedHash = Buffer.from(adminPasswordHash, "base64").toString(
+      "utf-8"
+    );
+    const isValid = await bcrypt.compare(password, decodedHash);
 
     if (!isValid) {
       // Add delay to prevent brute force attacks
