@@ -17,8 +17,9 @@ export default function Home() {
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               i&apos;m a cs & finance double major at the university of waterloo
-              and i like building stuff, whether it be a passion project or b2b
-              saas.
+              who spends way too much time coding and trading. outside of
+              classes i build startups, hack on side projects, and mess around
+              with ai.
             </p>
           </BlurFade>
         </section>
