@@ -152,15 +152,18 @@ export default function MarkdownRenderer({
               );
 
               return (
-                <Image
-                  src={imageSrc}
-                  alt={alt || ""}
-                  title={title}
-                  width={800}
-                  height={600}
-                  className="max-w-full h-auto rounded-lg shadow-md my-4"
-                  loading="lazy"
-                />
+                <div className="flex justify-center my-4">
+                  <Image
+                    src={imageSrc}
+                    alt={alt || ""}
+                    title={title}
+                    width={800}
+                    height={600}
+                    className="max-w-[400px] w-full h-auto rounded-lg shadow-md border-2 border-primary outline-2 outline-primary/30"
+                    loading="lazy"
+                    style={{ outlineOffset: 2 }}
+                  />
+                </div>
               );
             } catch {
               console.error(
