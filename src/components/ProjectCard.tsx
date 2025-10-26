@@ -10,6 +10,8 @@ import { Project } from "@/types";
 
 function ProjectCard({ project }: { project: Project }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   return (
     <>
@@ -17,13 +19,64 @@ function ProjectCard({ project }: { project: Project }) {
         <div className="flex flex-col h-full">
           {/* Project Image */}
           <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden bg-muted border border-gray-200 dark:border-transparent">
+            {/* Loading Skeleton with Shimmer Animation */}
+            {!imageLoaded && !imageError && (
+              <div className="absolute inset-0 bg-muted overflow-hidden">
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]">
+                  <div className="h-full w-full bg-gradient-to-r from-transparent via-white/20 dark:via-white/10 to-transparent" />
+                </div>
+                {/* Pulsing circles decoration */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-16 h-16">
+                    <div className="absolute inset-0 rounded-full border-2 border-muted-foreground/20 animate-ping" />
+                    <div className="absolute inset-2 rounded-full border-2 border-muted-foreground/30 animate-pulse" />
+                    <div
+                      className="absolute inset-4 rounded-full bg-muted-foreground/10 animate-pulse"
+                      style={{ animationDelay: "0.3s" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
             <Image
               src={project.src || "/placeholder.svg"}
               alt={project.title}
               fill
-              unoptimized
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                setImageError(true);
+                setImageLoaded(true);
+              }}
+              priority={false}
             />
+
+            {/* Error State */}
+            {imageError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-muted">
+                <div className="text-center text-muted-foreground">
+                  <svg
+                    className="w-12 h-12 mx-auto mb-2 opacity-50"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <p className="text-xs">Image unavailable</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Project Content */}

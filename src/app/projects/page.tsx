@@ -4,8 +4,11 @@ import ProjectsClient from "@/components/utils/projects-client";
 
 const prisma = new PrismaClient();
 
-// Enable revalidation for this page when projects are updated
-export const revalidate = 0; // Disable static generation caching for ISR
+// Enable ISR with 60 second revalidation instead of on-demand
+export const revalidate = 60;
+
+// Enable static params generation
+export const dynamic = "force-static";
 
 async function Projects() {
   try {
