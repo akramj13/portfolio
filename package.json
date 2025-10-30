@@ -6,6 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "deploy": "./scripts/deploy.sh",
+    "down": "pm2 stop portfolio && pm2 delete portfolio && pm2 save",
     "lint": "eslint",
     "studio": "prisma studio",
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
