@@ -6,22 +6,22 @@
 case "$1" in
     start)
         echo "Starting CDN service..."
-        docker-compose up -d cdn_init cdn
+        docker compose up -d cdn_init cdn
         echo "CDN service started on http://localhost:3001"
         ;;
     stop)
         echo "Stopping CDN service..."
-        docker-compose stop cdn
+        docker compose stop cdn
         echo "CDN service stopped"
         ;;
     restart)
         echo "Restarting CDN service..."
-        docker-compose restart cdn
+        docker compose restart cdn
         echo "CDN service restarted"
         ;;
     logs)
         echo "Showing CDN logs..."
-        docker-compose logs -f cdn
+        docker compose logs -f cdn
         ;;
     status)
         echo "Checking CDN status..."
@@ -32,7 +32,7 @@ case "$1" in
         echo "Health check:"
         curl -s http://localhost:3001/health
         echo -e "\nListing files in CDN volume:"
-        docker run --rm -v portfolio_cdn_static_files:/data alpine ls -la /data/ 2>/dev/null || echo "No files found in CDN volume"
+        docker run --rm -v portfolio_cdn_data:/data alpine ls -la /data/ 2>/dev/null || echo "No files found in CDN volume"
         ;;
     upload)
         if [ -z "$2" ]; then
@@ -46,31 +46,44 @@ case "$1" in
         fi
         filename=$(basename "$2")
         echo "Uploading $filename to CDN volume..."
-        docker run --rm -v "$(pwd):/host" -v portfolio_cdn_static_files:/cdn alpine cp "/host/$2" "/cdn/$filename"
-        echo "File uploaded successfully: http://localhost:3001/projects/$filename"
+        docker run --rm -v "$(pwd):/host" -v portfolio_cdn_data:/cdn alpine cp "/host/$2" "/cdn/$filename"
+        echo "File uploaded successfully: http://localhost:3001/$filename"
         ;;
     list)
         echo "Files in CDN volume:"
-        docker run --rm -v portfolio_cdn_static_files:/data alpine ls -la /data/
+        docker run --rm -v portfolio_cdn_data:/data alpine ls -la /data/
         ;;
     clean)
         echo "WARNING: This will delete all files in the CDN volume!"
         read -p "Are you sure? (y/N) " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            docker run --rm -v portfolio_cdn_static_files:/data alpine sh -c "rm -rf /data/* && echo 'CDN volume cleaned'"
+            docker run --rm -v portfolio_cdn_data:/data alpine sh -c "rm -rf /data/* && echo 'CDN volume cleaned'"
         else
             echo "Operation cancelled"
         fi
         ;;
     backup)
         if [ -z "$2" ]; then
-            backup_path="./cdn_backup_$(date +%Y%m%d_%H%M%S).tar.gz"
+            backup_path="$(pwd)/cdn_backup_$(date +%Y%m%d_%H%M%S).tar.gz"
         else
-            backup_path="$2"
+            # Convert to absolute path if relative
+            if [[ "$2" = /* ]]; then
+                backup_path="$2"
+            else
+                backup_path="$(pwd)/$2"
+            fi
         fi
+        
+        # Get the directory and filename separately
+        backup_dir="$(dirname "$backup_path")"
+        backup_name="$(basename "$backup_path")"
+        
+        # Ensure backup directory exists
+        mkdir -p "$backup_dir"
+        
         echo "Backing up CDN volume to $backup_path..."
-        docker run --rm -v portfolio_cdn_static_files:/data -v "$(pwd):/backup" alpine tar -czf "/backup/$backup_path" -C /data .
+        docker run --rm -v portfolio_cdn_data:/data -v "$backup_dir:/backup" alpine tar -czf "/backup/$backup_name" -C /data .
         echo "Backup created: $backup_path"
         ;;
     restore)
@@ -78,12 +91,25 @@ case "$1" in
             echo "Usage: $0 restore <backup-file-path>"
             exit 1
         fi
-        if [ ! -f "$2" ]; then
-            echo "Error: Backup file '$2' does not exist"
+        
+        # Convert to absolute path if relative
+        if [[ "$2" = /* ]]; then
+            backup_file="$2"
+        else
+            backup_file="$(pwd)/$2"
+        fi
+        
+        if [ ! -f "$backup_file" ]; then
+            echo "Error: Backup file '$backup_file' does not exist"
             exit 1
         fi
-        echo "Restoring CDN volume from $2..."
-        docker run --rm -v portfolio_cdn_static_files:/data -v "$(pwd):/backup" alpine tar -xzf "/backup/$2" -C /data
+        
+        # Get the directory and filename separately
+        backup_dir="$(dirname "$backup_file")"
+        backup_name="$(basename "$backup_file")"
+        
+        echo "Restoring CDN volume from $backup_file..."
+        docker run --rm -v portfolio_cdn_data:/data -v "$backup_dir:/backup:ro" alpine tar -xzf "/backup/$backup_name" -C /data
         echo "Restore completed successfully"
         ;;
     *)

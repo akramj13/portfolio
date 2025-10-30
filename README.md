@@ -26,3 +26,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## deployment
 
 This site is deployed with the help of <a href="https://vercel.com/">Vercel</a>, <a href="https://www.cloudflare.com/">Cloudflare</a>, and the power of my own self-hosted VPS.
+
+- To take backups of the database, run the `/scripts/backup.sh`
+- To take backups of the CDN, run `/server/cdn/manage.sh backup /backups/<backup-name>.tar.gz`

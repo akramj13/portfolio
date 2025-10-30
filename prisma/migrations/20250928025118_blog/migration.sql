@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "public"."Blog" ALTER COLUMN "slug" DROP DEFAULT,
-ALTER COLUMN "updatedAt" DROP DEFAULT;
