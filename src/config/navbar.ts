@@ -26,7 +26,7 @@ export const navdata = {
       },
       email: {
         name: "email",
-        url: "mailto:akram.jamil@uwaterloo.ca",
+        url: "mailto:hi@akramj.com",
         icon: Icons.email,
       },
     },
