@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Only protect admin routes
   if (request.nextUrl.pathname.startsWith("/admin")) {
     // Skip signin page and API auth endpoint
