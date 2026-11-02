@@ -15,10 +15,8 @@ function EditBlogContent() {
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
   const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(!!slug);
-  const [error, setError] = useState<string | null>(
-    slug ? null : "No blog slug provided"
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -104,7 +102,10 @@ function EditBlogContent() {
     router.push("/admin/dashboard/blogs");
   };
 
-  if (loading) {
+  // Derived from the current URL so a removed slug is reported, not ignored
+  const pageError = slug ? error : "No blog slug provided";
+
+  if (slug && loading) {
     return (
       <PageLayout variant="narrow" maxWidth="2xl">
         <div className="flex justify-center items-center py-12">
@@ -117,12 +118,12 @@ function EditBlogContent() {
     );
   }
 
-  if (error || !blog) {
+  if (pageError || !blog) {
     return (
       <PageLayout variant="narrow" maxWidth="2xl">
         <div className="text-center py-12">
           <h1 className="text-2xl font-bold text-destructive mb-4">Error</h1>
-          <p className="text-muted-foreground">{error || "Blog not found"}</p>
+          <p className="text-muted-foreground">{pageError || "Blog not found"}</p>
         </div>
       </PageLayout>
     );
