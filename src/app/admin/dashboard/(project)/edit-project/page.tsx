@@ -41,11 +41,7 @@ function EditProjectContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!projectId) {
-      setError("No project ID provided");
-      setLoading(false);
-      return;
-    }
+    if (!projectId) return;
 
     const fetchProject = async () => {
       try {
@@ -131,7 +127,10 @@ function EditProjectContent() {
     router.push("/admin/dashboard/projects");
   };
 
-  if (loading) {
+  // Derived from the current URL so a removed id is reported, not ignored
+  const pageError = projectId ? error : "No project ID provided";
+
+  if (projectId && loading) {
     return (
       <PageLayout variant="wide" maxWidth="2xl">
         <div className="flex items-center justify-center py-12">
@@ -141,7 +140,7 @@ function EditProjectContent() {
     );
   }
 
-  if (error && !project) {
+  if (!projectId || (error && !project)) {
     return (
       <PageLayout variant="wide" maxWidth="2xl">
         <div className="space-y-6">
@@ -150,7 +149,7 @@ function EditProjectContent() {
             <p className="text-muted-foreground">Update project information.</p>
           </div>
           <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md">
-            {error}
+            {pageError}
           </div>
         </div>
       </PageLayout>

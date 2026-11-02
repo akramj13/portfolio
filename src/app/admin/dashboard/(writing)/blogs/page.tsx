@@ -15,28 +15,28 @@ export default function BlogsManagement() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch("/admin/api/blogs", {
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs");
+        }
+
+        const data = await response.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        setError("Failed to load blogs");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchBlogs();
   }, []);
-
-  const fetchBlogs = async () => {
-    try {
-      const response = await fetch("/admin/api/blogs", {
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch blogs");
-      }
-
-      const data = await response.json();
-      setBlogs(data);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-      setError("Failed to load blogs");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDelete = async (id: number, title: string) => {
     const confirmed = confirm(

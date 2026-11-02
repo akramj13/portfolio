@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus, Upload, FileText } from "lucide-react";
@@ -53,17 +53,18 @@ export default function BlogUploadForm({
   const buttonText = submitButtonText || defaultSubmitText;
 
   // Auto-generate slug from title if not manually set
-  useEffect(() => {
-    if (!slugManuallySet && formData.title) {
-      const generatedSlug = formData.title
+  const handleTitleChange = (title: string) => {
+    setFormData((prev) => {
+      if (slugManuallySet || !title) return { ...prev, title };
+      const generatedSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
         .trim();
-      setFormData((prev) => ({ ...prev, slug: generatedSlug }));
-    }
-  }, [formData.title, slugManuallySet]);
+      return { ...prev, title, slug: generatedSlug };
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -220,9 +221,7 @@ export default function BlogUploadForm({
             type="text"
             required
             value={formData.title}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, title: e.target.value }))
-            }
+            onChange={(e) => handleTitleChange(e.target.value)}
             className="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
             placeholder="Enter blog post title"
           />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import PageLayout from "@/components/utils/page-layout";
 import LogoutButton from "@/components/LogoutButton";
 import {
@@ -22,6 +23,7 @@ import {
 } from "lucide-react";
 
 function Dashboard() {
+  const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshMessage, setRefreshMessage] = useState("");
   const [stats, setStats] = useState({ projects: "...", blogPosts: "..." });
@@ -74,27 +76,27 @@ function Dashboard() {
   };
 
   const handleNewBlogPost = () => {
-    window.location.href = "/admin/dashboard/new-blog";
+    router.push("/admin/dashboard/new-blog");
   };
 
   const handleEditBlogPost = () => {
-    window.location.href = "/admin/dashboard/blogs";
+    router.push("/admin/dashboard/blogs");
   };
 
   const handleDeleteBlogPost = () => {
-    window.location.href = "/admin/dashboard/blogs";
+    router.push("/admin/dashboard/blogs");
   };
 
   const handleNewProject = () => {
-    window.location.href = "/admin/dashboard/new-project";
+    router.push("/admin/dashboard/new-project");
   };
 
   const handleEditProject = () => {
-    window.location.href = "/admin/dashboard/projects";
+    router.push("/admin/dashboard/projects");
   };
 
   const handleDeleteProject = () => {
-    window.location.href = "/admin/dashboard/projects";
+    router.push("/admin/dashboard/projects");
   };
 
   const handleResumeUpload = async (file: File) => {
@@ -338,17 +340,18 @@ function Dashboard() {
                     {isUploadingResume ? "Uploading..." : "Upload Resume"}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <a
-                      href={`${
-                        process.env.NEXT_PUBLIC_CDN_URL
-                      }/resume.pdf?${Date.now()}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      View Current Resume
-                    </a>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      // Cache-bust at click time so the latest upload is shown
+                      window.open(
+                        `${process.env.NEXT_PUBLIC_CDN_URL}/resume.pdf?${Date.now()}`,
+                        "_blank",
+                        "noopener,noreferrer"
+                      );
+                    }}
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    View Current Resume
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

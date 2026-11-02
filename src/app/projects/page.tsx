@@ -10,22 +10,26 @@ export const revalidate = 60;
 // Enable static params generation
 export const dynamic = "force-static";
 
-async function Projects() {
+async function getProjects() {
   try {
     // Fetch projects from database at build time
-    const projects = await prisma.project.findMany({
+    return await prisma.project.findMany({
       orderBy: { sortOrder: "asc" },
     });
-
-    return <ProjectsClient projects={projects} />;
   } catch (error) {
     console.error("Failed to fetch projects:", error);
 
     // Fallback to empty array
-    return <ProjectsClient projects={[]} />;
+    return [];
   } finally {
     await prisma.$disconnect();
   }
+}
+
+async function Projects() {
+  const projects = await getProjects();
+
+  return <ProjectsClient projects={projects} />;
 }
 
 export default Projects;
