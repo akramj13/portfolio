@@ -23,6 +23,14 @@ interface Project {
   sortOrder: number;
 }
 
+async function requestProjects(): Promise<Project[]> {
+  const response = await fetch("/admin/api/projects");
+  if (!response.ok) {
+    throw new Error("Failed to fetch projects");
+  }
+  return response.json();
+}
+
 export default function ProjectsManagement() {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
@@ -34,12 +42,7 @@ export default function ProjectsManagement() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("/admin/api/projects");
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-        const data = await response.json();
-        setProjects(data);
+        setProjects(await requestProjects());
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to fetch projects"
@@ -110,8 +113,13 @@ export default function ProjectsManagement() {
         throw new Error("Failed to reorder projects");
       }
     } catch (err) {
-      // Revert the local change if the server update failed
-      setProjects(projects);
+      // Reconcile with the server rather than restoring this handler's
+      // snapshot, which may be stale if another reorder or delete happened
+      try {
+        setProjects(await requestProjects());
+      } catch {
+        // Keep the current list; the reorder error below is still shown
+      }
       setError(
         err instanceof Error ? err.message : "Failed to reorder projects"
       );
