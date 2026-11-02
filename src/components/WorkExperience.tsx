@@ -5,7 +5,7 @@ import { Experience } from "@/types";
 
 const prisma = new PrismaClient();
 
-async function WorkExperience() {
+async function getExperiences(): Promise<Experience[]> {
   try {
     // Fetch experiences from Prisma cache
     const linkedInCache = await prisma.linkedInCache.findUnique({
@@ -13,17 +13,21 @@ async function WorkExperience() {
     });
 
     // Extract experiences from the cached payload
-    const experiences = (linkedInCache?.payload as Experience[]) || [];
-
-    return <WorkExperienceClient experiences={experiences} />;
+    return (linkedInCache?.payload as Experience[]) || [];
   } catch (error) {
     console.error("Failed to fetch work experiences:", error);
 
     // Fallback to empty array or static data
-    return <WorkExperienceClient experiences={[]} />;
+    return [];
   } finally {
     await prisma.$disconnect();
   }
+}
+
+async function WorkExperience() {
+  const experiences = await getExperiences();
+
+  return <WorkExperienceClient experiences={experiences} />;
 }
 
 export default WorkExperience;

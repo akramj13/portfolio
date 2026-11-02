@@ -32,23 +32,25 @@ export default function ProjectsManagement() {
   const [reordering, setReordering] = useState(false);
 
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/admin/api/projects");
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch projects"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProjects();
   }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const response = await fetch("/admin/api/projects");
-      if (!response.ok) {
-        throw new Error("Failed to fetch projects");
-      }
-      const data = await response.json();
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch projects");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this project?")) {
@@ -109,7 +111,7 @@ export default function ProjectsManagement() {
       }
     } catch (err) {
       // Revert the local change if the server update failed
-      fetchProjects();
+      setProjects(projects);
       setError(
         err instanceof Error ? err.message : "Failed to reorder projects"
       );

@@ -15,15 +15,13 @@ function EditBlogContent() {
   const searchParams = useSearchParams();
   const slug = searchParams.get("slug");
   const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(!!slug);
+  const [error, setError] = useState<string | null>(
+    slug ? null : "No blog slug provided"
+  );
 
   useEffect(() => {
-    if (!slug) {
-      setError("No blog slug provided");
-      setLoading(false);
-      return;
-    }
+    if (!slug) return;
 
     const fetchBlog = async () => {
       try {

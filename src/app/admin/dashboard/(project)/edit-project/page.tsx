@@ -36,16 +36,14 @@ function EditProjectContent() {
   const projectId = searchParams.get("id");
 
   const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!projectId);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    projectId ? null : "No project ID provided"
+  );
 
   useEffect(() => {
-    if (!projectId) {
-      setError("No project ID provided");
-      setLoading(false);
-      return;
-    }
+    if (!projectId) return;
 
     const fetchProject = async () => {
       try {

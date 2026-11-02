@@ -25,11 +25,12 @@ export default function WritingClient({ blogs }: WritingClientProps) {
   const [showAll, setShowAll] = useState(false);
 
   // Reset pagination when search term changes
-  React.useEffect(() => {
-    if (searchTerm) {
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    if (term) {
       setShowAll(false); // Reset to collapsed state when searching
     }
-  }, [searchTerm]);
+  };
 
   // Generate intelligent search recommendations from excerpts and tags
   const enhancedArticles = useMemo(() => {
@@ -159,7 +160,7 @@ export default function WritingClient({ blogs }: WritingClientProps) {
         <div className="max-w-md mx-auto">
           <SearchBar
             searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
+            onSearchChange={handleSearchChange}
             placeholder="Search articles by title, content, or tags..."
             articles={enhancedArticles}
           />
