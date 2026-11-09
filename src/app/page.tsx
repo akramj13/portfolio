@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PenLine } from "lucide-react";
+import { ArrowRight, PenLine } from "lucide-react";
 import { GitHubIcon, LinkedInIcon, LogoMark, XIcon, projectIcons } from "@/components/icons";
 import { Reveal } from "@/components/motion";
 import { Pill } from "@/components/pill";
@@ -12,7 +12,7 @@ import { projects } from "@/content/projects";
 import { site, socials } from "@/content/site";
 
 const VISIBLE_ROLES = 5;
-const VISIBLE_PROJECTS = 5;
+const VISIBLE_PROJECTS = 3;
 
 /** Full date range on wider screens, MM/YY on phones. */
 function DateRange({ start, end }: { start: string; end: string }) {
@@ -158,6 +158,12 @@ export default function HomePage() {
             />
           );
         })}
+        {projects.length > VISIBLE_PROJECTS && (
+          <Pill href="/projects" variant="secondary" size="sm" className="mt-2 h-8 px-3 text-[13px]">
+            see more projects
+            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Pill>
+        )}
       </Section>
 
       <Section label="writing" action={{ href: "/writing", label: "all writing" }} delay={60}>
