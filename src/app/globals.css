@@ -41,26 +41,16 @@
   --radius-card: 2rem;
   --radius-tile: 1.125rem;
 
-  --animate-marquee: marquee 40s linear infinite;
   --animate-blink: blink 1s steps(2, start) infinite;
   --animate-float: float 6s ease-in-out infinite;
 }
 
-/* Page width used everywhere: ~1100px of content plus a 24px gutter. */
-@utility shell {
+/* Single reading column used on every page: 672px of content plus a 24px gutter. */
+@utility column {
   margin-inline: auto;
   width: 100%;
-  max-width: 1148px;
+  max-width: 720px;
   padding-inline: 1.5rem;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 @keyframes blink {

@@ -95,6 +95,16 @@ export const roles: Role[] = [
   },
 ];
 
+const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+/** "Jan 2026" → "01/26", "Present" → "now". Used where space is tight. */
+export function shortDate(value: string) {
+  if (value.toLowerCase() === "present") return "now";
+  const [month, year] = value.split(" ");
+  const m = MONTHS.indexOf(month.slice(0, 3).toLowerCase()) + 1;
+  return m > 0 && year ? `${String(m).padStart(2, "0")}/${year.slice(-2)}` : value;
+}
+
 export const education = {
   degree: "Bachelor of Computer Science & Financial Management",
   school: "University of Waterloo",

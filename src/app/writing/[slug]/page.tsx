@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/writing/[slug]">)
 
 export default function PostPage({ params }: PageProps<"/writing/[slug]">) {
   return (
-    <Suspense fallback={<DetailSkeleton narrow />}>
+    <Suspense fallback={<DetailSkeleton />}>
       <PostDetail params={params} />
     </Suspense>
   );
@@ -37,20 +37,20 @@ async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["pa
   const Body = post.body;
 
   return (
-    <article className="mx-auto w-full max-w-[760px] px-6 pt-10 md:pt-14">
+    <article className="column pt-10 md:pt-14">
       <Link
         href="/writing"
         className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
       >
         <ArrowLeft className="size-4" />
-        All writing
+        all writing
       </Link>
 
-      <Reveal className="mt-10 md:mt-14">
+      <Reveal className="mt-8">
         <p className="font-mono text-xs text-muted">
           {formatDate(post.date)} · {post.readingTime} min read
         </p>
-        <h1 className="headline mt-4 text-[40px] md:text-[56px]">{post.title}</h1>
+        <h1 className="headline mt-4 text-[36px] md:text-[48px]">{post.title}</h1>
         <p className="mt-5 text-[19px] leading-relaxed text-muted">{post.excerpt}</p>
         <div className="mt-8 flex items-center gap-3 border-b border-line pb-8">
           <Tile tone="ink" className="size-10 rounded-full">
@@ -74,13 +74,15 @@ async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["pa
         <Body />
       </Reveal>
 
-      <Reveal className="mt-20 rounded-[2rem] bg-surface p-8 text-center md:p-12">
-        <p className="headline text-[26px] md:text-[32px]">Thanks for reading.</p>
-        <p className="mt-2 text-muted">Questions, ideas, or corrections? I&apos;d love to hear them.</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <Pill href={socials.email.href}>Say hi</Pill>
+      <Reveal className="mt-16 flex flex-col items-start gap-4 rounded-[1.75rem] bg-surface p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
+        <div>
+          <p className="text-[18px] font-semibold tracking-[-0.02em]">thanks for reading.</p>
+          <p className="mt-1 text-[15px] text-muted">questions, ideas, or corrections? i&apos;d love to hear them.</p>
+        </div>
+        <div className="flex shrink-0 gap-2">
+          <Pill href={socials.email.href}>say hi</Pill>
           <Pill href="/writing" variant="secondary">
-            More writing
+            more writing
           </Pill>
         </div>
       </Reveal>

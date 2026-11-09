@@ -4,7 +4,7 @@ import { Tile } from "@/components/placeholder";
 
 export default function NotFound() {
   return (
-    <section className="shell grid min-h-[60vh] place-items-center py-24 text-center">
+    <section className="column grid min-h-[60vh] place-items-center py-24 text-center">
       <div>
         <h1 className="display text-[72px] md:text-[120px]">
           4

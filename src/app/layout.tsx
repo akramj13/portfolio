@@ -56,7 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main
           id="content"
-          className="relative z-10 flex-1 rounded-b-[2.5rem] bg-paper pb-10"
+          className="relative z-10 flex-1 rounded-b-[2rem] bg-paper pb-20"
         >
           {children}
         </main>
