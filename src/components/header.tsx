@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { useLenis } from "lenis/react";
 import { nav, site, socials } from "@/content/site";
 import { LogoMark } from "@/components/icons";
@@ -22,18 +22,27 @@ const RING_C = 2 * Math.PI * RING_R;
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [hover, setHover] = useState<{ left: number; width: number } | null>(null);
   const [lastHover, setLastHover] = useState({ left: 0, width: 0 });
+  const ringRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     let frame = 0;
+    let wasScrolled = false;
     const update = () => {
       frame = 0;
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      setScrolled(y > 24);
-      setProgress(max > 0 ? Math.min(1, Math.max(0, y / max)) : 0);
+      const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      // The ring is written straight to the SVG, so scrolling doesn't re-render
+      // the header every frame. React only hears about it when the pill
+      // style switches on or off.
+      ringRef.current?.style.setProperty("stroke-dashoffset", String(RING_C * (1 - progress)));
+      const isScrolled = y > 24;
+      if (isScrolled !== wasScrolled) {
+        wasScrolled = isScrolled;
+        setScrolled(isScrolled);
+      }
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -100,6 +109,7 @@ export function Header() {
             >
               <circle cx="20" cy="20" r={RING_R} fill="none" stroke="var(--line)" strokeWidth="2" />
               <circle
+                ref={ringRef}
                 cx="20"
                 cy="20"
                 r={RING_R}
@@ -108,7 +118,7 @@ export function Header() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeDasharray={RING_C}
-                strokeDashoffset={RING_C * (1 - progress)}
+                strokeDashoffset={RING_C}
               />
             </svg>
             <LogoMark className="h-[22px] w-auto transition-transform duration-500 ease-[var(--ease-spring)] group-hover:-rotate-12 group-hover:scale-110" />

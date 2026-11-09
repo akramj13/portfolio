@@ -53,7 +53,8 @@ export default function HomePage() {
     <>
       {/* Intro */}
       <section className="column pt-12 md:pt-20">
-        <Reveal>
+        {/* CSS-only entrance: the intro shouldn't wait for JavaScript to show up. */}
+        <div className="animate-rise-in">
           <h1 className="display text-[48px] md:text-[64px]">
             hey, i&apos;m
             <Tile
@@ -99,7 +100,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </div>
       </section>
 
       <div className="column mt-10">
