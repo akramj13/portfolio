@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { PenLine } from "lucide-react";
 import { GitHubIcon, LinkedInIcon, LogoMark, XIcon, projectIcons } from "@/components/icons";
 import { Reveal } from "@/components/motion";
@@ -73,7 +72,8 @@ export default function HomePage() {
             projects, and mess around with ai.
           </p>
 
-          <Link
+          {/* Plain <a> so Lenis handles the smooth in-page scroll instead of the router. */}
+          <a
             href="#experience"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-pill py-1.5 pr-3.5 pl-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-pill-hover"
           >
@@ -82,7 +82,7 @@ export default function HomePage() {
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
             now: {current.title.toLowerCase()} @ {current.company}
-          </Link>
+          </a>
 
           <ul className="mt-3 flex flex-wrap gap-1.5">
             {[

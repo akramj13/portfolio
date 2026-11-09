@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { useLenis } from "lenis/react";
 import { nav, site, socials } from "@/content/site";
 import { LogoMark } from "@/components/icons";
 import { cn } from "@/lib/cn";
@@ -47,6 +48,18 @@ export function Header() {
     };
   }, []);
 
+  const lenis = useLenis();
+
+  // On the home page the logo glides back to the top instead of reloading the route.
+  const onLogoClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== "/" || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0 });
+    // Drop a leftover "#experience" so the URL matches where you end up.
+    if (window.location.hash) window.history.replaceState(null, "", "/");
+  };
+
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   const highlight = (el: HTMLAnchorElement) => {
@@ -73,6 +86,7 @@ export function Header() {
         <Link
           href="/"
           aria-label={`${site.name}, home`}
+          onClick={onLogoClick}
           className="group flex items-center gap-2 rounded-full pr-1"
         >
           <span className="relative grid size-10 place-items-center">
