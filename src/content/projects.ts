@@ -1,0 +1,293 @@
+// Hardcoded from the current akramj.com projects list (same order).
+// Screenshots are placeholders for now; swap `image` in when real art exists.
+
+import type { Tone } from "@/components/placeholder";
+
+export type ProjectIcon =
+  | "keyboard"
+  | "video"
+  | "brain"
+  | "gamepad"
+  | "stethoscope"
+  | "chart"
+  | "layers"
+  | "mic"
+  | "trending";
+
+export type Project = {
+  slug: string;
+  title: string;
+  tagline: string;
+  description: string;
+  duration: string;
+  tags: string[];
+  features: string[];
+  highlights: string[];
+  challenges: string[];
+  link: string;
+  tone: Tone;
+  icon: ProjectIcon;
+  badge?: string;
+  image?: string;
+};
+
+export const projects: Project[] = [
+  {
+    slug: "cotabby",
+    title: "Cotabby",
+    tagline: "Privacy-first AI autocomplete for macOS.",
+    description:
+      "Privacy-first AI autocomplete for macOS that works across the apps you already use. Cotabby renders inline ghost-text suggestions, supports Apple Intelligence or local GGUF models, and keeps every keystroke on-device. 6,000+ downloads and 750+ stars so far.",
+    duration: "Ongoing",
+    tags: ["Swift", "SwiftUI", "AppKit", "Accessibility APIs", "llama.cpp", "Apple Intelligence", "OCR"],
+    features: [
+      "Inline ghost-text autocomplete across macOS apps",
+      "Word-by-word Tab acceptance that keeps the user in control",
+      "Local model routing with Apple Intelligence or GGUF backends",
+      "Emoji shortcuts, autocorrect, and macro expansion",
+    ],
+    highlights: [
+      "Open source, private, and free",
+      "Uses screenshot OCR for extra visual context when needed",
+    ],
+    challenges: [
+      "Tracking the focused editable field across many Accessibility implementations",
+      "Rendering suggestions at the caret without stealing focus",
+      "Keeping inference low-latency while staying fully on-device",
+    ],
+    link: "https://cotabby.app/",
+    tone: "ink",
+    icon: "keyboard",
+    badge: "6k+ downloads",
+  },
+  {
+    slug: "vidsynth",
+    title: "Vidsynth.ai",
+    tagline: "AI short-form video studio for creators.",
+    description:
+      "VidSynth AI is a SaaS platform that automates short-form content creation. AI-powered tools turn trends, Reddit posts and generated topics into engaging videos in minutes.",
+    duration: "1 month",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Radix UI", "Drizzle", "PostgreSQL", "Supabase", "Clerk", "Remotion", "Gemini", "ElevenLabs", "Replicate", "AssemblyAI", "AWS"],
+    features: [
+      "Trend discovery to help creators make content that goes viral",
+      "Reddit Post Converter: turn viral Reddit posts into video",
+      "Split Screen Creator: dual-view videos with custom backgrounds",
+      "ChatGPT Video Generator: AI-narrated videos from generated topics",
+    ],
+    highlights: [
+      "Google Gemini, ElevenLabs and Replicate for scripts, voices and images",
+      "Remotion Lambda for scalable, high-performance rendering",
+      "20+ AI voices, 25+ caption styles and multiple background options",
+      "Flexible, credit-based pricing tiers",
+    ],
+    challenges: [
+      "Configured Remotion Lambda on AWS for distributed rendering, keeping HD generation stable under heavy concurrency.",
+      "Stitched Gemini, ElevenLabs, Replicate and AssemblyAI into one pipeline, handling latency, retries and audio/caption/visual sync.",
+      "Built a transactional credit system on Clerk and Supabase/PostgreSQL with consistent deductions and per-tier access control.",
+    ],
+    link: "https://github.com/akramj13/vidsynth-ai",
+    tone: "violet",
+    icon: "video",
+  },
+  {
+    slug: "alzguard",
+    title: "AlzGuard",
+    tagline: "Alzheimer's detection tool for physicians.",
+    description:
+      "Engineered the frontend and AI model for an Alzheimer's detection tool for physicians, which won $1,000 at the Youth Impact Challenge.",
+    duration: "~2 months",
+    tags: ["React", "Python", "TensorFlow", "JavaScript", "CSS"],
+    features: [
+      "AI-powered Alzheimer's detection using machine learning",
+      "Medical image analysis and processing",
+      "Random-forest classifier for accurate predictions",
+      "Physician-friendly interface for clinical use",
+      "Real-time diagnostic results and recommendations",
+    ],
+    highlights: [
+      "Developed the machine learning model for Alzheimer's detection",
+      "Built an intuitive frontend for medical professionals",
+      "Won a $1,000 prize at the Youth Impact Challenge",
+      "High accuracy in diagnostic predictions",
+    ],
+    challenges: [
+      "Ensuring data security and privacy",
+      "Handling complex state management in the frontend",
+    ],
+    link: "https://github.com/akramj13/AlzGuard",
+    tone: "sky",
+    icon: "brain",
+    badge: "YIC winner",
+  },
+  {
+    slug: "biquadris",
+    title: "Biquadris",
+    tagline: "Two-player competitive Tetris in C++.",
+    description:
+      "A C++ implementation of Biquadris, a competitive two-player Tetris-style game for Linux. Built around object-oriented design, memory safety and clean separation of concerns, with both text and X11 graphical interfaces.",
+    duration: "2 weeks",
+    tags: ["C++", "X11", "Linux", "MVC"],
+    features: [
+      "Two-player competitive gameplay with real-time interaction",
+      "Dual rendering modes: terminal view and X11 graphical interface",
+      "Multiple block types and levels with increasing difficulty",
+      "Special actions that affect the opposing player",
+      "Robust command parsing for flexible gameplay control",
+      "Deterministic game logic with consistent state updates",
+    ],
+    highlights: [
+      "Modular architecture separating game logic, rendering and input",
+      "Modern C++ practices (RAII, smart pointers) to avoid leaks",
+      "Observer-style updates keep every view in sync",
+      "Built for Linux with low-level windowing via X11",
+    ],
+    challenges: [
+      "Managing complex game state across two independent players",
+      "Preventing memory leaks and dangling pointers in a large C++ codebase",
+      "Keeping text and graphical views perfectly synchronized",
+      "Designing extensible class hierarchies without over-engineering",
+    ],
+    link: "https://github.com/akramj13/biquadris",
+    tone: "orange",
+    icon: "gamepad",
+  },
+  {
+    slug: "echodoc",
+    title: "EchoDoc",
+    tagline: "AI voice clones that handle patient calls.",
+    description:
+      "EchoDoc creates AI-powered voice clones of doctors that handle routine patient communication and appointment scheduling on their own.",
+    duration: "2 days",
+    tags: ["Express.js", "Node.js", "Next.js", "TypeScript", "Supabase", "Clerk", "Twilio", "Google Gemini"],
+    features: [
+      "AI agents with cloned doctor voices handle calls and scheduling",
+      "Patient profiles keep responses aware of medical history",
+      "Live calendar integration for real-time appointment management",
+      "Secure handling of sensitive medical information",
+    ],
+    highlights: [
+      "Combined voice cloning and real-time AI text generation while respecting HIPAA and medical ethics",
+    ],
+    challenges: [
+      "Real-time voice cloning that keeps a doctor's natural speaking patterns",
+      "Dynamic calendar updates across concurrent AI calls without double-booking",
+    ],
+    link: "https://github.com/akramj13/echodoc",
+    tone: "green",
+    icon: "stethoscope",
+  },
+  {
+    slug: "learnetf",
+    title: "LearnETF",
+    tagline: "Gamified ETF lessons for Gen-Z investors.",
+    description:
+      "A full-stack learning platform for ETFs that won the Sun Life sponsor prize at GeeseHacks 2025. Interactive lessons, quizzes and progress tracking.",
+    duration: "2 days",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Figma", "Next.js", "Python", "Flask", "OpenAI", "Plotly", "NumPy", "yfinance"],
+    features: [
+      "Interactive modules for ETFs, stocks and bonds",
+      "Real-time market insights from Yahoo Finance",
+      "AI-powered personalised financial guidance",
+      "Interactive data visualisations with Plotly",
+      "Gamified modules to keep learners engaged",
+    ],
+    highlights: [
+      "Won the Sun Life sponsor prize at GeeseHacks 2025",
+      "Built a full financial literacy platform in 2 days",
+      "Real-time market data with yfinance and NumPy",
+      "Personalised learning with the OpenAI API",
+    ],
+    challenges: [
+      "Building a complete LMS inside a hackathon timeframe",
+      "Integrating multiple APIs for real-time financial data",
+      "Simplifying complex financial concepts for younger audiences",
+    ],
+    link: "https://github.com/akramj13/learnetf",
+    tone: "blue",
+    icon: "chart",
+    badge: "GeeseHacks winner",
+  },
+  {
+    slug: "portfolio-v1",
+    title: "Portfolio v1",
+    tagline: "The self-updating site this one replaced.",
+    description:
+      "The previous version of this site: Next.js with live LinkedIn sync, a custom animation system, PostgreSQL, an admin dashboard and a microservice API for content management.",
+    duration: "2 weeks",
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "Nginx", "Cloudflare", "Python", "FastAPI", "Playwright", "Docker", "Prisma", "PostgreSQL"],
+    features: [
+      "Live LinkedIn work-experience sync via a custom API",
+      "Animation system built on Motion with custom blur-fade components",
+      "PostgreSQL with Prisma for persistence and caching",
+      "SEO via the App Router metadata API",
+    ],
+    highlights: [
+      "Custom self-hosted CDN with Nginx",
+      "Deployed on a self-hosted VPS behind Cloudflare",
+    ],
+    challenges: ["Static generation with dynamic content from a CMS"],
+    link: "https://github.com/akramj13/portfolio",
+    tone: "slate",
+    icon: "layers",
+  },
+  {
+    slug: "voice-synthesis-ai",
+    title: "Voice Synthesis AI",
+    tagline: "AI voice-overs for short-form video.",
+    description:
+      "A full-stack web app that generates high-quality AI voice-overs for short-form videos, with custom topic generation.",
+    duration: "2 weeks",
+    tags: ["Next.js", "Gemini API", "AssemblyAI", "ElevenLabs", "AWS S3", "PostgreSQL", "Drizzle ORM", "Clerk"],
+    features: [
+      "Voice synthesis with the ElevenLabs API",
+      "Custom topic generation with Gemini",
+      "Transcription and processing with AssemblyAI",
+      "Cloud storage on AWS S3",
+      "Authentication and session management",
+    ],
+    highlights: [
+      "Realistic voice synthesis with ElevenLabs",
+      "Scalable backend with PostgreSQL and Drizzle ORM",
+      "Secure file storage on AWS S3",
+    ],
+    challenges: [
+      "Managing large audio uploads and processing",
+      "Optimising synthesis response times",
+      "Balancing audio quality with processing speed",
+    ],
+    link: "https://github.com/akramj13/ai-voice",
+    tone: "red",
+    icon: "mic",
+  },
+  {
+    slug: "roboadvisor",
+    title: "RoboAdvisor",
+    tagline: "A robo-advisor that tried to beat the S&P.",
+    description:
+      "A robo-advisor that gives stock insights and recommendations from real-time data. Uses modern portfolio theory and stochastic optimisation to beat the S&P 500.",
+    duration: "~1.5 months",
+    tags: ["Python", "NumPy", "pandas", "yfinance", "matplotlib"],
+    features: [
+      "Real-time stock market data analysis",
+      "Data-driven predictions and recommendations",
+      "Portfolio tracking and management",
+    ],
+    highlights: [
+      "Modern portfolio theory for allocation",
+      "Outperformed the S&P 500 benchmark",
+      "Strategy tuned with options data and market sentiment",
+    ],
+    challenges: ["Handling large volumes of real-time data"],
+    link: "https://github.com/akramj13/Stock-Robo-Advisor",
+    tone: "lime",
+    icon: "trending",
+  },
+];
+
+export function getProject(slug: string) {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function linkLabel(link: string) {
+  return link.includes("github.com") ? "View on GitHub" : "Visit site";
+}
