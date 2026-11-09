@@ -126,10 +126,11 @@ export function Header() {
           <span
             className={cn(
               "overflow-hidden text-[15px] font-semibold tracking-tight whitespace-nowrap transition-[max-width,opacity] duration-500",
-              scrolled ? "max-w-0 opacity-0" : "max-w-20 opacity-100 max-[380px]:max-w-0 max-[380px]:opacity-0",
+              // The full name needs ~428px of bar, so phones show just the logo.
+              scrolled ? "max-w-0 opacity-0" : "max-w-28 opacity-100 max-[440px]:max-w-0 max-[440px]:opacity-0",
             )}
           >
-            akram
+            akram jamil
           </span>
         </Link>
 
