@@ -12,9 +12,10 @@ const RING_C = 2 * Math.PI * RING_R;
 
 /**
  * Floating pill navbar.
- * - At the top of the page it sits flat and spans the reading column.
- * - Once you scroll it shrinks into a frosted pill and the logo gains a
- *   ring that fills with scroll progress.
+ * - Logo, links and the "say hi" button sit together in the middle.
+ * - At the top of the page the bar has no background. Once you scroll it
+ *   becomes a frosted pill and the logo gains a ring that fills with
+ *   scroll progress.
  * - A soft gray highlight slides between links on hover.
  */
 export function Header() {
@@ -61,18 +62,18 @@ export function Header() {
     <header className="pointer-events-none sticky top-0 z-50 h-[76px] px-3 pt-3">
       <div
         className={cn(
-          "pointer-events-auto mx-auto flex h-[52px] w-full animate-nav-in items-center gap-2 rounded-full pr-1.5 pl-2",
-          "transition-[max-width,background-color,box-shadow,backdrop-filter] duration-500 ease-[var(--ease-spring)]",
+          "pointer-events-auto mx-auto flex h-[52px] w-fit max-w-full animate-nav-in items-center justify-center gap-1 rounded-full pr-1.5 pl-2",
+          "transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-[var(--ease-spring)]",
           scrolled
-            ? "max-w-[392px] bg-paper/85 shadow-[0_0_0_1px_var(--line),0_12px_32px_-12px_rgb(20_20_20/0.25)] backdrop-blur-xl backdrop-saturate-150"
-            : "max-w-[696px] bg-transparent",
+            ? "bg-paper/85 shadow-[0_0_0_1px_var(--line),0_12px_32px_-12px_rgb(20_20_20/0.25)] backdrop-blur-xl backdrop-saturate-150"
+            : "bg-transparent",
         )}
       >
         {/* Logo with scroll-progress ring */}
         <Link
           href="/"
           aria-label={`${site.name}, home`}
-          className="group mr-auto flex items-center gap-2 rounded-full"
+          className="group flex items-center gap-2 rounded-full pr-1"
         >
           <span className="relative grid size-10 place-items-center">
             <svg
