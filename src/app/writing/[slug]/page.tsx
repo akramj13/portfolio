@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
 import { DetailSkeleton } from "@/components/skeleton";
 import { LogoMark } from "@/components/icons";
 import { Pill } from "@/components/pill";
@@ -19,7 +20,21 @@ export async function generateMetadata({ params }: PageProps<"/writing/[slug]">)
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
-  return { title: post.title, description: post.excerpt };
+  return {
+    title: post.title,
+    description: post.excerpt,
+    keywords: post.tags,
+    alternates: { canonical: `/writing/${slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `/writing/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+      authors: [site.name],
+      tags: post.tags,
+    },
+  };
 }
 
 export default function PostPage({ params }: PageProps<"/writing/[slug]">) {
@@ -38,6 +53,20 @@ async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["pa
 
   return (
     <article className="column pt-10 md:pt-14">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          keywords: post.tags.join(", "),
+          url: `${site.url}/writing/${post.slug}`,
+          mainEntityOfPage: `${site.url}/writing/${post.slug}`,
+          image: `${site.url}/writing/${post.slug}/opengraph-image`,
+          author: { "@type": "Person", name: site.name, url: site.url },
+        }}
+      />
       <Link
         href="/writing"
         className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"

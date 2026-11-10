@@ -21,17 +21,33 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: site.title,
-    template: `%s — ${site.name}`,
+    template: `%s — ${site.title}`,
   },
   description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  keywords: [
+    "Akram Jamil",
+    "akramj13",
+    "University of Waterloo",
+    "computer science",
+    "financial management",
+    "software engineer",
+    "machine learning",
+    "portfolio",
+  ],
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {
     title: site.title,
     description: site.description,
-    url: site.url,
+    url: "/",
     siteName: site.name,
+    locale: "en_CA",
     type: "website",
   },
-  twitter: { card: "summary_large_image", creator: "@akramj_13" },
+  twitter: { card: "summary_large_image", creator: "@akramj_13", title: site.title, description: site.description },
 };
 
 export const viewport: Viewport = {

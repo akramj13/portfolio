@@ -8,8 +8,9 @@ import { socials } from "@/content/site";
 import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "projects",
   description: "Things Akram has built: AI tools, hackathon winners, games, and finance experiments.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {

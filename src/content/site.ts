@@ -3,7 +3,8 @@ export const site = {
   handle: "akramj13",
   url: "https://akramj.com",
   email: "hi@akramj.com",
-  title: "Akram Jamil — software, ml & markets",
+  // Browser tab and share title; lowercase to match the site's voice.
+  title: "akram jamil",
   description:
     "cs & finance double major at the university of waterloo. i build startups, hack on side projects, and mess around with ai.",
   since: 2024,

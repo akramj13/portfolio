@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, PenLine } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
+import { JsonLd } from "@/components/json-ld";
 import { HeroField } from "@/components/hero/hero-field";
 import { HeroPrefix } from "@/components/hero/hero-prefix";
 import { MorphWord } from "@/components/hero/morph-word";
@@ -62,6 +63,22 @@ export default function HomePage() {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: site.name,
+          alternateName: site.handle,
+          url: site.url,
+          image: `${site.url}/icon-512.png`,
+          email: `mailto:${site.email}`,
+          description: site.description,
+          jobTitle: current.title,
+          worksFor: { "@type": "Organization", name: current.company },
+          alumniOf: { "@type": "CollegeOrUniversity", name: education.school, url: "https://uwaterloo.ca" },
+          sameAs: [socials.github.href, socials.linkedin.href, socials.x.href],
+        }}
+      />
       {/*
         Intro. The HTML name renders first; once WebGL loads, HeroField redraws it as a dot
         field that reacts to the cursor and morphs when the dotted words are hovered.

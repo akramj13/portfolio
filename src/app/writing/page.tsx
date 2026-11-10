@@ -6,8 +6,9 @@ import { Row, Section } from "@/components/resume";
 import { formatDate, posts, publishedPosts } from "@/content/posts";
 
 export const metadata: Metadata = {
-  title: "Writing",
+  title: "writing",
   description: "Notes on building software, side projects, and whatever Akram is figuring out.",
+  alternates: { canonical: "/writing" },
 };
 
 const icon = (
