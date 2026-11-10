@@ -1,17 +1,4 @@
 import type { SVGProps } from "react";
-import {
-  Brain,
-  ChartCandlestick,
-  Gamepad2,
-  Keyboard,
-  Layers,
-  Mic,
-  Stethoscope,
-  TrendingUp,
-  Video,
-  type LucideIcon,
-} from "lucide-react";
-import type { ProjectIcon } from "@/content/projects";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -51,14 +38,3 @@ export function XIcon(props: IconProps) {
   );
 }
 
-export const projectIcons: Record<ProjectIcon, LucideIcon> = {
-  keyboard: Keyboard,
-  video: Video,
-  brain: Brain,
-  gamepad: Gamepad2,
-  stethoscope: Stethoscope,
-  chart: ChartCandlestick,
-  layers: Layers,
-  mic: Mic,
-  trending: TrendingUp,
-};

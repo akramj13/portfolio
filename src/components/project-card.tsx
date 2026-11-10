@@ -1,21 +1,22 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/content/projects";
-import { projectIcons } from "@/components/icons";
-import { Placeholder, Tile } from "@/components/placeholder";
+import { Placeholder } from "@/components/placeholder";
+import { ProjectIcon } from "@/components/project-icon";
 import { cn } from "@/lib/cn";
 
 /** Placeholder "screenshot" with the project's icon tile floating in the middle. */
 export function ProjectArt({ project, className }: { project: Project; className?: string }) {
-  const Icon = projectIcons[project.icon];
   return (
     <Placeholder tone={project.tone} label="screenshot" className={cn("grid place-items-center", className)}>
-      <Tile
+      <ProjectIcon
+        src={project.icon}
+        // The placeholder sits on the project's colour, so use a contrasting tile.
         tone={project.tone === "ink" ? "slate" : "ink"}
-        className="size-14 rounded-[16px] transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6"
-      >
-        <Icon className="size-7" strokeWidth={1.75} />
-      </Tile>
+        size={56}
+        // A light rim lifts the icon off art that shares its colour.
+        className="rounded-[16px] ring-2 ring-white/70 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6"
+      />
     </Placeholder>
   );
 }

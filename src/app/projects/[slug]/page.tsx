@@ -3,9 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { projectIcons } from "@/components/icons";
 import { Pill } from "@/components/pill";
-import { Tile } from "@/components/placeholder";
+import { ProjectIcon } from "@/components/project-icon";
 import { ProjectArt } from "@/components/project-card";
 import { Reveal } from "@/components/motion";
 import { DetailSkeleton } from "@/components/skeleton";
@@ -40,7 +39,6 @@ async function ProjectDetail({ params }: { params: PageProps<"/projects/[slug]">
   const project = getProject(slug);
   if (!project) notFound();
 
-  const Icon = projectIcons[project.icon];
   const index = projects.indexOf(project);
   const next = projects[(index + 1) % projects.length];
 
@@ -62,9 +60,7 @@ async function ProjectDetail({ params }: { params: PageProps<"/projects/[slug]">
 
       <Reveal className="mt-8">
         <div className="flex items-center gap-3">
-          <Tile tone={project.tone} className="size-12 rounded-[14px]">
-            <Icon className="size-6" strokeWidth={2} />
-          </Tile>
+          <ProjectIcon src={project.icon} tone={project.tone} size={48} className="rounded-[14px]" />
           <div className="text-sm text-muted">
             <p>{project.duration}</p>
             {project.badge && <p className="font-medium text-ink">{project.badge}</p>}

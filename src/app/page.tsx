@@ -5,9 +5,10 @@ import { JsonLd } from "@/components/json-ld";
 import { HeroField } from "@/components/hero/hero-field";
 import { HeroPrefix } from "@/components/hero/hero-prefix";
 import { MorphWord } from "@/components/hero/morph-word";
-import { GitHubIcon, LinkedInIcon, XIcon, projectIcons } from "@/components/icons";
+import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion";
 import { Pill } from "@/components/pill";
+import { ProjectIcon } from "@/components/project-icon";
 import { Tile } from "@/components/placeholder";
 import { Row, Section } from "@/components/resume";
 import { ShowMore } from "@/components/show-more";
@@ -172,24 +173,17 @@ export default function HomePage() {
         action={{ href: "/projects", label: "all projects" }}
         delay={60}
       >
-        {projects.slice(0, VISIBLE_PROJECTS).map((p) => {
-          const Icon = projectIcons[p.icon];
-          return (
-            <Row
-              key={p.slug}
-              href={`/projects/${p.slug}`}
-              icon={
-                <Tile tone={p.tone} className="size-10 rounded-[12px]">
-                  <Icon className="size-[18px]" strokeWidth={2} />
-                </Tile>
-              }
-              title={p.title}
-              badge={p.badge}
-              subtitle={p.tagline}
-              metaBottom={p.duration}
-            />
-          );
-        })}
+        {projects.slice(0, VISIBLE_PROJECTS).map((p) => (
+          <Row
+            key={p.slug}
+            href={`/projects/${p.slug}`}
+            icon={<ProjectIcon src={p.icon} tone={p.tone} size={40} className="rounded-[12px]" />}
+            title={p.title}
+            badge={p.badge}
+            subtitle={p.tagline}
+            metaBottom={p.duration}
+          />
+        ))}
         {projects.length > VISIBLE_PROJECTS && (
           <Pill href="/projects" variant="secondary" size="sm" className="mt-2 h-8 px-3 text-[13px]">
             see more projects
