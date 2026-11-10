@@ -49,11 +49,11 @@ Everything on the site is plain files, so updating it is a commit.
 
 - **experience:** the easiest way to update it is the `/sync-experience` skill below. Company logos load automatically from [logo.dev](https://www.logo.dev) by company name. If a name matches the wrong brand, pin it with `"logo": { "domain": "acme.com" }`, or set `"logo": false` to keep the monogram tile.
 - **projects:** the easiest way to add one is the `/add-project` skill below.
-- **blog posts:** each `.mdx` file exports its `metadata` (title, excerpt, date, reading time, tags, cover) at the top. Add one line for it in `src/content/posts.ts` and it shows up on the writing page, the sitemap, and its share image. Set `draft: true` to keep it hidden.
+- **blog posts:** the easiest way to write one is the `/new-post` skill below. Each `.mdx` file exports its `metadata` (title, excerpt, date, reading time, tags, cover) at the top. Add one line for it in `src/content/posts.ts` and it shows up on the writing page, the sitemap, and its share image. Set `draft: true` to keep it hidden: drafts don't appear anywhere in production, but open by URL on the dev server (with a draft label) so you can read them first.
 
 ## Claude skills
 
-The repo ships two [Claude Code](https://claude.com/claude-code) skills in `.claude/skills/`. Run them as slash commands in any Claude Code session in this repo, or just ask in plain words.
+The repo ships three [Claude Code](https://claude.com/claude-code) skills in `.claude/skills/`. Run them as slash commands in any Claude Code session in this repo, or just ask in plain words.
 
 ### `/add-project`
 
@@ -90,6 +90,16 @@ Makes the experience section match your LinkedIn. It opens your profile's experi
 ```
 
 Needs [Claude in Chrome](https://claude.com/chrome) with LinkedIn signed in.
+
+### `/new-post`
+
+Turns your notes, a rough draft, or a voice-memo transcript into a post in your voice (lowercase and casual, keeping your wording and only the facts you gave it). It saves images you hand it (converting HEIC photos) or screenshots of sites you name into `public/writing/<slug>/`, registers the post, and leaves it as a draft for you to read on the dev server. Say "publish" when you're happy and it goes live.
+
+```text
+/new-post here are my notes on winning geesehacks: …
+```
+
+The skill lives in `.claude/skills/new-post/`, with its test cases in `evals/`.
 
 ## deployment
 

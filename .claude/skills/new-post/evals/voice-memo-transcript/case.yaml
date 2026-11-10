@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: voice-memo-transcript
+expected_outcome: |
+  A short draft post about rebuilding the portfolio as a frontend-only v2, shaped from the rambling transcript into a structured post in the user's voice with no filler words, no images or cover, registered in posts.ts, and the site still builds with the draft unpublished.

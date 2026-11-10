@@ -42,7 +42,13 @@ const chrome = spawn(
 );
 const cleanup = () => {
   chrome.kill("SIGKILL");
-  rmSync(profile, { recursive: true, force: true });
+  // Chrome may still be writing to its profile as it exits; retry, and never
+  // let a leftover temp folder fail an otherwise good capture.
+  try {
+    rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+  } catch {
+    /* the OS clears tmp eventually */
+  }
 };
 const fail = (message, code = 1) => {
   console.error(`error: ${message}; ask the user for a screenshot instead`);

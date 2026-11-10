@@ -30,8 +30,13 @@ export const publishedPosts = all
   .filter((p) => !p.draft)
   .sort((a, b) => b.date.localeCompare(a.date));
 
+/**
+ * Look up a post by slug. Drafts are hidden everywhere in production, but on
+ * the dev server they open by URL so they can be read before publishing.
+ */
 export function getPost(slug: string) {
-  return publishedPosts.find((p) => p.slug === slug);
+  const showDrafts = process.env.NODE_ENV === "development";
+  return all.find((p) => p.slug === slug && (!p.draft || showDrafts));
 }
 
 export function formatDate(iso: string) {

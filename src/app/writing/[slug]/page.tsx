@@ -77,6 +77,11 @@ async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["pa
 
       <Reveal className="mt-8">
         <p className="font-mono text-xs text-muted">
+          {post.draft && (
+            <span className="mr-2 rounded-full bg-amber-100 px-2 py-0.5 font-sans font-semibold text-amber-800">
+              draft · only visible on the dev server
+            </span>
+          )}
           {formatDate(post.date)} · {post.readingTime} min read
         </p>
         <h1 className="headline mt-4 text-[36px] md:text-[48px]">{post.title}</h1>

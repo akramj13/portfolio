@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: notes-with-website-screenshot
+expected_outcome: |
+  A draft post about Cotabby written from the notes in the user's casual lowercase voice, with a fresh screenshot of cotabby.app saved under public/writing/<slug>/ and shown near the top, registered in posts.ts, and the site still builds with the draft unpublished.
