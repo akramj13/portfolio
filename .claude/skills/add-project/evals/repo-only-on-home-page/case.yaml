@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: repo-only-on-home-page
+expected_outcome: |
+  A local-chatbot project is added as the third entry of src/config/projects.json with no image field, a matching icon.svg in public/projects/<slug>/, the card falls back to placeholder art, the home page's building section now lists it, and the site still builds.
