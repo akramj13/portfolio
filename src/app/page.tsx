@@ -19,6 +19,7 @@ import { site, socials } from "@/content/site";
 
 const VISIBLE_ROLES = 5;
 const VISIBLE_PROJECTS = 3;
+const VISIBLE_POSTS = 2;
 
 /** Full date range on wider screens, MM/YY on phones. */
 function DateRange({ start, end }: { start: string; end: string }) {
@@ -193,7 +194,7 @@ export default function HomePage() {
       </Section>
 
       <Section label="writing" action={{ href: "/writing", label: "all writing" }} delay={60}>
-        {publishedPosts.map((post) => (
+        {publishedPosts.slice(0, VISIBLE_POSTS).map((post) => (
           <Row
             key={post.slug}
             href={`/writing/${post.slug}`}
@@ -217,6 +218,12 @@ export default function HomePage() {
             metaBottom={formatDate(post.date)}
           />
         ))}
+        {publishedPosts.length > VISIBLE_POSTS && (
+          <Pill href="/writing" variant="secondary" size="sm" className="mt-2 h-8 px-3 text-[13px]">
+            see more writing
+            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Pill>
+        )}
       </Section>
 
       <section className="column mt-14">
