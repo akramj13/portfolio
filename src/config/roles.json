@@ -1,11 +1,21 @@
 [
   {
+    "title": "Software Engineer",
+    "company": "TD",
+    "monogram": "TD",
+    "tone": "green",
+    "start": "Sep 2026",
+    "end": "Present",
+    "location": "Toronto, ON",
+    "mode": "On-site"
+  },
+  {
     "title": "Software & ML Engineer",
     "company": "Illuminex AI",
     "monogram": "Ix",
     "tone": "violet",
     "start": "Jan 2026",
-    "end": "Present",
+    "end": "Apr 2026",
     "location": "Waterloo, ON",
     "mode": "Remote"
   },
@@ -66,11 +76,13 @@
     "monogram": "CC",
     "tone": "red",
     "start": "Jun 2024",
-    "end": "Sep 2024"
+    "end": "Sep 2024",
+    "location": "Toronto, ON",
+    "mode": "On-site"
   },
   {
     "title": "Teaching Assistant",
-    "company": "Kumon Canada",
+    "company": "Kumon Canada, Inc.",
     "monogram": "Ku",
     "tone": "sky",
     "start": "Sep 2020",

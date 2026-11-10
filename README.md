@@ -47,13 +47,17 @@ Everything on the site is plain files, so updating it is a commit.
 | post images | `public/writing/<slug>/` |
 | site name, links, socials | `src/content/site.ts` |
 
-- **experience:** company logos load automatically from [logo.dev](https://www.logo.dev) by company name. If a name matches the wrong brand, pin it with `"logo": { "domain": "acme.com" }`, or set `"logo": false` to keep the monogram tile.
+- **experience:** the easiest way to update it is the `/sync-experience` skill below. Company logos load automatically from [logo.dev](https://www.logo.dev) by company name. If a name matches the wrong brand, pin it with `"logo": { "domain": "acme.com" }`, or set `"logo": false` to keep the monogram tile.
 - **projects:** the easiest way to add one is the `/add-project` skill below.
 - **blog posts:** each `.mdx` file exports its `metadata` (title, excerpt, date, reading time, tags, cover) at the top. Add one line for it in `src/content/posts.ts` and it shows up on the writing page, the sitemap, and its share image. Set `draft: true` to keep it hidden.
 
-## adding projects with Claude
+## Claude skills
 
-The repo ships a [Claude Code](https://claude.com/claude-code) skill, `add-project`, that adds a project end to end:
+The repo ships two [Claude Code](https://claude.com/claude-code) skills in `.claude/skills/`. Run them as slash commands in any Claude Code session in this repo, or just ask in plain words.
+
+### `/add-project`
+
+Adds a project end to end:
 
 1. gathers the details from the repo (via `gh`) and the live site, drafts the entry, and confirms it and its spot in the list with you
 2. captures a 2000×1250 screenshot of the live site, or saves one you give it
@@ -76,6 +80,16 @@ The skill lives in `.claude/skills/add-project/`, with its test cases in `evals/
 ```bash
 cd .claude/skills/add-project && claude plugin eval . --allow-tools Write,Edit,Bash --scaffold
 ```
+
+### `/sync-experience`
+
+Makes the experience section match your LinkedIn. It opens your profile's experience page in Chrome (sign in there first), compares every position with `src/config/roles.json`, and shows you what it would add, change, or remove: titles, dates, locations, work mode, and company names. It also checks that each new company's logo is the right brand. Nothing is written until you approve, and your own monogram, colour, and logo choices are kept.
+
+```text
+/sync-experience
+```
+
+Needs [Claude in Chrome](https://claude.com/chrome) with LinkedIn signed in.
 
 ## deployment
 
