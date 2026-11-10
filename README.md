@@ -17,7 +17,7 @@ Install dependencies and add your environment variables (see `.env.example`):
 
 ```bash
 npm install
-cp .env.example .env.local
+cp .env.example .env
 ```
 
 Then run the development server:
@@ -79,14 +79,26 @@ cd .claude/skills/add-project && claude plugin eval . --allow-tools Write,Edit,B
 
 ## deployment
 
-This site is self-hosted on my own server, with DNS and proxying through [Cloudflare](https://www.cloudflare.com/).
+This site is self-hosted on my own server, with DNS and proxying through [Cloudflare](https://www.cloudflare.com/). It runs as a small Docker container: Next.js builds a standalone server, and only that plus the static files ship on Node Alpine.
 
-On the server, add `.env.local` with `NEXT_PUBLIC_LOGO_DEV_KEY` **before** building: the key is baked into the build, and without it the experience rows fall back to monogram tiles. Then build and start the production server (it listens on port 3000 by default):
+On the server, create `.env` from `.env.example`:
+
+- `NEXT_PUBLIC_LOGO_DEV_KEY`: needed **at build time** (it's baked into the page); without it, experience rows fall back to monogram tiles.
+- `PORT`: the port the container listens on and exposes (default `3000`).
+
+Then build and start it:
 
 ```bash
-npm ci
-npm run build
-npm run start
+docker compose up -d --build
 ```
+
+After pulling new changes, run the same command again to rebuild and restart. Useful extras:
+
+```bash
+docker compose logs -f   # follow the server logs
+docker compose down      # stop it
+```
+
+The container restarts on its own after crashes or reboots, and has a health check that pings the home page every 30 seconds. Point Cloudflare (or your reverse proxy) at the server on `PORT`.
 
 Pages, share images, `sitemap.xml`, and `robots.txt` are generated at build time from the files above. The canonical URL comes from `site.url` in `src/content/site.ts`.
