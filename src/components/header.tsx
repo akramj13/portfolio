@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { useLenis } from "lenis/react";
 import { nav, site, socials } from "@/content/site";
 import { LogoMark } from "@/components/icons";
@@ -17,14 +17,48 @@ const RING_C = 2 * Math.PI * RING_R;
  * - At the top of the page the bar has no background. Once you scroll it
  *   becomes a frosted pill and the logo gains a ring that fills with
  *   scroll progress.
- * - A soft gray highlight slides between links on hover.
+ * - A soft gray highlight slides between links on hover. The active page is
+ *   marked with a dot under its label, so link widths never change.
  */
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [hover, setHover] = useState<{ left: number; width: number } | null>(null);
-  const [lastHover, setLastHover] = useState({ left: 0, width: 0 });
+  // Which link the highlight sits behind (hovered or keyboard-focused).
+  const [hovered, setHovered] = useState<string | null>(null);
   const ringRef = useRef<SVGCircleElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const linkRefs = useRef(new Map<string, HTMLAnchorElement>());
+  const hoveredRef = useRef(hovered);
+  const shownRef = useRef(false);
+
+  // Size the highlight from the link as it is laid out right now. Measuring
+  // only on mouseenter left it stale whenever the bar changed under the
+  // cursor (switching pages, the name folding away on scroll, resizes).
+  useLayoutEffect(() => {
+    hoveredRef.current = hovered;
+    const indicator = indicatorRef.current;
+    const nav = navRef.current;
+    if (!indicator || !nav) return;
+    const place = (animate: boolean) => {
+      const link = hoveredRef.current ? linkRefs.current.get(hoveredRef.current) : undefined;
+      if (!link) return;
+      // When the highlight first appears, put it straight under the link
+      // instead of sliding in from wherever it was last.
+      if (!animate) indicator.style.transitionProperty = "opacity";
+      indicator.style.left = `${link.offsetLeft}px`;
+      indicator.style.width = `${link.offsetWidth}px`;
+      if (!animate) {
+        void indicator.offsetWidth; // commit the jump before re-enabling the slide
+        indicator.style.transitionProperty = "";
+      }
+    };
+    place(shownRef.current);
+    shownRef.current = hovered !== null;
+    const ro = new ResizeObserver(() => place(false));
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, [hovered, pathname, scrolled]);
 
   useEffect(() => {
     let frame = 0;
@@ -71,14 +105,6 @@ export function Header() {
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-  const highlight = (el: HTMLAnchorElement) => {
-    const { offsetLeft: left, offsetWidth: width } = el;
-    setHover({ left, width });
-    setLastHover({ left, width });
-  };
-
-  // The highlight keeps its last position while hidden, so the next hover slides in from there.
-  const indicator = hover ?? lastHover;
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 h-[76px] px-3 pt-3">
@@ -135,14 +161,19 @@ export function Header() {
         </Link>
 
         {/* Links with a sliding hover highlight */}
-        <nav aria-label="Main" className="relative flex items-center" onMouseLeave={() => setHover(null)}>
+        <nav
+          ref={navRef}
+          aria-label="Main"
+          className="relative flex items-center"
+          onMouseLeave={() => setHovered(null)}
+        >
           <span
+            ref={indicatorRef}
             aria-hidden
             className={cn(
-              "absolute inset-y-0 rounded-full bg-pill transition-[left,width,opacity] duration-300 ease-[var(--ease-spring)]",
-              hover ? "opacity-100" : "opacity-0",
+              "absolute inset-y-0 left-0 w-0 rounded-full bg-pill transition-[left,width,opacity] duration-300 ease-[var(--ease-spring)]",
+              hovered ? "opacity-100" : "opacity-0",
             )}
-            style={{ left: indicator.left, width: indicator.width }}
           />
           {nav.map((item) => {
             const active = isActive(item.href);
@@ -150,17 +181,28 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                onMouseEnter={(e) => highlight(e.currentTarget)}
-                onFocus={(e) => highlight(e.currentTarget)}
-                onBlur={() => setHover(null)}
+                ref={(el) => {
+                  if (el) linkRefs.current.set(item.href, el);
+                  else linkRefs.current.delete(item.href);
+                }}
+                onMouseEnter={() => setHovered(item.href)}
+                onFocus={() => setHovered(item.href)}
+                onBlur={() => setHovered(null)}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex h-9 items-center gap-1.5 rounded-full px-3.5 text-[15px] font-medium transition-colors duration-200",
+                  "relative flex h-9 items-center rounded-full px-3.5 text-[15px] font-medium transition-colors duration-200",
                   active ? "text-ink" : "text-muted hover:text-ink",
                 )}
               >
-                {active && <span aria-hidden className="size-1.5 rounded-full bg-ink" />}
                 {item.label}
+                {/* Active marker: centred under the label, outside the flow so the link never resizes. */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute bottom-1 left-1/2 size-1 -translate-x-1/2 rounded-full bg-ink transition-[opacity,scale] duration-300 ease-[var(--ease-spring)]",
+                    active ? "scale-100 opacity-100" : "scale-0 opacity-0",
+                  )}
+                />
               </Link>
             );
           })}
