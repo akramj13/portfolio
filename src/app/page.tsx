@@ -198,9 +198,19 @@ export default function HomePage() {
             key={post.slug}
             href={`/writing/${post.slug}`}
             icon={
-              <Tile tone="slate" className="size-10 rounded-[12px]">
-                <PenLine className="size-[18px]" strokeWidth={2} />
-              </Tile>
+              post.cover ? (
+                <Image
+                  src={post.cover}
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="size-10 shrink-0 rounded-[12px] object-cover object-top ring-1 ring-black/10"
+                />
+              ) : (
+                <Tile tone="slate" className="size-10 rounded-[12px]">
+                  <PenLine className="size-[18px]" strokeWidth={2} />
+                </Tile>
+              )
             }
             title={post.title}
             subtitle={post.excerpt}

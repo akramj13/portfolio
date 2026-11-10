@@ -48,8 +48,8 @@ export default function PostPage({ params }: PageProps<"/writing/[slug]">) {
 async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["params"] }) {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post?.body) notFound();
-  const Body = post.body;
+  if (!post) notFound();
+  const { Body } = post;
 
   return (
     <article className="column pt-10 md:pt-14">
