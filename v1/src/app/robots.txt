@@ -1,0 +1,11 @@
+# Allow all crawlers full access to the site
+User-agent: *
+
+# Allow everything
+Allow: /
+
+# Point to your sitemap
+Sitemap: https://codentrel.com/sitemap.xml
+
+# Optional: Delay crawl rate if your server has limited resources
+# Crawl-delay: 10

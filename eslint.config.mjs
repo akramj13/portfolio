@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The archived v1 site has its own config; don't lint it with v2's.
+    "v1/**",
   ]),
 ]);
 

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* The archived v1 site lives in /v1; don't pull its classes into v2's CSS. */
+@source not "../../v1";
 
 /*
  * Design tokens.
