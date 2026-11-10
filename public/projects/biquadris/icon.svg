@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 64 64">
+  <defs><clipPath id="tile"><rect width="64" height="64" rx="15"/></clipPath></defs>
+  <rect width="64" height="64" rx="15" fill="#ffffff"/>
+  <g clip-path="url(#tile)">
+    <g stroke="#e3e3e3" stroke-width="0.8"><path d="M8 8 V56 M8 8 H56"/><path d="M16 8 V56 M8 16 H56"/><path d="M24 8 V56 M8 24 H56"/><path d="M32 8 V56 M8 32 H56"/><path d="M40 8 V56 M8 40 H56"/><path d="M48 8 V56 M8 48 H56"/><path d="M56 8 V56 M8 56 H56"/></g>
+    <rect x="16" y="32" width="8" height="8" fill="#f5e100" stroke="#141414" stroke-width="0.9"/><rect x="24" y="32" width="8" height="8" fill="#f5e100" stroke="#141414" stroke-width="0.9"/><rect x="16" y="40" width="8" height="8" fill="#f5e100" stroke="#141414" stroke-width="0.9"/><rect x="24" y="40" width="8" height="8" fill="#f5e100" stroke="#141414" stroke-width="0.9"/>
+    <rect x="32" y="16" width="8" height="8" fill="#ff2bf0" stroke="#141414" stroke-width="0.9"/><rect x="40" y="16" width="8" height="8" fill="#ff2bf0" stroke="#141414" stroke-width="0.9"/><rect x="48" y="16" width="8" height="8" fill="#ff2bf0" stroke="#141414" stroke-width="0.9"/><rect x="40" y="24" width="8" height="8" fill="#ff2bf0" stroke="#141414" stroke-width="0.9"/>
+    <rect x="32" y="40" width="8" height="8" fill="#ff2a2a" stroke="#141414" stroke-width="0.9"/><rect x="40" y="40" width="8" height="8" fill="#ff2a2a" stroke="#141414" stroke-width="0.9"/><rect x="40" y="48" width="8" height="8" fill="#ff2a2a" stroke="#141414" stroke-width="0.9"/><rect x="48" y="48" width="8" height="8" fill="#ff2a2a" stroke="#141414" stroke-width="0.9"/>
+    <rect x="8" y="8" width="48" height="48" fill="none" stroke="#141414" stroke-width="1.6"/>
+  </g>
+</svg>

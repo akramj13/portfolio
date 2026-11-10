@@ -1,65 +1,78 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import { ThemeProvider } from "@/components/utils/theme-provider";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { site } from "@/content/site";
+import { baseOpenGraph } from "@/lib/metadata";
+import "lenis/dist/lenis.css";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Script from "next/script";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: "400",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-  ),
-  title: "akramj13 - Akram Jamil",
-  description:
-    "welcome to my portfolio. feel free to checkout what i'm working on!",
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.title,
+    template: `%s — ${site.title}`,
+  },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  keywords: [
+    "Akram Jamil",
+    "akramj13",
+    "University of Waterloo",
+    "computer science",
+    "financial management",
+    "software engineer",
+    "machine learning",
+    "portfolio",
+  ],
+  // No canonical or share URL here: they'd be inherited by every page without
+  // its own, including the 404. Each page sets its own.
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
+  // Share titles and descriptions come from each page's own metadata.
+  openGraph: baseOpenGraph,
+  twitter: { card: "summary_large_image", creator: "@akramj_13" },
 };
 
-const GA_ID = process.env.GA_ID;
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} antialiased`}>
-        {GA_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);} 
-                window.gtag = gtag;
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}', {
-                  page_path: window.location.pathname + window.location.search
-                });
-              `}
-            </Script>
-          </>
-        )}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    // No CSS `scroll-behavior: smooth` here: Lenis does the smoothing, and the two fight each other.
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="flex min-h-dvh flex-col">
+        <SmoothScroll />
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
         >
-          <Navbar />
+          Skip to content
+        </a>
+        <Header />
+        <main
+          id="content"
+          className="relative z-10 flex-1 rounded-b-[2rem] bg-paper pb-20"
+        >
           {children}
-          <Footer />
-        </ThemeProvider>
+        </main>
+        <Footer />
       </body>
     </html>
   );

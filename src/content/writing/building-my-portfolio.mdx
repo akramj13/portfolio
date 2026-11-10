@@ -1,0 +1,56 @@
+export const metadata = {
+  title: "building my portfolio — why & how (short version)",
+  excerpt:
+    'why i made my portfolio, what tech powers it, and how full-stack automation makes it better than your average "about me" site.',
+  date: "2025-09-30",
+  readingTime: 5,
+  tags: ["Portfolio", "Automation", "Next.js", "Full-stack"],
+  cover: "/writing/building-my-portfolio/home.png",
+};
+
+![the home page of the old portfolio](/writing/building-my-portfolio/home.png)
+
+i built my portfolio ([code here](https://github.com/akramj13/portfolio)) because i’m lazy lol. i wanted a site that:
+
+- **never needs a full redeploy**
+- **auto-updates with my latest projects & experience**
+- **keeps things fresh with zero extra work from me**
+
+so i stitched together a little system: a set of [playwright](https://playwright.dev/) scripts that sync my linkedin (and other sources), then push updates right into my portfolio. now, whenever i tweak something on linkedin, it reflectively shows up in my “experience” section. its kind of magic.
+
+![the admin sign-in screen](/writing/building-my-portfolio/admin-login.png)
+
+![the admin dashboard](/writing/building-my-portfolio/admin-dashboard.png)
+
+---
+
+## tech & structure (the 60-second tour)
+
+what glues this all together?
+
+- **next.js (app router) + tailwind** — frontend, fast & flexible
+- **prisma + postgresql** — data layer (snappy + typesafe)
+- **custom admin UI + markdown blog** — write/publish from anywhere
+- **image/resume upload** — with CDN & caching
+- **deployment:** docker, nginx, vps + cloudflare (hybrid, cheap, reliable)
+- **playwright scripting** — for that sweet external sync
+
+so it’s not just a static site but it’s a small full-stack app, wrapped in automation and a bit of duct tape.
+
+---
+
+## what i love (& the trade-offs)
+
+the best bit? i _never_ have to manually update my experience. but… it also means more moving parts: scripts, APIs, storage, error handling, and all the fun that comes with real infra. if the sync breaks, parts of the portfolio can look stale. worth it.
+
+i try to keep the design minimal, responsive, and clean — so the tech never distracts from the story.
+
+## wrap
+
+this portfolio is a lazy-person’s dream — set it up once, let it mostly run itself. for me, the real joy is in the automation: letting tech do the busywork so i can focus on the fun stuff.
+
+---
+
+\*(wanted to make a quick post behind the motivations of putting in so much time into a portfolio site.)
+
+\*\*(i'm also just testing to make sure this feature of my site works lol).

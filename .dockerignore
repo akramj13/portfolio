@@ -1,0 +1,13 @@
+# Keep the build context small and secrets out of the image.
+node_modules
+v1
+.next
+.git
+.claude
+.env*
+!.env.example
+npm-debug.log*
+*.md
+Dockerfile
+.dockerignore
+compose.yaml

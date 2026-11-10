@@ -5,20 +5,15 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  {
-    // Plain Node.js (CommonJS) helper scripts
-    files: ["scripts/**/*.js"],
-    rules: {
-      "@typescript-eslint/no-require-imports": "off",
-    },
-  },
+  // Override default ignores of eslint-config-next.
   globalIgnores([
-    "node_modules/**",
+    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
-    "generated/**",
+    // The archived v1 site has its own config; don't lint it with v2's.
+    "v1/**",
   ]),
 ]);
 

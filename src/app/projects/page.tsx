@@ -1,35 +1,67 @@
-import React from "react";
-import { PrismaClient } from "../../../generated/prisma";
-import ProjectsClient from "@/components/utils/projects-client";
+import type { Metadata } from "next";
+import { ArrowUpRight } from "lucide-react";
+import { PageHeader } from "@/components/page-header";
+import { ProjectCard } from "@/components/project-card";
+import { Reveal } from "@/components/motion";
+import { projects } from "@/content/projects";
+import { socials } from "@/content/site";
+import { cn } from "@/lib/cn";
+import { baseOpenGraph } from "@/lib/metadata";
 
-const prisma = new PrismaClient();
+export const metadata: Metadata = {
+  title: "projects",
+  description: "Things Akram has built: AI tools, hackathon winners, games, and finance experiments.",
+  alternates: { canonical: "/projects" },
+  openGraph: { ...baseOpenGraph, url: "/projects" },
+};
 
-// Enable ISR with 60 second revalidation instead of on-demand
-export const revalidate = 60;
+export default function ProjectsPage() {
+  return (
+    <>
+      <PageHeader title="projects.">
+        startups, hackathon winners, class projects that got out of hand, and a few experiments
+        with money.{" "}
+        <span className="text-faint">
+          {projects.length} favorites below, plenty more on{" "}
+          <a
+            href={socials.github.href}
+            target="_blank"
+            rel="noreferrer"
+            className="underline decoration-faint/60 underline-offset-3 transition-colors hover:text-ink hover:decoration-ink"
+          >
+            github
+          </a>
+          .
+        </span>
+      </PageHeader>
 
-// Enable static params generation
-export const dynamic = "force-static";
+      <section className="column mt-10 grid gap-3 sm:grid-cols-2">
+        {projects.map((p, i) => {
+          // With an odd count, the last card sits alone on its row, so center it at the usual card width.
+          const loneLast = projects.length % 2 === 1 && i === projects.length - 1;
+          return (
+            <Reveal
+              key={p.slug}
+              delay={(i % 2) * 60}
+              className={cn(loneLast && "sm:col-span-2 sm:w-[calc(50%-0.375rem)] sm:justify-self-center")}
+            >
+              <ProjectCard project={p} className="h-full" />
+            </Reveal>
+          );
+        })}
+      </section>
 
-async function getProjects() {
-  try {
-    // Fetch projects from database at build time
-    return await prisma.project.findMany({
-      orderBy: { sortOrder: "asc" },
-    });
-  } catch (error) {
-    console.error("Failed to fetch projects:", error);
-
-    // Fallback to empty array
-    return [];
-  } finally {
-    await prisma.$disconnect();
-  }
+      <div className="column mt-8">
+        <a
+          href={socials.github.href}
+          target="_blank"
+          rel="noreferrer"
+          className="group inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-ink"
+        >
+          more experiments on github
+          <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
+      </div>
+    </>
+  );
 }
-
-async function Projects() {
-  const projects = await getProjects();
-
-  return <ProjectsClient projects={projects} />;
-}
-
-export default Projects;

@@ -1,0 +1,18 @@
+# Production container for the site. Reads PORT and NEXT_PUBLIC_LOGO_DEV_KEY
+# from .env (see .env.example); PORT defaults to 3000.
+#
+#   docker compose up -d --build
+name: portfolio
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_LOGO_DEV_KEY: ${NEXT_PUBLIC_LOGO_DEV_KEY:-}
+        PORT: ${PORT:-3000}
+    image: akramj-portfolio
+    environment:
+      PORT: ${PORT:-3000}
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    restart: unless-stopped

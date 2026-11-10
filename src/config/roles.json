@@ -1,0 +1,93 @@
+[
+  {
+    "title": "Software Engineer",
+    "company": "TD",
+    "monogram": "TD",
+    "tone": "green",
+    "start": "Sep 2026",
+    "end": "Present",
+    "location": "Toronto, ON",
+    "mode": "On-site"
+  },
+  {
+    "title": "Software & ML Engineer",
+    "company": "Illuminex AI",
+    "monogram": "Ix",
+    "tone": "violet",
+    "start": "Jan 2026",
+    "end": "Apr 2026",
+    "location": "Waterloo, ON",
+    "mode": "Remote"
+  },
+  {
+    "title": "Software Engineer Intern",
+    "company": "siift.ai",
+    "monogram": "si",
+    "tone": "blue",
+    "start": "Sep 2025",
+    "end": "Dec 2025",
+    "location": "Vancouver, BC",
+    "mode": "Remote"
+  },
+  {
+    "title": "Full Stack Developer",
+    "company": "Wellington-Dufferin-Guelph Public Health",
+    "monogram": "WD",
+    "tone": "green",
+    "start": "May 2025",
+    "end": "Aug 2025",
+    "location": "Guelph, ON",
+    "mode": "Hybrid"
+  },
+  {
+    "title": "Software Engineer Intern",
+    "company": "Vöxtur Capital",
+    "monogram": "Vö",
+    "tone": "ink",
+    "start": "Jan 2025",
+    "end": "Apr 2025",
+    "location": "Miami, FL",
+    "mode": "Remote"
+  },
+  {
+    "title": "Software Engineer Intern",
+    "company": "Agile Creative Labs Inc.",
+    "monogram": "AC",
+    "tone": "orange",
+    "start": "Sep 2024",
+    "end": "Dec 2024",
+    "location": "Ottawa, ON",
+    "mode": "Remote"
+  },
+  {
+    "title": "Software Engineer",
+    "company": "Stealth Startup",
+    "monogram": "St",
+    "tone": "slate",
+    "logo": false,
+    "start": "Jul 2024",
+    "end": "Oct 2024",
+    "location": "Toronto, ON",
+    "mode": "Remote"
+  },
+  {
+    "title": "Information Technology Consultant",
+    "company": "Canada Cartage",
+    "monogram": "CC",
+    "tone": "red",
+    "start": "Jun 2024",
+    "end": "Sep 2024",
+    "location": "Toronto, ON",
+    "mode": "On-site"
+  },
+  {
+    "title": "Teaching Assistant",
+    "company": "Kumon Canada, Inc.",
+    "monogram": "Ku",
+    "tone": "sky",
+    "start": "Sep 2020",
+    "end": "Jun 2024",
+    "location": "Brampton, ON",
+    "mode": "Hybrid"
+  }
+]

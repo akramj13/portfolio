@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: from-repo-and-live-site
+expected_outcome: |
+  A new uxshopify project is added as the last entry of src/config/projects.json with copy based on the repo and site, a captured screenshot of the live site saved as public/projects/<slug>/screenshot.png, a hand-drawn public/projects/<slug>/icon.svg, and the site still builds.

@@ -1,134 +1,127 @@
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
-import PageLayout from "@/components/utils/page-layout";
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { Badge } from "@/components/ui/badge";
-import { BlurFade } from "@/components/ui/blur-fade";
-import prisma from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { ArrowLeft } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
+import { DetailSkeleton } from "@/components/skeleton";
+import { LogoMark } from "@/components/icons";
+import { Pill } from "@/components/pill";
+import { Tile } from "@/components/placeholder";
+import { Reveal } from "@/components/motion";
+import { formatDate, getPost, publishedPosts } from "@/content/posts";
+import { site, socials } from "@/content/site";
+import { baseOpenGraph } from "@/lib/metadata";
 
-// Use ISR with on-demand revalidation
-export const revalidate = 3600; // Revalidate every hour, but can be triggered on-demand
-
-interface BlogPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+export function generateStaticParams() {
+  return publishedPosts.map((p) => ({ slug: p.slug }));
 }
 
-async function getBlogPost(slug: string) {
-  try {
-    const blog = await prisma.blog.findUnique({
-      where: {
-        slug: slug,
-        published: true,
-      },
-    });
-
-    return blog;
-  } catch (error) {
-    console.error("Failed to fetch blog post:", error);
-    return null;
-  }
-}
-
-export async function generateMetadata({
-  params,
-}: BlogPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/writing/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const blog = await getBlogPost(slug);
-
-  if (!blog) {
-    return {
-      title: "Blog Post Not Found",
-    };
-  }
-
+  const post = getPost(slug);
+  if (!post) return {};
   return {
-    title: `${blog.title} | Blog`,
-    description: blog.excerpt,
+    title: post.title,
+    description: post.excerpt,
+    keywords: post.tags,
+    alternates: { canonical: `/writing/${slug}` },
+    openGraph: {
+      ...baseOpenGraph,
+      title: post.title,
+      description: post.excerpt,
+      url: `/writing/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+      authors: [site.name],
+      tags: post.tags,
+    },
   };
 }
 
-export async function generateStaticParams() {
-  try {
-    const blogs = await prisma.blog.findMany({
-      where: {
-        published: true,
-      },
-      select: {
-        slug: true,
-      },
-    });
-
-    return blogs.map((blog) => ({
-      slug: blog.slug,
-    }));
-  } catch (error) {
-    console.error("Failed to generate static params:", error);
-    return [];
-  }
+export default function PostPage({ params }: PageProps<"/writing/[slug]">) {
+  return (
+    <Suspense fallback={<DetailSkeleton />}>
+      <PostDetail params={params} />
+    </Suspense>
+  );
 }
 
-export default async function BlogPost({ params }: BlogPageProps) {
+async function PostDetail({ params }: { params: PageProps<"/writing/[slug]">["params"] }) {
   const { slug } = await params;
-  const blog = await getBlogPost(slug);
-
-  if (!blog) {
-    notFound();
-  }
+  const post = getPost(slug);
+  if (!post) notFound();
+  const { Body } = post;
 
   return (
-    <PageLayout variant="narrow" maxWidth="2xl">
-      <BlurFade delay={0.25}>
-        <article className="space-y-8">
-          {/* Header */}
-          <header className="space-y-4">
-            {/* Back button (goes to /writing*/}
-            <Link href="/writing">
-              <Button variant="link" className="px-0 cursor-pointer">
-                &larr; back to writing
-              </Button>
-            </Link>
+    <article className="column pt-10 md:pt-14">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          keywords: post.tags.join(", "),
+          url: `${site.url}/writing/${post.slug}`,
+          mainEntityOfPage: `${site.url}/writing/${post.slug}`,
+          image: `${site.url}/writing/${post.slug}/opengraph-image`,
+          author: { "@type": "Person", name: site.name, url: site.url },
+        }}
+      />
+      <Link
+        href="/writing"
+        className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
+      >
+        <ArrowLeft className="size-4" />
+        all writing
+      </Link>
 
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              {new Date(blog.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-              <span>•</span>
-              <span>{blog.readingTime} min read</span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-              {blog.title}
-            </h1>
-
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              {blog.excerpt}
-            </p>
-
-            {blog.tags && blog.tags.length > 0 && (
-              <div className="flex gap-2 flex-wrap">
-                {blog.tags.map((tag, index) => (
-                  <Badge key={index} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </header>
-
-          {/* Content */}
-          <div className="prose-divider">
-            <hr className="border-border" />
+      <Reveal className="mt-8">
+        <p className="font-mono text-xs text-muted">
+          {post.draft && (
+            <span className="mr-2 rounded-full bg-amber-100 px-2 py-0.5 font-sans font-semibold text-amber-800">
+              draft · only visible on the dev server
+            </span>
+          )}
+          {formatDate(post.date)} · {post.readingTime} min read
+        </p>
+        <h1 className="headline mt-4 text-[36px] md:text-[48px]">{post.title}</h1>
+        <p className="mt-5 text-[19px] leading-relaxed text-muted">{post.excerpt}</p>
+        <div className="mt-8 flex items-center gap-3 border-b border-line pb-8">
+          <Tile tone="ink" className="size-10 rounded-full">
+            <LogoMark className="h-4 w-auto text-paper" />
+          </Tile>
+          <div className="text-sm">
+            <p className="font-medium">{site.name}</p>
+            <p className="text-muted">@{site.handle}</p>
           </div>
+          <ul className="ml-auto hidden flex-wrap justify-end gap-1.5 sm:flex">
+            {post.tags.map((t) => (
+              <li key={t} className="rounded-full bg-pill px-2.5 py-1 text-xs font-medium text-ink-soft">
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
 
-          <MarkdownRenderer content={blog.content} blogSlug={blog.slug} />
-        </article>
-      </BlurFade>
-    </PageLayout>
+      <Reveal className="prose-post mt-10">
+        <Body />
+      </Reveal>
+
+      <Reveal className="mt-16 flex flex-col items-start gap-4 rounded-[1.75rem] bg-surface p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
+        <div>
+          <p className="text-[18px] font-semibold tracking-[-0.02em]">thanks for reading.</p>
+          <p className="mt-1 text-[15px] text-muted">questions, ideas, or corrections? i&apos;d love to hear them.</p>
+        </div>
+        <div className="flex shrink-0 gap-2">
+          <Pill href={socials.email.href}>say hi</Pill>
+          <Pill href="/writing" variant="secondary">
+            more writing
+          </Pill>
+        </div>
+      </Reveal>
+    </article>
   );
 }

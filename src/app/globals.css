@@ -1,139 +1,247 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* The archived v1 site lives in /v1; don't pull its classes into v2's CSS. */
+@source not "../../v1";
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * Design tokens.
+ * Near-black ink on white, soft gray surfaces, pill controls and big
+ * rounded cards. Colour only shows up in the small "app icon" tiles and
+ * placeholder art, so the type does the heavy lifting.
+ */
+:root {
+  --ink: #141414;
+  --ink-soft: #3d3d3d;
+  --muted: #707070;
+  --faint: #a3a3a3;
+  --paper: #ffffff;
+  --surface: #f4f4f4;
+  --surface-strong: #ebebeb;
+  --line: rgb(20 20 20 / 0.08);
+  --pill: rgb(64 64 64 / 0.08);
+  --pill-hover: rgb(64 64 64 / 0.14);
+  --night: #141414;
+  --night-soft: #1f1f1f;
+}
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
   --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-faint: var(--faint);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-pill: var(--pill);
+  --color-pill-hover: var(--pill-hover);
+  --color-night: var(--night);
+  --color-night-soft: var(--night-soft);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 2rem;
+  --radius-tile: 1.125rem;
+
+  --animate-blink: blink 1s steps(2, start) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-nav-in: nav-in 700ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  --animate-wave: wave 900ms ease-in-out;
+  --animate-label-in: label-in 450ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+  --animate-rise-in: rise-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  /* Slight overshoot, for things that slide into place. */
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.96);
+  }
 }
 
-.dark {
-  --background: oklch(0.22 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.27 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.27 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.85 0 0);
-  --primary-foreground: oklch(0.22 0 0);
-  --secondary: oklch(0.31 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.31 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.31 0 0);
-  --accent-foreground: oklch(0.95 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.4 0 0);
-  --input: oklch(0.35 0 0);
-  --ring: oklch(0.6 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.24 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.31 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.4 0 0);
-  --sidebar-ring: oklch(0.6 0 0);
+/*
+ * Same fade-and-rise as [data-reveal], but pure CSS so it starts on first
+ * paint. Used above the fold, where waiting for JS would delay the content.
+ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
 }
 
+/* Button text rolling in; --label-from sets the direction. */
+@keyframes label-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--label-from, 100%));
+    filter: blur(2px);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20%,
+  60% {
+    transform: rotate(16deg);
+  }
+  40%,
+  80% {
+    transform: rotate(-8deg);
+  }
+}
+
+/* Single reading column used on every page: 672px of content plus a 24px gutter. */
+@utility column {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 720px;
+  padding-inline: 1.5rem;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-8px) rotate(var(--tilt, 0deg));
+  }
+}
+
+/* Tailwind v4 gives buttons the default arrow cursor; bring back the pointer. */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
-@layer utilities {
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
-  }
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Display type: heavy, tight, and slightly negative tracking. */
+.display {
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.headline {
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+/* Fade-and-rise on first view; see components/reveal.tsx. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hand-written blog prose. */
+.prose-post {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.prose-post > * + * {
+  margin-top: 1.25em;
+}
+
+.prose-post h2 {
+  margin-top: 2.25em;
+  font-size: 1.75rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.prose-post strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.prose-post a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms;
+}
+
+.prose-post a:hover {
+  text-decoration-color: var(--ink);
+}
+
+.prose-post ul {
+  padding-left: 1.25em;
+  list-style: disc;
+}
+
+.prose-post li + li {
+  margin-top: 0.4em;
+}
+
+.prose-post li::marker {
+  color: var(--faint);
+}
+
+.prose-post hr {
+  margin: 2.5em 0;
+  border-color: var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
 }

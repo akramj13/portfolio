@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: uses-provided-screenshot
+expected_outcome: |
+  A nova project is added as the second entry of src/config/projects.json (after cotabby), with duration Ongoing or about 3 months, using the provided dashboard image saved as public/projects/<slug>/screenshot.png, a matching icon.svg in the same folder, and the site still builds.
+context:
+  scaffold_script: place-files.sh

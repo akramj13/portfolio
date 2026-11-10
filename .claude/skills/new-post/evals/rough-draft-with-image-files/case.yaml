@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: rough-draft-with-image-files
+expected_outcome: |
+  A draft post about winning GeeseHacks with LearnETF, polished from draft.md in the user's voice, with both images saved under public/writing/<slug>/ with descriptive names (the HEIC converted to PNG or JPEG), placed in the text with alt text, registered in posts.ts, and the site still builds with the draft unpublished.
+context:
+  scaffold_script: place-files.sh
