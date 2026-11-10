@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { ArrowRight, PenLine } from "lucide-react";
-import { GitHubIcon, LinkedInIcon, LogoMark, XIcon, projectIcons } from "@/components/icons";
+import { HeroField } from "@/components/hero/hero-field";
+import { HeroPrefix } from "@/components/hero/hero-prefix";
+import { MorphWord } from "@/components/hero/morph-word";
+import { GitHubIcon, LinkedInIcon, XIcon, projectIcons } from "@/components/icons";
 import { Reveal } from "@/components/motion";
 import { Pill } from "@/components/pill";
 import { Tile } from "@/components/placeholder";
@@ -51,26 +54,30 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Intro */}
-      <section className="column pt-12 md:pt-20">
+      {/*
+        Intro. The HTML name renders first; once WebGL loads, HeroField redraws it as a dot
+        field that reacts to the cursor and morphs when the dotted words are hovered.
+      */}
+      <section className="group/hero relative pt-12 md:pt-20">
+        <HeroField />
         {/* CSS-only entrance: the intro shouldn't wait for JavaScript to show up. */}
-        <div className="animate-rise-in">
-          <h1 className="display text-[48px] md:text-[64px]">
-            hey, i&apos;m
-            <Tile
-              tone="ink"
-              tilt={-6}
-              className="mx-[0.14em] size-[0.86em] translate-y-[0.06em] animate-float rounded-[0.24em] align-baseline"
+        <div className="column relative animate-rise-in">
+          {/* One sentence at one size; on narrow screens "akram." drops to its own line. */}
+          <h1 className="display text-[clamp(3.5rem,11vw,5.75rem)] leading-[1.02]">
+            <HeroPrefix />{" "}
+            <span
+              data-hero-name
+              className="transition-opacity duration-500 group-data-[field=live]/hero:opacity-0"
             >
-              <LogoMark className="h-[0.42em] w-auto text-paper" />
-            </Tile>
-            akram.
+              akram.
+            </span>
           </h1>
           <p className="mt-5 text-[18px] leading-[1.55] text-muted">
             i&apos;m a <span className="font-medium text-ink">cs &amp; finance</span> double major at
-            the <span className="font-medium text-ink">university of waterloo</span> who spends way
-            too much time coding and trading. outside of classes i build startups, hack on side
-            projects, and mess around with ai.
+            the <MorphWord shape="waterloo">university of waterloo</MorphWord> who spends way too much
+            time <MorphWord shape="code">coding</MorphWord> and{" "}
+            <MorphWord shape="markets">trading</MorphWord>. outside of classes i build startups, hack
+            on side projects, and mess around with <MorphWord shape="ai">ai</MorphWord>.
           </p>
 
           {/* Plain <a> so Lenis handles the smooth in-page scroll instead of the router. */}
