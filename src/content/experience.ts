@@ -1,7 +1,12 @@
 // Hardcoded from the current akramj.com experience section.
-// Placeholder logos are generated from `monogram` + `tone`.
+//
+// Logos load from logo.dev by company name, so a new role only needs its
+// `company`. If the name matches the wrong brand, set `logo: { domain }` to
+// pin it; set `logo: false` to skip the lookup. While a logo loads, or if
+// there isn't one, the row shows a tile built from `monogram` + `tone`.
 
 import type { Tone } from "@/components/placeholder";
+import type { LogoSource } from "@/lib/logo-dev";
 
 export type Role = {
   title: string;
@@ -12,7 +17,14 @@ export type Role = {
   end: string;
   location?: string;
   mode?: "Remote" | "Hybrid" | "On-site";
+  /** Override the logo lookup (defaults to `{ name: company }`), or `false` for none. */
+  logo?: LogoSource | false;
 };
+
+/** Where a role's logo comes from: its override, or a lookup by company name. */
+export function roleLogo(role: Role): LogoSource | false {
+  return role.logo ?? { name: role.company };
+}
 
 export const roles: Role[] = [
   {
@@ -57,7 +69,7 @@ export const roles: Role[] = [
   },
   {
     title: "Software Engineer Intern",
-    company: "Agile Creative Labs",
+    company: "Agile Creative Labs Inc.",
     monogram: "AC",
     tone: "orange",
     start: "Sep 2024",
@@ -70,6 +82,8 @@ export const roles: Role[] = [
     company: "Stealth Startup",
     monogram: "St",
     tone: "slate",
+    // A name lookup would match an unrelated brand; stealth means no logo anyway.
+    logo: false,
     start: "Jul 2024",
     end: "Oct 2024",
     location: "Toronto, ON",

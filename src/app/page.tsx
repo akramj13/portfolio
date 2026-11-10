@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, PenLine } from "lucide-react";
+import { CompanyLogo } from "@/components/company-logo";
 import { HeroField } from "@/components/hero/hero-field";
 import { HeroPrefix } from "@/components/hero/hero-prefix";
 import { MorphWord } from "@/components/hero/morph-word";
@@ -9,7 +10,7 @@ import { Pill } from "@/components/pill";
 import { Tile } from "@/components/placeholder";
 import { Row, Section } from "@/components/resume";
 import { ShowMore } from "@/components/show-more";
-import { education, roles, shortDate, type Role } from "@/content/experience";
+import { education, roleLogo, roles, shortDate, type Role } from "@/content/experience";
 import { formatDate, publishedPosts } from "@/content/posts";
 import { projects } from "@/content/projects";
 import { site, socials } from "@/content/site";
@@ -35,9 +36,16 @@ function RoleRow({ role }: { role: Role }) {
   return (
     <Row
       icon={
-        <Tile tone={role.tone} className="size-10 rounded-[12px] text-[13px] font-bold">
-          {role.monogram}
-        </Tile>
+        <CompanyLogo
+          source={roleLogo(role)}
+          alt=""
+          className="rounded-[12px] ring-1 ring-black/12 shadow-[0_1px_2px_rgb(20_20_20/0.08)]"
+          fallback={
+            <Tile tone={role.tone} className="size-10 rounded-[12px] text-[13px] font-bold">
+              {role.monogram}
+            </Tile>
+          }
+        />
       }
       title={role.company}
       subtitle={role.title}
@@ -117,7 +125,7 @@ export default function HomePage() {
       <Section label="studying at" delay={60}>
         <Row
           icon={
-            <span className="size-10 shrink-0 overflow-hidden rounded-[12px] ring-1 ring-black/5">
+            <span className="size-10 shrink-0 overflow-hidden rounded-[12px] ring-1 ring-black/12 shadow-[0_1px_2px_rgb(20_20_20/0.08)]">
               <Image src="/uwaterloo.jpeg" alt="" width={40} height={40} className="size-full object-cover" />
             </span>
           }
