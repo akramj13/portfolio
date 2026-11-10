@@ -232,7 +232,16 @@ export async function createField({ container, anchor, onLive, onLost }: Options
     u.uCamZ.value = camera.position.z;
   };
 
-  build();
+  try {
+    build();
+  } catch (error) {
+    // Nothing to show: release the GPU context instead of leaving a hidden canvas behind.
+    geometry.dispose();
+    material.dispose();
+    renderer.dispose();
+    canvas.remove();
+    throw error;
+  }
 
   // Pointer, in viewport coordinates.
   const pointer = { x: 0, y: 0, active: false };
@@ -255,6 +264,8 @@ export async function createField({ container, anchor, onLive, onLost }: Options
   window.addEventListener("blur", onLeave);
 
   let raf = 0;
+  // Set once WebGL is gone, so scrolling back to the hero doesn't restart the loop.
+  let lost = false;
   let last = 0;
   let time = 0;
   // Infinity until the crossfade starts, which keeps the intro wave and tilt off until then.
@@ -348,7 +359,7 @@ export async function createField({ container, anchor, onLive, onLost }: Options
     renderer.render(scene, camera);
   };
   const start = () => {
-    if (raf) return;
+    if (raf || lost) return;
     last = 0;
     raf = requestAnimationFrame(frame);
   };
@@ -382,6 +393,8 @@ export async function createField({ container, anchor, onLive, onLost }: Options
 
   const onContextLost = (e: Event) => {
     e.preventDefault();
+    lost = true;
+    cancelAnimationFrame(fadeIn);
     stop();
     canvas.style.opacity = "0";
     onLost();
@@ -390,7 +403,8 @@ export async function createField({ container, anchor, onLive, onLost }: Options
 
   // Draw the first frame invisibly, then crossfade from the HTML text.
   renderer.render(scene, camera);
-  requestAnimationFrame((now) => {
+  // Kept so destroy() can cancel it: firing after teardown would mark the hero live with no field.
+  const fadeIn = requestAnimationFrame((now) => {
     liveAt = now;
     canvas.style.opacity = "1";
     onLive();
@@ -410,6 +424,7 @@ export async function createField({ container, anchor, onLive, onLost }: Options
       }
     },
     destroy() {
+      cancelAnimationFrame(fadeIn);
       stop();
       clearTimeout(resizeTimer);
       io.disconnect();

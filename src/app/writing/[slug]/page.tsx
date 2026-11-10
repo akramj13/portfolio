@@ -11,6 +11,7 @@ import { Tile } from "@/components/placeholder";
 import { Reveal } from "@/components/motion";
 import { formatDate, getPost, publishedPosts } from "@/content/posts";
 import { site, socials } from "@/content/site";
+import { baseOpenGraph } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return publishedPosts.map((p) => ({ slug: p.slug }));
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/writing/[slug]">)
     keywords: post.tags,
     alternates: { canonical: `/writing/${slug}` },
     openGraph: {
+      ...baseOpenGraph,
       title: post.title,
       description: post.excerpt,
       url: `/writing/${slug}`,

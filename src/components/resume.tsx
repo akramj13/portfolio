@@ -20,11 +20,13 @@ export function Section({
   delay?: number;
   children: ReactNode;
 }) {
+  // IDs can't contain spaces: aria-labelledby would read "studying at-label" as two IDs.
+  const headingId = `${id ?? label.replace(/\s+/g, "-")}-label`;
   return (
-    <section id={id} aria-labelledby={`${id ?? label}-label`} className="column mt-12 scroll-mt-24">
+    <section id={id} aria-labelledby={headingId} className="column mt-12 scroll-mt-24">
       <Reveal delay={delay}>
         <div className="mb-3 flex items-baseline justify-between gap-4">
-          <h2 id={`${id ?? label}-label`} className="text-[15px] font-medium text-muted">
+          <h2 id={headingId} className="text-[15px] font-medium text-muted">
             {label}
             {count !== undefined && <span className="ml-1.5 text-faint">{count}</span>}
           </h2>

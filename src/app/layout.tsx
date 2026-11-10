@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { site } from "@/content/site";
+import { baseOpenGraph } from "@/lib/metadata";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
@@ -37,17 +38,12 @@ export const metadata: Metadata = {
     "machine learning",
     "portfolio",
   ],
-  alternates: { canonical: "/" },
+  // No canonical or share URL here: they'd be inherited by every page without
+  // its own, including the 404. Each page sets its own.
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
-  openGraph: {
-    title: site.title,
-    description: site.description,
-    url: "/",
-    siteName: site.name,
-    locale: "en_CA",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image", creator: "@akramj_13", title: site.title, description: site.description },
+  // Share titles and descriptions come from each page's own metadata.
+  openGraph: baseOpenGraph,
+  twitter: { card: "summary_large_image", creator: "@akramj_13" },
 };
 
 export const viewport: Viewport = {

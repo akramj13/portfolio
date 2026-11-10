@@ -64,7 +64,7 @@ Before editing anything, show the user every change in one message:
 - a short table or list per group (new / changed with `old → new` / removed),
 - the monogram, tone and logo decision for each new role,
 - anything you weren't sure about (a location you guessed, a company you matched loosely),
-- side effects: the hero's "now: … @ …" pill always shows the first role, so say when it will change; the home page shows five roles before "show N more roles".
+- side effects: the hero's "now: … @ …" pill shows the first role whose end is "Present" (and disappears if none is), so say when it will change; the home page shows five roles before "show N more roles".
 
 If nothing differs, say the site already matches LinkedIn and stop. Otherwise wait for their OK; they may want to keep a removed role or adjust something. Apply exactly what they approve.
 

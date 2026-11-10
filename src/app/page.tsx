@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowRight, PenLine } from "lucide-react";
 import { CompanyLogo } from "@/components/company-logo";
@@ -16,6 +17,12 @@ import { education, roleLogo, roles, shortDate, type Role } from "@/content/expe
 import { formatDate, publishedPosts } from "@/content/posts";
 import { projects } from "@/content/projects";
 import { site, socials } from "@/content/site";
+import { baseOpenGraph } from "@/lib/metadata";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { ...baseOpenGraph, url: "/" },
+};
 
 const VISIBLE_ROLES = 5;
 const VISIBLE_PROJECTS = 3;
@@ -59,7 +66,8 @@ function RoleRow({ role }: { role: Role }) {
 }
 
 export default function HomePage() {
-  const current = roles[0];
+  // The role you're in right now, if any: an ended role shouldn't read as "now".
+  const current = roles.find((r) => r.end.toLowerCase() === "present");
   const shownRoles = roles.slice(0, VISIBLE_ROLES);
   const extraRoles = roles.slice(VISIBLE_ROLES);
 
@@ -75,8 +83,10 @@ export default function HomePage() {
           image: `${site.url}/icon-512.png`,
           email: `mailto:${site.email}`,
           description: site.description,
-          jobTitle: current.title,
-          worksFor: { "@type": "Organization", name: current.company },
+          ...(current && {
+            jobTitle: current.title,
+            worksFor: { "@type": "Organization", name: current.company },
+          }),
           alumniOf: { "@type": "CollegeOrUniversity", name: education.school, url: "https://uwaterloo.ca" },
           sameAs: [socials.github.href, socials.linkedin.href, socials.x.href],
         }}
@@ -107,19 +117,21 @@ export default function HomePage() {
             on side projects, and mess around with <MorphWord shape="ai">ai</MorphWord>.
           </p>
 
-          {/* Plain <a> so Lenis handles the smooth in-page scroll instead of the router. */}
-          <a
-            href="#experience"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-pill py-1.5 pr-3.5 pl-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-pill-hover"
-          >
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-            </span>
-            now: {current.title.toLowerCase()} @ {current.company}
-          </a>
+          {current && (
+            // Plain <a> so Lenis handles the smooth in-page scroll instead of the router.
+            <a
+              href="#experience"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-pill py-1.5 pr-3.5 pl-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-pill-hover"
+            >
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
+              now: {current.title.toLowerCase()} @ {current.company}
+            </a>
+          )}
 
-          <ul className="mt-3 flex flex-wrap gap-1.5">
+          <ul className={current ? "mt-3 flex flex-wrap gap-1.5" : "mt-6 flex flex-wrap gap-1.5"}>
             {[
               { ...socials.email, label: site.email, Icon: null },
               { ...socials.linkedin, Icon: LinkedInIcon },

@@ -5,17 +5,6 @@
 import type { Tone } from "@/components/placeholder";
 import projectsData from "@/config/projects.json";
 
-export type ProjectIcon =
-  | "keyboard"
-  | "video"
-  | "brain"
-  | "gamepad"
-  | "stethoscope"
-  | "chart"
-  | "layers"
-  | "mic"
-  | "trending";
-
 export type Project = {
   slug: string;
   title: string;

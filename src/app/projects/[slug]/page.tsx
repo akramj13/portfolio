@@ -9,6 +9,7 @@ import { ProjectArt } from "@/components/project-card";
 import { Reveal } from "@/components/motion";
 import { DetailSkeleton } from "@/components/skeleton";
 import { getProject, linkLabel, projects } from "@/content/projects";
+import { baseOpenGraph } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
     title: project.title,
     description: project.tagline,
     alternates: { canonical: `/projects/${slug}` },
-    openGraph: { title: project.title, description: project.tagline, url: `/projects/${slug}`, type: "website" },
+    openGraph: { ...baseOpenGraph, title: project.title, description: project.tagline, url: `/projects/${slug}` },
   };
 }
 

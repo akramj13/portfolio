@@ -6,11 +6,13 @@ import { Reveal } from "@/components/motion";
 import { PageHeader } from "@/components/page-header";
 import { Tile } from "@/components/placeholder";
 import { formatDate, publishedPosts, type Post } from "@/content/posts";
+import { baseOpenGraph } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "writing",
   description: "Thoughts, rants, and the occasional thing Akram actually figured out.",
   alternates: { canonical: "/writing" },
+  openGraph: { ...baseOpenGraph, url: "/writing" },
 };
 
 /** One post: cover on the left (on top on phones), details on the right. */

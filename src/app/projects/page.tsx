@@ -6,11 +6,13 @@ import { Reveal } from "@/components/motion";
 import { projects } from "@/content/projects";
 import { socials } from "@/content/site";
 import { cn } from "@/lib/cn";
+import { baseOpenGraph } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "projects",
   description: "Things Akram has built: AI tools, hackathon winners, games, and finance experiments.",
   alternates: { canonical: "/projects" },
+  openGraph: { ...baseOpenGraph, url: "/projects" },
 };
 
 export default function ProjectsPage() {

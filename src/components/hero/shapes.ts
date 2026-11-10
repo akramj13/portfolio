@@ -251,7 +251,8 @@ export function buildTargets(layout: Layout) {
     // Resample at a spacing that yields about one dot per particle.
     const m = points.xy.length / 2;
     if (m > 0) points = raster(layout, Math.max(1.5, layout.gap * Math.sqrt(m / count)), draw);
-    targets[key] = fit(points, count, layout.gap * 0.5);
+    // A shape that drew nothing (no room for it) keeps the name, rather than sending every dot to NaN.
+    targets[key] = points.xy.length > 0 ? fit(points, count, layout.gap * 0.5) : targets.name;
   }
   return { count, targets };
 }
