@@ -77,7 +77,11 @@ async function ProjectDetail({ params }: { params: PageProps<"/projects/[slug]">
       </Reveal>
 
       <Reveal className="mt-10">
-        <ProjectArt project={project} className="aspect-[16/10] rounded-[1.75rem]" />
+        <ProjectArt
+          project={project}
+          sizes="(min-width: 720px) 672px, calc(100vw - 48px)"
+          className="aspect-[16/10] rounded-[1.75rem]"
+        />
       </Reveal>
 
       <div className="mt-12 space-y-10">

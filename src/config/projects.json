@@ -31,7 +31,9 @@
     ],
     "link": "https://cotabby.app/",
     "tone": "ink",
-    "icon": "/projects/cotabby.svg",
+    "icon": "/projects/cotabby/icon.svg",
+    "image": "/projects/cotabby/screenshot.png",
+    "imagePosition": "left top",
     "badge": "6k+ downloads"
   },
   {
@@ -77,7 +79,8 @@
     ],
     "link": "https://github.com/akramj13/vidsynth-ai",
     "tone": "violet",
-    "icon": "/projects/vidsynth.svg"
+    "icon": "/projects/vidsynth/icon.svg",
+    "image": "/projects/vidsynth/screenshot.png"
   },
   {
     "slug": "alzguard",
@@ -111,7 +114,8 @@
     ],
     "link": "https://github.com/akramj13/AlzGuard",
     "tone": "sky",
-    "icon": "/projects/alzguard.svg",
+    "icon": "/projects/alzguard/icon.svg",
+    "image": "/projects/alzguard/screenshot.png",
     "badge": "YIC winner"
   },
   {
@@ -148,7 +152,8 @@
     ],
     "link": "https://github.com/akramj13/biquadris",
     "tone": "orange",
-    "icon": "/projects/biquadris.svg"
+    "icon": "/projects/biquadris/icon.svg",
+    "image": "/projects/biquadris/screenshot.png"
   },
   {
     "slug": "echodoc",
@@ -181,7 +186,8 @@
     ],
     "link": "https://github.com/akramj13/echodoc",
     "tone": "green",
-    "icon": "/projects/echodoc.svg"
+    "icon": "/projects/echodoc/icon.svg",
+    "image": "/projects/echodoc/screenshot.png"
   },
   {
     "slug": "learnetf",
@@ -222,7 +228,8 @@
     ],
     "link": "https://github.com/akramj13/learnetf",
     "tone": "blue",
-    "icon": "/projects/learnetf.svg",
+    "icon": "/projects/learnetf/icon.svg",
+    "image": "/projects/learnetf/screenshot.png",
     "badge": "GeeseHacks winner"
   },
   {
@@ -259,7 +266,8 @@
     ],
     "link": "https://github.com/akramj13/portfolio",
     "tone": "slate",
-    "icon": "/projects/portfolio-v1.svg"
+    "icon": "/projects/portfolio-v1/icon.svg",
+    "image": "/projects/portfolio-v1/screenshot.png"
   },
   {
     "slug": "voice-synthesis-ai",
@@ -296,7 +304,8 @@
     ],
     "link": "https://github.com/akramj13/ai-voice",
     "tone": "red",
-    "icon": "/projects/voice-synthesis-ai.svg"
+    "icon": "/projects/voice-synthesis-ai/icon.svg",
+    "image": "/projects/voice-synthesis-ai/screenshot.png"
   },
   {
     "slug": "roboadvisor",
@@ -326,6 +335,7 @@
     ],
     "link": "https://github.com/akramj13/Stock-Robo-Advisor",
     "tone": "lime",
-    "icon": "/projects/roboadvisor.svg"
+    "icon": "/projects/roboadvisor/icon.svg",
+    "image": "/projects/roboadvisor/screenshot.png"
   }
 ]
