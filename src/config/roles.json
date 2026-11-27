@@ -10,6 +10,17 @@
     "mode": "On-site"
   },
   {
+    "title": "Forward Deployed Engineer",
+    "company": "Booked AI",
+    "monogram": "BA",
+    "tone": "blue",
+    "logo": { "domain": "bookedworks.com" },
+    "start": "Sep 2026",
+    "end": "Present",
+    "location": "Toronto, ON",
+    "mode": "Remote"
+  },
+  {
     "title": "Software & ML Engineer",
     "company": "Illuminex AI",
     "monogram": "Ix",
